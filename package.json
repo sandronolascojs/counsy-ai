@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "format": "pnpm -r --if-present run format",
+    "lint": "pnpm -r --if-present run lint",
+    "lint:fix": "pnpm -r --if-present run lint:fix",
+    "prepare": "husky install",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "watch": "turbo watch dev"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "dependencies": {
+    "turbo": "^2.5.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "eslint": "^9.27.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx,json,css,md,yaml,yml}": [
+      "pnpm format"
+    ]
+  },
+  "packageManager": "pnpm@10.11.0"
+}

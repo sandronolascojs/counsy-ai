@@ -1,0 +1,41 @@
+{
+  "name": "@counsy-ai/ts-rest",
+  "version": "1.0.0",
+  "description": "TS-REST for the Calm Pulse project",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "echo 'No build step'",
+    "clean": "del-cli dist tsconfig.tsbuildinfo",
+    "compile": "tsc --noEmit",
+    "coverage": "vitest run --coverage",
+    "format": "prettier --config ../config/.prettierrc --write . && prettier-package-json --write ./package.json",
+    "lint": "eslint src --flag v10_config_lookup_from_file --max-warnings 0 --ext .ts,.tsx",
+    "lint:fix": "eslint src --flag v10_config_lookup_from_file --max-warnings 0 --fix --ext .ts,.tsx",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@counsy-ai/config": "workspace:*",
+    "@counsy-ai/shared": "workspace:*",
+    "@counsy-ai/types": "workspace:*",
+    "@ts-rest/core": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}

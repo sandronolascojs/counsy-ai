@@ -1,0 +1,58 @@
+{
+  "name": "@counsy-ai/ai-background-service",
+  "version": "1.0.0",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "bundle": "tsup-node",
+    "bundle:watch": "tsup-node --watch",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "dev": "run-p bundle:watch type:gen:watch dev:local",
+    "dev:local": "dotenv -e .env.local -- node ./dist/index.js",
+    "format": "prettier --config ../../packages/config/.prettierrc --write . && prettier-package-json --write ./package.json",
+    "lint": "eslint src --max-warnings 0 --ext .ts,.tsx",
+    "lint:fix": "eslint src --max-warnings 0 --fix --ext .ts,.tsx",
+    "start": "node ./dist/index.js",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly",
+    "type:gen:watch": "tsc --emitDeclarationOnly --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@counsy-ai/ai": "workspace:*",
+    "@counsy-ai/config": "workspace:*",
+    "@counsy-ai/db": "workspace:*",
+    "@counsy-ai/shared": "workspace:*",
+    "@counsy-ai/types": "workspace:*",
+    "@fastify/schedule": "^6.0.0",
+    "@mastra/core": "catalog:",
+    "@mastra/libsql": "catalog:",
+    "@mastra/loggers": "catalog:",
+    "@mastra/memory": "catalog:",
+    "@t3-oss/env-core": "catalog:",
+    "bullmq": "^5.56.4",
+    "dotenv-cli": "catalog:",
+    "fastify": "catalog:",
+    "mastra": "catalog:",
+    "openai": "^5.5.1",
+    "sharp": "^0.34.2",
+    "toad-scheduler": "^3.1.0",
+    "tsx": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "npm-run-all": "catalog:",
+    "prettier": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}

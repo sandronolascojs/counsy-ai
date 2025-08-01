@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "rootDir": "src",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "composite": true
+  },
+  "extends": "@counsy-ai/config/typescript-config/library.json",
+  "include": ["src"]
+}
