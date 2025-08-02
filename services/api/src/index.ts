@@ -29,7 +29,7 @@ export function buildServer() {
   app.register(async (fastify) => {
     await fastify.register(authPlugin);
 
-   /*  fastify.register(tsRest.plugin(slackController), {
+    /*  fastify.register(tsRest.plugin(slackController), {
       hooks: { preHandler: fastify.authenticate },
     });
     fastify.register(tsRest.plugin(workspaceController), {
