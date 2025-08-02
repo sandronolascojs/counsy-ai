@@ -26,7 +26,7 @@
     "prettier-plugin-organize-imports": "catalog:",
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "catalog:",
-    "tw-animate-css": "^1.3.0",
+    "tw-animate-css": "^1.3.6",
     "typescript": "catalog:"
   },
   "devDependencies": {
