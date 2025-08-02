@@ -1,5 +1,6 @@
-const APP_NAME = 'CalmPulse AI';
-const APP_DESCRIPTION = 'AI-powered burnout detection for remote teams';
+const APP_NAME = 'Counsy AI';
+const APP_DESCRIPTION =
+  'Private 24/7 voice-chat therapy app offering personalized mental-health support';
 
 export const APP_CONFIG = {
   basics: {

@@ -1,8 +1,9 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, text } from 'drizzle-orm/pg-core';
+import { subscriptions } from '../billing';
+import { voiceSessions } from '../sessions/voiceSessions';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
-import { userWorkspaces } from '../workspace/index';
 import { accounts } from './accounts';
 import { sessions } from './sessions';
 import { verifications } from './verifications';
@@ -23,10 +24,11 @@ export const userRelations = relations(users, ({ one, many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   verifications: many(verifications),
-  userWorkspaces: one(userWorkspaces, {
+  userVoiceSessions: one(voiceSessions, {
     fields: [users.id],
-    references: [userWorkspaces.userId],
+    references: [voiceSessions.userId],
   }),
+  userSubscriptions: many(subscriptions),
 }));
 
 export type InsertUser = typeof users.$inferInsert;
