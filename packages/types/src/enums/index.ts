@@ -4,4 +4,3 @@ export * from './currency.enum';
 export * from './locale.enum';
 export * from './platform.enum';
 export * from './subscription';
-export * from './locale.enum';
