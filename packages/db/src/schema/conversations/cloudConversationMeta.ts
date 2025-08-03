@@ -9,7 +9,7 @@ export const cloudConversationMeta = pgTable(
   {
     cloudConversationMetaId: generateIdField({ name: 'cloud_conversation_meta_id' }),
     userId: text('user_id')
-      .references(() => users.id)
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
     objectKey: text('object_key').notNull(),
     sizeBytes: integer('size_bytes').notNull(),

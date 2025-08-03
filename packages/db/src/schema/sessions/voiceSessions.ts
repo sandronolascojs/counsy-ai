@@ -10,7 +10,7 @@ export const voiceSessions = pgTable(
     userId: text('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    startedAt: timestamp('started_at').defaultNow(),
+    startedAt: timestamp('started_at').defaultNow().notNull(),
     endedAt: timestamp('ended_at'),
     durationSec: integer('duration_sec'),
     createdAt: createdAtField,

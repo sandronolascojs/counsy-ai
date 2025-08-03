@@ -11,7 +11,7 @@ export const planChannelProducts = pgTable(
   'plan_channel_products',
   {
     planChannelProductId: generateIdField({ name: 'plan_channel_product_id' }),
-    planId: text('plan_id').references(() => plans.planId),
+    planId: text('plan_id').references(() => plans.planId, { onDelete: 'cascade' }),
     channel: subscriptionChannel('channel').notNull(),
     externalProductId: text('external_product_id').notNull(),
     currency: currency('currency').notNull().default(Currency.USD), // default to USD

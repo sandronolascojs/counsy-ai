@@ -5,7 +5,7 @@ import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { users } from './users';
 
-export const deviceType = pgEnum('device_type', [DeviceType.Android, DeviceType.iOS]);
+export const deviceType = pgEnum('device_type', [DeviceType.ANDROID, DeviceType.IOS]);
 
 export const platform = pgEnum('platform', [Platform.EXPO]);
 

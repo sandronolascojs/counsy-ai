@@ -9,9 +9,11 @@ export const securityHeaders = {
 };
 
 export default $config({
-  app(input) {
+  async app(input) {
+    const { APP_CONFIG } = await import('@counsy-ai/types');
+
     return {
-      name: 'calmpulse-app',
+      name: APP_CONFIG.basics.prefix,
       stage: input?.stage ?? 'dev',
       home: 'aws',
       removal: input?.stage === 'production' ? 'retain' : 'remove',
@@ -31,9 +33,9 @@ export default $config({
     const isProduction = $app.stage === 'production';
 
     const APP_NAME = APP_CONFIG.basics.name.toLowerCase().replace(/\s+/g, '-');
-    const ROOT = env.FRONTEND_URL; // calmpulse.app
-    const API_ZONE = `api.${ROOT}`; // api.calmpulse.app   (zone Route 53)
-    const APP_ZONE = `app.${ROOT}`; // app.calmpulse.app   (zone Route 53)
+    const ROOT = env.FRONTEND_URL; // counsy.ai
+    const API_ZONE = `api.${ROOT}`; // api.counsy.ai   (zone Route 53)
+    const APP_ZONE = `app.${ROOT}`; // app.counsy.ai   (zone Route 53)
 
     const API_DOMAIN = isProduction ? `${API_ZONE}` : `${$app.stage}.${API_ZONE}`;
     const FRONT_DOMAIN = isProduction ? `${APP_ZONE}` : `${$app.stage}.${APP_ZONE}`;
