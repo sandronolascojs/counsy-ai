@@ -20,7 +20,7 @@ export const users = pgTable('users', {
   updatedAt: updatedAtField,
 });
 
-export const userRelations = relations(users, ({ one, many }) => ({
+export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   verifications: many(verifications),
