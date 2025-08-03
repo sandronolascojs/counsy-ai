@@ -1,0 +1,509 @@
+---
+alwaysApply: true
+---
+
+Counsy AI – Technical Instructions (v1.0)
+
+Last updated: 27 Jul 2025
+
+⸻
+
+0 · Quick‑start TL;DR
+
+# 👇 Local dev in 90 s
+pnpm i          # 1. Install root deps
+pnpm sst dev    # 2. Spin up SST (Fastify λ + ts-rest + local Dynamo)
+expo start      # 3. React‑Native client (Expo 50)
+
+All secrets live in infra/.env.*. Use infra/.env.example as template and grab dev creds via 1Password.
+
+⸻
+
+1 · Architecture Overview
+
+Hexagonal, serverless‑first.
+
+ ┌───────────────────────────┐
+ │  React Native (Expo)      │
+ │  + NativeWind v4          │
+ └───────────┬───────────────┘
+             │ ts-rest (pure TS RPC over HTTPS)
+ ┌───────────▼───────────────┐
+ │  Fastify Lambda API       │
+ │  • ts-rest router            │
+ │  • Auth adapter (Better)  │
+ │  • BLL (hex ports)        │
+ └───────────┬───────────────┘
+             │ Postgres (RDS, IAM auth)
+ ┌───────────▼───────────────┐    ┌───────────────────────────┐
+ │  Drizzle ORM              │    │  ElevenLabs TTS           │
+ └───────────┬───────────────┘    └───────────────────────────┘
+             │ S3 (AES-256-GCM)    ┌───────────────────────────┐
+             │ KMS (data keys)     │  OpenAI GPT‑4o mini       │
+             │                     └───────────────────────────┘
+
+Deployed via SST CDK. One stack ≈ 20 resources: API Gateway, Lambda@Edge, RDS Proxy, S3, CloudFront, WAF, EventBridge, CloudWatch, IAM, KMS.
+
+⸻
+
+2 · Repo Layout (pnpm workspaces)
+
+Path	Purpose
+apps/mobile	Expo 50 RN client
+apps/server	Fastify λ + ts-rest router (TypeScript)
+packages/db	Drizzle schema + migrations
+packages/types	Shared Zod validators & API types
+packages/auth	Better‑Auth adapter + guards
+infra/	SST stacks + IaC
+.github/workflows	CI + CD pipelines
+
+
+⸻
+
+3 · Local Development Setup
+	1.	Prereqs: Node ^20, pnpm ^9, Docker Desktop, AWS CLI aws-vault, Xcode 15 / Android Studio, aws-sam-cli (for Lambda debug).
+	2.	pnpm i – installs root + workspace deps.
+	3.	pnpm db:migrate – spins an ephemeral Postgres via Docker and runs Drizzle migrations.
+	4.	sst dev – hot‑reload Lambda + localstack mocks (S3, SSM).
+	5.	expo start – QR‑scan to device.
+
+Tip: Use the VS Code Cursor extension for AI‑assisted inline code review (pre‑configured .cursor/config.toml).
+
+⸻
+
+4 · Environment Variables
+
+# Common
+NODE_ENV=development
+LOG_LEVEL=debug
+
+# Postgres
+DATABASE_URL=postgres://user:pass@localhost:5432/counsy
+PGSSLMODE=disable
+
+# Auth
+JWT_SECRET=dev‑only‑change‑me
+
+# OpenAI
+OPENAI_API_KEY=…
+OPENAI_MODEL=gpt-4o-mini
+
+# ElevenLabs
+ELEVENLABS_API_KEY=…
+VOICE_ID=…
+
+# AWS
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=…
+AWS_SECRET_ACCESS_KEY=…
+KMS_KEY_ID=alias/counsy-data
+S3_BUCKET=counsy-prod-chatblobs
+
+Prod values injected by the SST GitHub Action via OIDC → AWS Secrets Manager.
+
+⸻
+
+5 · Authentication & Session Flow
+	1.	Better Auth issues a JWT (RS256) valid 30 d.
+	2.	Refresh rotates every 7 d (rotate=true), mitigating token replay.
+	3.	Passwords hashed with Argon2id (t=3, m=65536, p=1).
+	4.	Optional passkey / WebAuthn fully supported on mobile (react‑native-webauthn).
+	5.	ts-rest client sends Authorization: Bearer <JWT>; Fastify plugin validates via JWKS (cached 5 m).
+
+Role‑based RBAC via user.role ∈ {user, therapist, admin}; guarded by @protected({ role: 'therapist' }) decorator.
+
+⸻
+
+6 · Data Model (Drizzle excerpt)
+
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').unique().notNull(),
+  hash: text('hash').notNull(),
+  createdAt: timestamp('created_at').defaultNow()
+});
+
+export const sessions = pgTable('sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id),
+  startedAt: timestamp('started_at').defaultNow(),
+  minutesUsed: integer('minutes_used').default(0)
+});
+
+
+⸻
+
+7 · Security & Compliance
+
+7.1 Threat Model (STRIDE)
+
+Category	Mitigation
+Spoofing	JWT + passkey, TLS 1.3, HSTS, WAF IP rate‑limits
+Tampering	KMS‑managed AES‑256‑GCM on S3, Argon2id password hashing
+Repudiation	CloudTrail + API Gateway access logs, imm‑storage logs retention 1 y
+Information Disclosure	E2EE at rest via client‑side AES, PHI segregated, least‑priv IAM
+Denial of Service	API‑GW throttling (100 r/s + burst 50), CloudFront WAF, multi‑AZ RDS
+Elevation of Privilege	strict IAM scoping, IAM SCPs, Lambda least‑priv roles
+
+7.2 Encryption
+
+Layer	At‑Rest	In‑Transit
+Mobile DB	AES‑256 (SQLCipher)	n/a
+Cloud blobs (S3)	AES‑256‑GCM (client‑side) + SSE-KMS	TLS 1.3
+Postgres (RDS)	AES‑256 (AWS‑KMS)	TLS 1.2 enforced
+Secrets	AWS Secrets Manager (AES‑256‑KMS)	IAM signed requests
+
+7.3 Compliance Matrix
+
+Law / Std	Requirement	Implementation
+HIPAA (US)	Encryption (45 CFR §164.312), audit logs	AES‑256 E2EE; CloudTrail 1 y
+HIPAA BAA	Signed with ElevenLabs & AWS	Stored in legal/
+GDPR (EU)	Data subject rights, DPA, EU‑→US transfer (SCC)	KMS keys in eu‑central‑1; AWS SCC attached
+CCPA (US‑CA)	Opt‑out, delete (CCPA §1798.105)	/api/v1/account/delete purges within 30 d
+ISO 27001 (target)	ISMS policies, quarterly risk review	Doc in security/ISMS/
+
+Data‑retention: chat audio & transcripts purge after 3 y (default) or user‑initiated wipe (under 24 h).Panic Erase is immediate.
+
+7.4 Secure SDLC
+	•	SAST & SCA via GitHub Advanced Security (CodeQL, Dependabot).
+	•	DAST nightly with OWASP ZAP against staging.
+	•	Secrets scanner fails PR on leak.
+	•	Mandatory code‑owner review + Cursor AI lint hints.
+	•	Production deploys require 2‑man rule via GitHub Environments.
+
+⸻
+
+8 · CI/CD Pipeline (GitHub Actions)
+
+name: ci
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with: { version: 9 }
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm turbo run lint test --concurrency=4
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write
+      contents: read
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with: { role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}, aws-region: us-east-1 }
+      - run: pnpm sst deploy --stage prod
+
+Prod deploys take < 4 min; rollbacks sst remove --stage prod --retain keeps data.
+
+⸻
+
+9 · Observability
+
+Layer	Tool	Metric / Alert
+Client	Sentry RN	Crash‑free ≥ 99.5 %
+Lambda	CloudWatch + X-Ray	p95 ≤ 400 ms, error rate < 0.5 %
+DB	RDS Performance Insights	CPU ≤ 70 %, unused connections < 100
+Billing	AWS Budgets	Alarm at ≥ 80 % of $8 k monthly guardrail
+Product	Amplitude	D30 retention, funnel drop‑offs
+
+PagerDuty on‑call rotates weekly; SLA 99.9 % API uptime.
+
+⸻
+
+10 · Legal & Privacy Notes
+	•	PHI classified as Critical. Covered by HIPAA; stored only encrypted.
+	•	DPA & SCC executed with OpenAI and ElevenLabs.
+	•	Children <13 explicitly disallowed (COPPA). Age gate in onboarding.
+	•	GDPR Art 27 EU representative: Lex‑Data GmbH, Berlin.
+	•	Data Processing Agreement template in legal/DPA-template.pdf.
+
+⸻
+
+11 · Backup & DR
+	•	Postgres: daily snapshots (RDS, 7‑day PITR).
+	•	S3: versioning + replication to us-west-2 bucket.
+	•	KMS keys: automatic rotation 365 d.
+	•	Restore objective: ≤ 30 min RTO, ≤ 5 min RPO.
+
+⸻
+
+12 · Performance & Load‑Test Baseline
+
+Scenario	Users	p95 (ms)	Errors	Notes
+1 min voice session	1 k	320	0.1 %	20 Lambda / AZ
+Transcript retrieval (S3)	5 k	180	0.05 %	CloudFront cached
+Auth token refresh	10 k	90	0.02 %	RDS Proxy warm
+
+Gatling scripts in tests/load/.
+
+⸻
+
+13 · Open Issues / Future Work
+	•	SOC 2 Type I audit – targeted Q4 2025.
+	•	Privacy‑preserving analytics (Snowplow + differential privacy).
+	•	Voice diarization (speaker separation) for multi‑party therapy.
+	•	K8s migration (EKS) once DAU > 100 k.
+
+⸻
+
+End of Technical InstructionsCounsy AI – Technical Instructions (v1.0)
+
+Last updated: 27 Jul 2025
+
+⸻
+
+0 · Quick‑start TL;DR
+
+# 👇 Local dev in 90 s
+pnpm i          # 1. Install root deps
+pnpm sst dev    # 2. Spin up SST (Fastify λ + ts-rest + local Dynamo)
+expo start      # 3. React‑Native client (Expo 50)
+
+All secrets live in infra/.env.*. Use infra/.env.example as template and grab dev creds via 1Password.
+
+⸻
+
+1 · Architecture Overview
+
+Hexagonal, serverless‑first.
+
+ ┌───────────────────────────┐
+ │  React Native (Expo)      │
+ │  + NativeWind v4          │
+ └───────────┬───────────────┘
+             │ ts-rest (pure TS RPC over HTTPS)
+ ┌───────────▼───────────────┐
+ │  Fastify Lambda API       │
+ │  • ts-rest router            │
+ │  • Auth adapter (Better)  │
+ │  • BLL (hex ports)        │
+ └───────────┬───────────────┘
+             │ Postgres (RDS, IAM auth)
+ ┌───────────▼───────────────┐    ┌───────────────────────────┐
+ │  Drizzle ORM              │    │  ElevenLabs TTS           │
+ └───────────┬───────────────┘    └───────────────────────────┘
+             │ S3 (AES-256-GCM)    ┌───────────────────────────┐
+             │ KMS (data keys)     │  OpenAI GPT‑4o mini       │
+             │                     └───────────────────────────┘
+
+Deployed via SST CDK. One stack ≈ 20 resources: API Gateway, Lambda@Edge, RDS Proxy, S3, CloudFront, WAF, EventBridge, CloudWatch, IAM, KMS.
+
+⸻
+
+2 · Repo Layout (pnpm workspaces)
+
+Path	Purpose
+apps/mobile	Expo 50 RN client
+apps/server	Fastify λ + ts-rest router (TypeScript)
+packages/db	Drizzle schema + migrations
+packages/types	Shared Zod validators & API types
+packages/auth	Better‑Auth adapter + guards
+infra/	SST stacks + IaC
+.github/workflows	CI + CD pipelines
+
+
+⸻
+
+3 · Local Development Setup
+	1.	Prereqs: Node ^20, pnpm ^9, Docker Desktop, AWS CLI aws-vault, Xcode 15 / Android Studio, aws-sam-cli (for Lambda debug).
+	2.	pnpm i – installs root + workspace deps.
+	3.	pnpm db:migrate – spins an ephemeral Postgres via Docker and runs Drizzle migrations.
+	4.	sst dev – hot‑reload Lambda + localstack mocks (S3, SSM).
+	5.	expo start – QR‑scan to device.
+
+Tip: Use the VS Code Cursor extension for AI‑assisted inline code review (pre‑configured .cursor/config.toml).
+
+⸻
+
+4 · Environment Variables
+
+# Common
+NODE_ENV=development
+LOG_LEVEL=debug
+
+# Postgres
+DATABASE_URL=postgres://user:pass@localhost:5432/counsy
+PGSSLMODE=disable
+
+# Auth
+JWT_SECRET=dev‑only‑change‑me
+
+# OpenAI
+OPENAI_API_KEY=…
+OPENAI_MODEL=gpt-4o-mini
+
+# ElevenLabs
+ELEVENLABS_API_KEY=…
+VOICE_ID=…
+
+# AWS
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=…
+AWS_SECRET_ACCESS_KEY=…
+KMS_KEY_ID=alias/counsy-data
+S3_BUCKET=counsy-prod-chatblobs
+
+Prod values injected by the SST GitHub Action via OIDC → AWS Secrets Manager.
+
+⸻
+
+5 · Authentication & Session Flow
+	1.	Better Auth issues a JWT (RS256) valid 30 d.
+	2.	Refresh rotates every 7 d (rotate=true), mitigating token replay.
+	3.	Passwords hashed with Argon2id (t=3, m=65536, p=1).
+	4.	Optional passkey / WebAuthn fully supported on mobile (react‑native-webauthn).
+	5.	ts-rest client sends Authorization: Bearer <JWT>; Fastify plugin validates via JWKS (cached 5 m).
+
+Role‑based RBAC via user.role ∈ {user, therapist, admin}; guarded by @protected({ role: 'therapist' }) decorator.
+
+⸻
+
+6 · Data Model (Drizzle excerpt)
+
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').unique().notNull(),
+  hash: text('hash').notNull(),
+  createdAt: timestamp('created_at').defaultNow()
+});
+
+export const sessions = pgTable('sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').references(() => users.id),
+  startedAt: timestamp('started_at').defaultNow(),
+  minutesUsed: integer('minutes_used').default(0)
+});
+
+
+⸻
+
+7 · Security & Compliance
+
+7.1 Threat Model (STRIDE)
+
+Category	Mitigation
+Spoofing	JWT + passkey, TLS 1.3, HSTS, WAF IP rate‑limits
+Tampering	KMS‑managed AES‑256‑GCM on S3, Argon2id password hashing
+Repudiation	CloudTrail + API Gateway access logs, imm‑storage logs retention 1 y
+Information Disclosure	E2EE at rest via client‑side AES, PHI segregated, least‑priv IAM
+Denial of Service	API‑GW throttling (100 r/s + burst 50), CloudFront WAF, multi‑AZ RDS
+Elevation of Privilege	strict IAM scoping, IAM SCPs, Lambda least‑priv roles
+
+7.2 Encryption
+
+Layer	At‑Rest	In‑Transit
+Mobile DB	AES‑256 (SQLCipher)	n/a
+Cloud blobs (S3)	AES‑256‑GCM (client‑side) + SSE-KMS	TLS 1.3
+Postgres (RDS)	AES‑256 (AWS‑KMS)	TLS 1.2 enforced
+Secrets	AWS Secrets Manager (AES‑256‑KMS)	IAM signed requests
+
+7.3 Compliance Matrix
+
+Law / Std	Requirement	Implementation
+HIPAA (US)	Encryption (45 CFR §164.312), audit logs	AES‑256 E2EE; CloudTrail 1 y
+HIPAA BAA	Signed with ElevenLabs & AWS	Stored in legal/
+GDPR (EU)	Data subject rights, DPA, EU‑→US transfer (SCC)	KMS keys in eu‑central‑1; AWS SCC attached
+CCPA (US‑CA)	Opt‑out, delete (CCPA §1798.105)	/api/v1/account/delete purges within 30 d
+ISO 27001 (target)	ISMS policies, quarterly risk review	Doc in security/ISMS/
+
+Data‑retention: chat audio & transcripts purge after 3 y (default) or user‑initiated wipe (under 24 h).Panic Erase is immediate.
+
+7.4 Secure SDLC
+	•	SAST & SCA via GitHub Advanced Security (CodeQL, Dependabot).
+	•	DAST nightly with OWASP ZAP against staging.
+	•	Secrets scanner fails PR on leak.
+	•	Mandatory code‑owner review + Cursor AI lint hints.
+	•	Production deploys require 2‑man rule via GitHub Environments.
+
+⸻
+
+8 · CI/CD Pipeline (GitHub Actions)
+
+name: ci
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with: { version: 9 }
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm turbo run lint test --concurrency=4
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write
+      contents: read
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with: { role-to-assume: ${{ secrets.AWS_OIDC_ROLE }}, aws-region: us-east-1 }
+      - run: pnpm sst deploy --stage prod
+
+Prod deploys take < 4 min; rollbacks sst remove --stage prod --retain keeps data.
+
+⸻
+
+9 · Observability
+
+Layer	Tool	Metric / Alert
+Client	Sentry RN	Crash‑free ≥ 99.5 %
+Lambda	CloudWatch + X-Ray	p95 ≤ 400 ms, error rate < 0.5 %
+DB	RDS Performance Insights	CPU ≤ 70 %, unused connections < 100
+Billing	AWS Budgets	Alarm at ≥ 80 % of $8 k monthly guardrail
+Product	Amplitude	D30 retention, funnel drop‑offs
+
+PagerDuty on‑call rotates weekly; SLA 99.9 % API uptime.
+
+⸻
+
+10 · Legal & Privacy Notes
+	•	PHI classified as Critical. Covered by HIPAA; stored only encrypted.
+	•	DPA & SCC executed with OpenAI and ElevenLabs.
+	•	Children <13 explicitly disallowed (COPPA). Age gate in onboarding.
+	•	GDPR Art 27 EU representative: Lex‑Data GmbH, Berlin.
+	•	Data Processing Agreement template in legal/DPA-template.pdf.
+
+⸻
+
+11 · Backup & DR
+	•	Postgres: daily snapshots (RDS, 7‑day PITR).
+	•	S3: versioning + replication to us-west-2 bucket.
+	•	KMS keys: automatic rotation 365 d.
+	•	Restore objective: ≤ 30 min RTO, ≤ 5 min RPO.
+
+⸻
+
+12 · Performance & Load‑Test Baseline
+
+Scenario	Users	p95 (ms)	Errors	Notes
+1 min voice session	1 k	320	0.1 %	20 Lambda / AZ
+Transcript retrieval (S3)	5 k	180	0.05 %	CloudFront cached
+Auth token refresh	10 k	90	0.02 %	RDS Proxy warm
+
+Gatling scripts in tests/load/.
+
+⸻
+
+13 · Open Issues / Future Work
+	•	SOC 2 Type I audit – targeted Q4 2025.
+	•	Privacy‑preserving analytics (Snowplow + differential privacy).
+	•	Voice diarization (speaker separation) for multi‑party therapy.
+	•	K8s migration (EKS) once DAU > 100 k.
+
+⸻
+
+End of Technical Instructions
