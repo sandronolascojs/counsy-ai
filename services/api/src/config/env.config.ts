@@ -5,55 +5,29 @@ export const env = createEnv({
   server: {
     PORT: z.coerce.number().default(8000),
     APP_ENV: z.enum(['development', 'production', 'dev', 'staging']).default('dev'),
-    DATABASE_URL: z.string({
-      required_error: 'DATABASE_URL is required',
-    }),
+    DATABASE_URL: z.string(),
     ALLOWED_ORIGINS: z.string().default('*'),
-    API_BASE_URL: z.string({
-      required_error: 'API_BASE_URL is required',
-    }),
-    FRONTEND_URL: z.string({
-      required_error: 'FRONTEND_URL is required',
-    }),
+    API_BASE_URL: z.string(),
+    FRONTEND_URL: z.string(),
 
     // slack
-    SLACK_CLIENT_ID: z.string({
-      required_error: 'SLACK_CLIENT_ID is required',
-    }),
-    SLACK_CLIENT_SECRET: z.string({
-      required_error: 'SLACK_CLIENT_SECRET is required',
-    }),
-    SLACK_SIGNING_SECRET: z.string({
-      required_error: 'SLACK_SIGNING_SECRET is required',
-    }),
-    OAUTH_SCOPES: z.string({
-      required_error: 'OAUTH_SCOPES is required',
-    }),
+    SLACK_CLIENT_ID: z.string(),
+    SLACK_CLIENT_SECRET: z.string(),
+    SLACK_SIGNING_SECRET: z.string(),
+    OAUTH_SCOPES: z.string(),
     NGROK_SLACK_ENDPOINT: z.string().optional(),
 
     // auth
-    BETTER_AUTH_URL: z.string({
-      required_error: 'BETTER_AUTH_URL is required',
-    }),
-    BETTER_AUTH_SECRET: z.string({
-      required_error: 'BETTER_AUTH_SECRET is required',
-    }),
+    BETTER_AUTH_URL: z.string(),
+    BETTER_AUTH_SECRET: z.string(),
 
     // email
-    RESEND_API_KEY: z.string({
-      required_error: 'RESEND_API_KEY is required',
-    }),
-    FROM_EMAIL: z.string({
-      required_error: 'FROM_EMAIL is required',
-    }),
+    RESEND_API_KEY: z.string(),
+    FROM_EMAIL: z.string(),
 
     // google
-    GOOGLE_CLIENT_ID: z.string({
-      required_error: 'GOOGLE_CLIENT_ID is required',
-    }),
-    GOOGLE_CLIENT_SECRET: z.string({
-      required_error: 'GOOGLE_CLIENT_SECRET is required',
-    }),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
   },
   runtimeEnvStrict: {
     PORT: process.env.PORT,
