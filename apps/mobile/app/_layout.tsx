@@ -6,7 +6,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import config from '@/tamagui.config';
 import { SafeAreaView } from 'react-native';
-import { TamaguiProvider, Theme } from 'tamagui';
+import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,14 +20,18 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TamaguiProvider config={config}>
-        <Theme name={colorScheme ?? 'light'}>
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack />
-          </ThemeProvider>
-        </Theme>
-      </TamaguiProvider>
-    </SafeAreaView>
+    <TamaguiProvider config={config}>
+      <Theme name={colorScheme ?? 'dark'}>
+        <YStack flex={1} backgroundColor="$background">
+          <SafeAreaView style={{ flex: 1 }}>
+            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              </Stack>
+            </ThemeProvider>
+          </SafeAreaView>
+        </YStack>
+      </Theme>
+    </TamaguiProvider>
   );
 }

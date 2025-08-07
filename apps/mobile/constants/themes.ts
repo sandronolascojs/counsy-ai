@@ -1,33 +1,57 @@
 import * as Colors from '@tamagui/colors';
 import { createThemes, defaultComponentThemes } from '@tamagui/theme-builder';
 
+const colors = {
+  light: {
+    background: 'hsla(0, 0%, 100%, 1)',
+    backgroundSecondary: 'hsla(0, 0%, 96%, 1)',
+    backgroundTertiary: 'hsla(0, 0%, 92%, 1)',
+    backgroundHover: 'hsla(0, 0%, 90%, 1)',
+    backgroundPress: 'hsla(0, 0%, 88%, 1)',
+    text: 'hsla(0, 0%, 10%, 1)',
+    textSecondary: 'hsla(0, 0%, 30%, 1)',
+    border: 'hsla(0, 0%, 85%, 1)',
+  },
+  dark: {
+    background: 'hsla(0, 0%, 6%, 1)',
+    backgroundSecondary: 'hsla(0, 0%, 10%, 1)',
+    backgroundTertiary: 'hsla(0, 0%, 15%, 1)',
+    backgroundHover: 'hsla(0, 0%, 20%, 1)',
+    backgroundPress: 'hsla(0, 0%, 25%, 1)',
+    text: 'hsla(0, 0%, 95%, 1)',
+    textSecondary: 'hsla(0, 0%, 70%, 1)',
+    border: 'hsla(0, 0%, 30%, 1)',
+  },
+} as const;
+
 const darkPalette = [
-  'hsla(0, 0%, 1%, 1)',
-  'hsla(0, 0%, 6%, 1)',
-  'hsla(0, 0%, 12%, 1)',
-  'hsla(0, 0%, 17%, 1)',
-  'hsla(0, 0%, 23%, 1)',
+  colors.dark.background,
+  colors.dark.backgroundSecondary,
+  colors.dark.backgroundTertiary,
+  colors.dark.backgroundHover,
+  colors.dark.backgroundPress,
   'hsla(0, 0%, 28%, 1)',
   'hsla(0, 0%, 34%, 1)',
   'hsla(0, 0%, 39%, 1)',
   'hsla(0, 0%, 45%, 1)',
   'hsla(0, 0%, 50%, 1)',
-  'hsla(0, 15%, 93%, 1)',
-  'hsla(0, 15%, 99%, 1)',
+  colors.dark.textSecondary,
+  colors.dark.text,
 ];
+
 const lightPalette = [
-  'hsla(0, 0%, 92%, 1)',
-  'hsla(0, 0%, 87%, 1)',
-  'hsla(0, 0%, 83%, 1)',
-  'hsla(0, 0%, 78%, 1)',
-  'hsla(0, 0%, 73%, 1)',
+  colors.light.background,
+  colors.light.backgroundSecondary,
+  colors.light.backgroundTertiary,
+  colors.light.backgroundHover,
+  colors.light.backgroundPress,
   'hsla(0, 0%, 69%, 1)',
   'hsla(0, 0%, 64%, 1)',
   'hsla(0, 0%, 59%, 1)',
   'hsla(0, 0%, 55%, 1)',
   'hsla(0, 0%, 50%, 1)',
-  'hsla(0, 15%, 15%, 1)',
-  'hsla(0, 15%, 1%, 1)',
+  colors.light.textSecondary,
+  colors.light.text,
 ];
 
 const lightShadows = {
@@ -56,7 +80,6 @@ const builtThemes = createThemes({
       dark: darkPalette,
       light: lightPalette,
     },
-
     extra: {
       light: {
         ...Colors.green,
@@ -107,7 +130,6 @@ const builtThemes = createThemes({
       ],
     },
   },
-
   childrenThemes: {
     warning: {
       palette: {
@@ -115,14 +137,12 @@ const builtThemes = createThemes({
         light: Object.values(Colors.yellow),
       },
     },
-
     error: {
       palette: {
         dark: Object.values(Colors.redDark),
         light: Object.values(Colors.red),
       },
     },
-
     success: {
       palette: {
         dark: Object.values(Colors.greenDark),

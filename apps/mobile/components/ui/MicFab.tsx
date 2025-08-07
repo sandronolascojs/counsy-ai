@@ -1,6 +1,5 @@
 import { useChatSheet } from '@/store';
 import { Mic } from '@tamagui/lucide-icons';
-import { Platform } from 'react-native';
 import { Button } from 'tamagui';
 
 export const MicFab = () => {
@@ -8,21 +7,15 @@ export const MicFab = () => {
 
   return (
     <Button
-      size="$7"
       circular
-      elevate
-      position="absolute"
-      bottom={Platform.select({
-        ios: 84,
-        default: 72,
-      })}
+      size="$5"
+      borderWidth="$0.25"
+      borderColor="$borderColor"
       alignSelf="center"
-      theme="accent"
-      scale={0.9}
-      pressStyle={{ scale: 0.85 }}
-      animation="bouncy"
       icon={Mic}
       onPress={toggle}
+      scaleIcon={1.5}
+      theme="accent"
       aria-label="Hablar con Counsy"
     />
   );

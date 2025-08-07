@@ -1,9 +1,9 @@
-import { Text, View } from 'react-native';
+import { Text, YStack } from 'tamagui';
 
 export default function History() {
   return (
-    <View>
+    <YStack flex={1} backgroundColor="$background">
       <Text>History</Text>
-    </View>
+    </YStack>
   );
 }

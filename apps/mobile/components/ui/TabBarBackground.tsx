@@ -1,18 +1,21 @@
-import { BlurView } from 'expo-blur';
 import React from 'react';
 import { Platform } from 'react-native';
-import { View } from 'tamagui';
+import { useTheme, View, YStack } from 'tamagui';
 
 export function TabBarBackground() {
+  const theme = useTheme();
+  const backgroundColor = theme.background?.get();
+
   if (Platform.OS === 'ios' || Platform.OS === 'android') {
     return (
-      <BlurView
-        intensity={85}
+      <YStack
         style={{
-          position: 'absolute',
+          backgroundColor,
+          borderTopWidth: theme.borderWidth?.get(),
+          borderTopColor: theme.borderColor?.get(),
+          height: 0,
           left: 0,
           right: 0,
-          height: 84,
           bottom: 0,
         }}
       />
@@ -22,11 +25,13 @@ export function TabBarBackground() {
   return (
     <View
       style={{
+        backgroundColor,
         position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
-        height: 84,
+        borderTopWidth: 1,
+        borderTopColor: theme.borderColor?.get(),
         backdropFilter: 'blur(20px)',
       }}
     />

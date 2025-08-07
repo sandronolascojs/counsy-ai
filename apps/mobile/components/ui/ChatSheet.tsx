@@ -1,56 +1,104 @@
+import { OVERLAY_OPACITY, SHEET_SNAP_POINTS } from '@/constants/sheet';
 import { useChatSheet } from '@/store';
-import { MicOff, StopCircle } from '@tamagui/lucide-icons';
+import { MicOff, StopCircle, X as XIcon } from '@tamagui/lucide-icons';
 import { useState } from 'react';
-import { Button, Progress, Sheet, Spinner, Text, Theme, XStack, YStack } from 'tamagui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Button, Progress, Sheet, Spinner, Text, XStack, YStack } from 'tamagui';
 
 export function ChatSheet() {
   const { open, toggle } = useChatSheet();
   const [recording, setRecording] = useState(false);
+  const insets = useSafeAreaInsets();
 
   return (
     <Sheet
-      open={open}
-      onOpenChange={(open: boolean) => !open && toggle()}
       modal
-      snapPoints={[40, 95]}
+      open={open}
+      native
+      onOpenChange={(open: boolean) => !open && toggle()}
+      snapPoints={SHEET_SNAP_POINTS}
       dismissOnSnapToBottom
       moveOnKeyboardChange
+      animation="medium"
     >
-      <Sheet.Overlay />
-
-      <Sheet.Frame padding="$4" gap="$5">
-        <Theme name="light">
-          {/* header */}
+      <Sheet.Overlay
+        animation="lazy"
+        opacity={OVERLAY_OPACITY}
+        enterStyle={{ opacity: 0 }}
+        exitStyle={{ opacity: 0 }}
+        backgroundColor="$color"
+      />
+      <Sheet.Frame
+        padding="$4"
+        gap="$5"
+        backgroundColor="$background"
+        borderTopLeftRadius="$8"
+        borderTopRightRadius="$8"
+        paddingBottom={insets.bottom}
+      >
+        <YStack gap="$5">
           <XStack alignItems="center" justifyContent="space-between">
-            <Text fontWeight="700">Sesión</Text>
-            <Button chromeless size="$3" icon={MicOff} onPress={toggle} aria-label="Cerrar" />
+            <Text fontSize="$6" fontWeight="700">
+              Sesión
+            </Text>
+            <Button
+              size="$2"
+              icon={XIcon}
+              borderWidth="$0"
+              backgroundColor="transparent"
+              color="$color"
+              scaleIcon={1.5}
+              onPress={toggle}
+              aria-label="Cerrar"
+              pressStyle={{ opacity: 0.7 }}
+              hoverStyle={{ opacity: 0.8 }}
+            />
           </XStack>
 
-          <YStack alignItems="center" gap="$3" marginVertical="$2">
+          {/* Recording Status */}
+          <YStack alignItems="center" gap="$3">
             {recording ? (
-              <Spinner size="large" color="primary" />
+              <Spinner size="large" />
             ) : (
-              <Button circular size="$9" icon={MicOff} disabled />
+              <Button circular size="$9" icon={MicOff} disabled opacity={0.5} />
             )}
-            <Text theme="alt2">{recording ? 'Escuchando…' : 'Detenido'}</Text>
+            <Text fontSize="$5" fontWeight="500" color="$color">
+              {recording ? 'Escuchando…' : 'Detenido'}
+            </Text>
           </YStack>
 
+          {/* Progress */}
           <YStack alignItems="center" gap="$2">
-            <Progress value={12} max={60} width="70%">
-              <Progress.Indicator backgroundColor="primary" />
+            <Progress
+              value={12}
+              max={60}
+              height="$1"
+              backgroundColor="$borderColor"
+              borderWidth="$0.25"
+              borderColor="$borderColor"
+            >
+              <Progress.Indicator animation="bouncy" backgroundColor="$accentColor" />
             </Progress>
-            <Text theme="alt2">12 / 60 min restantes</Text>
+            <Text fontSize="$3" fontWeight="500" color="$color">
+              12 / 60 min restantes
+            </Text>
           </YStack>
 
+          {/* Action Button */}
           <Button
-            size="$5"
+            size="$4"
             icon={recording ? StopCircle : MicOff}
-            theme={recording ? 'destructive' : 'primary'}
             onPress={() => setRecording(!recording)}
+            fontWeight="600"
+            animation="bouncy"
+            theme="accent"
+            pressStyle={{ scale: 0.97 }}
+            gap="$0.25"
+            scaleIcon={1.2}
           >
             {recording ? 'Detener' : 'Hablar'}
           </Button>
-        </Theme>
+        </YStack>
       </Sheet.Frame>
     </Sheet>
   );

@@ -5,71 +5,81 @@ import {
   Book as BookIcon,
   History as HistoryIcon,
   Home as HomeIcon,
-  Map as MapIcon,
+  User as UserIcon,
 } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
+import { useTheme } from 'tamagui';
 
 export default function TabLayout() {
+  const theme = useTheme();
+  console.log(theme);
   return (
     <>
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarBackground: TabBarBackground,
-          tabBarLabelStyle: {
-            fontSize: 11,
-            fontWeight: '500',
-            marginBottom: 8,
+          tabBarBackground: () => <TabBarBackground />,
+          tabBarActiveTintColor: theme.accentColor?.get(),
+          tabBarIconStyle: {
+            color: theme.borderColor?.get(),
           },
           tabBarStyle: {
             position: 'absolute',
-            height: 84,
-            borderTopWidth: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 80,
+            borderTopWidth: 0.2,
+            borderTopColor: theme.borderColor?.get(),
             backgroundColor: 'transparent',
             bottom: 0,
-          },
-          tabBarItemStyle: {
-            height: 64,
+            elevation: 0,
             paddingTop: 12,
+            boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.05)',
           },
-          tabBarShowLabel: false,
+          tabBarItemStyle: {},
+          tabBarLabelStyle: {
+            fontSize: 11,
+            fontWeight: '600',
+          },
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
             title: 'Home',
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => <HomeIcon size={24} color={color} />,
+            tabBarIcon: ({ color }) => <HomeIcon size={24} color={color} />, // Home
           }}
         />
         <Tabs.Screen
-          name="explore"
-          options={{
-            title: 'Explore',
-            tabBarLabel: 'Explore',
-            tabBarIcon: ({ color }) => <MapIcon size={24} color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="history"
+          name="history/index"
           options={{
             title: 'History',
-            tabBarLabel: 'History',
-            tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />,
+            tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />, // History
           }}
         />
         <Tabs.Screen
-          name="advice"
+          name="mic/index"
+          options={{
+            tabBarLabel: () => null,
+            tabBarIcon: () => null,
+            tabBarButton: () => <MicFab />,
+          }}
+        />
+        <Tabs.Screen
+          name="advice/index"
           options={{
             title: 'Tips',
-            tabBarLabel: 'Tips',
-            tabBarIcon: ({ color }) => <BookIcon size={24} color={color} />,
+            tabBarIcon: ({ color }) => <BookIcon size={24} color={color} />, // Tips
+          }}
+        />
+        <Tabs.Screen
+          name="account/index"
+          options={{
+            title: 'Account',
+            tabBarIcon: ({ color }) => <UserIcon size={24} color={color} />, // Account
           }}
         />
       </Tabs>
-
-      <MicFab />
       <ChatSheet />
     </>
   );
