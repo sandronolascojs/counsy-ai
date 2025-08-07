@@ -5,9 +5,9 @@ import { voiceSessions } from '../sessions/voiceSessions';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { accounts } from './accounts';
+import { pushTokens } from './pushTokens';
 import { sessions } from './sessions';
 import { verifications } from './verifications';
-import { pushTokens } from './pushTokens';
 
 export const users = pgTable('users', {
   id: generateIdField({ name: 'id' }),
