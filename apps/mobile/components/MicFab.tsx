@@ -16,7 +16,10 @@ export const MicFab = () => {
       onPress={toggle}
       scaleIcon={1.5}
       theme="accent"
+      role="button"
       aria-label="Hablar con Counsy"
+      aria-describedby="Abre el chat para hablar con Counsy"
+      hitSlop={8}
     />
   );
 };

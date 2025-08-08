@@ -10,8 +10,18 @@ const CHAT_SHEET_SNAP_POINTS = [45];
 export const ChatSheet = () => {
   const { open, toggle } = useChatSheet();
   const [recording, setRecording] = useState(false);
+
+  const handleOpen = (next: boolean) => {
+    if (next !== open) toggle();
+  };
+
   return (
-    <Sheet title="Sesión" open={open} handleOpen={toggle} sheetSnapPoints={CHAT_SHEET_SNAP_POINTS}>
+    <Sheet
+      title="Sesión"
+      open={open}
+      handleOpen={handleOpen}
+      sheetSnapPoints={CHAT_SHEET_SNAP_POINTS}
+    >
       <YStack gap="$5">
         {/* Recording Status */}
         <YStack alignItems="center" gap="$3">

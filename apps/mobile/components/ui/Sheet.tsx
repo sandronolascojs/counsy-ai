@@ -8,7 +8,7 @@ import { Button } from './Button';
 interface SheetProps {
   title?: string;
   open: boolean;
-  handleOpen: () => void;
+  handleOpen: (open: boolean) => void;
   children: ReactNode;
   sheetSnapPoints?: number[];
 }
@@ -64,7 +64,7 @@ export const Sheet = ({
               variant="ghost"
               size="$2"
               icon={XIcon}
-              onPress={handleOpen}
+              onPress={() => handleOpen(false)}
               aria-label="Close"
             />
           </XStack>

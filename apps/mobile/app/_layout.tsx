@@ -10,6 +10,8 @@ import { TamaguiProvider, Theme, YStack } from 'tamagui';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const effectiveScheme = colorScheme ?? 'dark';
+
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -20,11 +22,11 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme ?? 'dark'}>
-      <Theme name={colorScheme ?? 'dark'}>
+    <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
+      <Theme name={effectiveScheme}>
         <YStack flex={1} backgroundColor="$background">
           <SafeAreaView style={{ flex: 1 }}>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <ThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
               <Stack>
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               </Stack>

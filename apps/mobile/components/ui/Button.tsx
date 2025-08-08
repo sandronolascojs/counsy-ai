@@ -6,8 +6,16 @@ export interface ButtonProps extends Omit<TamaguiButtonProps, 'variant'> {
   variant?: ButtonVariant;
 }
 
-export const Button = ({ children, variant = 'default', ...props }: ButtonProps) => {
-  let variantProps: TamaguiButtonProps = {};
+export const Button = ({
+  children,
+  variant = 'default',
+  pressStyle: userPressStyle,
+  hoverStyle: userHoverStyle,
+  size: userSize,
+  scaleIcon: userScaleIcon,
+  ...restProps
+}: ButtonProps) => {
+  let variantProps: Partial<TamaguiButtonProps> = {};
 
   switch (variant) {
     case 'ghost':
@@ -15,7 +23,6 @@ export const Button = ({ children, variant = 'default', ...props }: ButtonProps)
         backgroundColor: 'transparent',
         borderWidth: '$0',
         color: '$color',
-        ...props,
       };
       break;
     case 'outline':
@@ -24,7 +31,6 @@ export const Button = ({ children, variant = 'default', ...props }: ButtonProps)
         borderWidth: 1,
         borderColor: '$borderColor',
         color: '$color',
-        ...props,
       };
       break;
     case 'default':
@@ -34,18 +40,26 @@ export const Button = ({ children, variant = 'default', ...props }: ButtonProps)
         theme: 'accent',
         gap: '$0.25',
         animation: 'bouncy',
-        ...props,
       };
       break;
   }
 
   return (
     <TamaguiButton
-      pressStyle={{ scale: 0.97, ...(variantProps.pressStyle || {}) }}
-      scaleIcon={1.2}
-      hoverStyle={{ opacity: 0.8 }}
-      size="$4"
       {...variantProps}
+      {...restProps}
+      pressStyle={{
+        scale: 0.97,
+        ...(variantProps.pressStyle || {}),
+        ...(userPressStyle || {}),
+      }}
+      hoverStyle={{
+        opacity: 0.8,
+        ...(variantProps.hoverStyle || {}),
+        ...(userHoverStyle || {}),
+      }}
+      size={userSize ?? '$4'}
+      scaleIcon={userScaleIcon ?? 1.2}
     >
       {children}
     </TamaguiButton>

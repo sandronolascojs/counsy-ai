@@ -17,6 +17,7 @@ export function TabBarBackground() {
           left: 0,
           right: 0,
           bottom: 0,
+          pointerEvents: 'none',
         }}
       />
     );
@@ -30,9 +31,10 @@ export function TabBarBackground() {
         left: 0,
         right: 0,
         bottom: 0,
-        borderTopWidth: 1,
+        borderTopWidth: theme.borderWidth?.get(),
         borderTopColor: theme.borderColor?.get(),
         backdropFilter: 'blur(20px)',
+        pointerEvents: 'none',
       }}
     />
   );

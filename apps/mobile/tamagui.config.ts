@@ -1,9 +1,9 @@
-import { themes } from '@/constants/themes';
+import { themes as customThemes } from '@/constants/themes';
 import { createAnimations } from '@tamagui/animations-react-native';
 import { defaultConfig } from '@tamagui/config/v4';
 import { createTamagui } from 'tamagui';
 
-export default createTamagui({
+const config = createTamagui({
   ...defaultConfig,
   animations: createAnimations({
     fast: {
@@ -55,5 +55,10 @@ export default createTamagui({
       stiffness: 100,
     },
   }),
-  themes,
+  themes: {
+    ...defaultConfig.themes,
+    ...customThemes,
+  },
 });
+
+export default config;

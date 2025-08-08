@@ -8,6 +8,11 @@
     "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "updates": {
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
+    },
     "ios": {
       "bundleIdentifier": "com.counsy.ai",
       "supportsTablet": true

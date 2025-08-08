@@ -19,9 +19,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarBackground: () => <TabBarBackground />,
           tabBarActiveTintColor: theme.accentColor?.get(),
-          tabBarIconStyle: {
-            color: theme.borderColor?.get(),
-          },
+          tabBarInactiveTintColor: theme.textSecondary?.get(),
           tabBarStyle: {
             position: 'absolute',
             alignItems: 'center',
