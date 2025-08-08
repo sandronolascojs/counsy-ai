@@ -1,8 +1,8 @@
 export enum Platform {
-  EXPO = "EXPO",
+  EXPO = 'EXPO',
 }
 
 export enum DeviceType {
-  IOS = "iOS",
-  ANDROID = "Android",
+  IOS = 'iOS',
+  ANDROID = 'Android',
 }

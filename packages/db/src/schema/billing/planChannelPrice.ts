@@ -8,10 +8,9 @@ export const planChannelPrices = pgTable(
   'plan_channel_prices',
   {
     planChannelPriceId: generateIdField({ name: 'plan_channel_price_id' }),
-    planChannelProductId: text('plan_channel_product_id').references(
-      () => planChannelProducts.planChannelProductId,
-      { onDelete: 'cascade' },
-    ).notNull(),
+    planChannelProductId: text('plan_channel_product_id')
+      .references(() => planChannelProducts.planChannelProductId, { onDelete: 'cascade' })
+      .notNull(),
     unitAmount: integer('unit_amount').notNull(), // 2499
     storePriceTier: text('store_price_tier'), // '25' → Apple Tier 25
     effectiveFrom: timestamp('effective_from').notNull(),

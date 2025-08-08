@@ -49,8 +49,10 @@
     "@babel/core": "^7.25.2",
     "@tamagui/babel-plugin": "^1.132.16",
     "@types/react": "~19.0.10",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
+    "expo-updates": "~0.28.17",
     "typescript": "~5.8.3"
   }
 }

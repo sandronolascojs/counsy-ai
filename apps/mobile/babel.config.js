@@ -1,3 +1,6 @@
+// Default to 'native' if not provided; allow CI/CLI overrides (e.g., web builds)
+process.env.TAMAGUI_TARGET = process.env.TAMAGUI_TARGET || 'native';
+
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -12,6 +15,7 @@ module.exports = function (api) {
           disableExtraction: process.env.NODE_ENV === 'development',
         },
       ],
+      ['transform-inline-environment-variables', { include: ['TAMAGUI_TARGET'] }],
       'react-native-reanimated/plugin',
     ],
   };
