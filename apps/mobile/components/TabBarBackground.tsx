@@ -13,7 +13,8 @@ export function TabBarBackground() {
           backgroundColor,
           borderTopWidth: theme.borderWidth?.get(),
           borderTopColor: theme.borderColor?.get(),
-          height: 0,
+          height: '100%',
+          width: '100%',
           left: 0,
           right: 0,
           bottom: 0,
@@ -33,6 +34,8 @@ export function TabBarBackground() {
         bottom: 0,
         borderTopWidth: theme.borderWidth?.get(),
         borderTopColor: theme.borderColor?.get(),
+        height: '100%',
+        width: '100%',
         backdropFilter: 'blur(20px)',
         pointerEvents: 'none',
       }}

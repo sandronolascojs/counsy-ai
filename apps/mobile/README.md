@@ -48,3 +48,40 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+# Internationalization (i18n)
+
+This app uses [react-i18next](https://react.i18next.com/) and [expo-localization](https://docs.expo.dev/versions/latest/sdk/localization/) for scalable, enterprise-grade internationalization.
+
+## Folder Structure
+
+- `i18n/` — i18n configuration and initialization
+- `i18n/locales/` — translation files, organized by language and namespace
+
+## Adding a New Language
+
+1. Create a new folder in `i18n/locales/` with the language code (e.g., `fr` for French).
+2. Add translation files for each namespace (e.g., `common.json`).
+3. Update the supported languages in the i18n config if needed.
+
+## Adding a New Namespace
+
+1. Add a new JSON file in each language folder (e.g., `i18n/locales/en/newNamespace.json`).
+2. Reference the namespace in your components using the `useTranslation` hook.
+
+## Usage in Components
+
+```tsx
+import { useTranslation } from 'react-i18next';
+
+export const MyComponent = () => {
+  const { t } = useTranslation('common');
+  return <Text>{t('welcome')}</Text>;
+};
+```
+
+## Language Detection
+
+The app uses the device language via `expo-localization` by default, with fallback to English.
+
+---

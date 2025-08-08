@@ -1,9 +1,5 @@
-import { Text, YStack } from 'tamagui';
+import { AccountSettingsView } from '@/views/account';
 
 export default function Account() {
-  return (
-    <YStack flex={1} backgroundColor="$background">
-      <Text>Account</Text>
-    </YStack>
-  );
+  return <AccountSettingsView />;
 }
