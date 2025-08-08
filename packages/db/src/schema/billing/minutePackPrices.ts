@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { integer, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
@@ -22,10 +22,9 @@ export const minutePackPrices = pgTable(
     deletedAt: timestamp('deleted_at'),
   },
   (table) => [
-    uniqueIndex('idx_minute_pack_prices_temporal_unique').on(
-      table.minutePackProductId,
-      table.effectiveFrom,
-    ),
+    uniqueIndex('idx_minute_pack_prices_temporal_unique')
+      .on(table.minutePackProductId, table.effectiveFrom)
+      .where(sql`${table.deletedAt} IS NULL`),
   ],
 );
 
