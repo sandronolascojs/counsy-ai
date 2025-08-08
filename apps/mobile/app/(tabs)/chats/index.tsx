@@ -1,9 +1,9 @@
 import { Text, YStack } from 'tamagui';
 
-export default function Advice() {
+export default function Chats() {
   return (
     <YStack flex={1} backgroundColor="$background">
-      <Text>Advice</Text>
+      <Text>Chats</Text>
     </YStack>
   );
 }

@@ -20,7 +20,7 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={config}>
+    <TamaguiProvider config={config} defaultTheme={colorScheme ?? 'dark'}>
       <Theme name={colorScheme ?? 'dark'}>
         <YStack flex={1} backgroundColor="$background">
           <SafeAreaView style={{ flex: 1 }}>

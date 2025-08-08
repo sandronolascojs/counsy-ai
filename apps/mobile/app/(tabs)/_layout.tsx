@@ -1,10 +1,10 @@
-import { ChatSheet } from '@/components/ui/ChatSheet';
-import { MicFab } from '@/components/ui/MicFab';
-import { TabBarBackground } from '@/components/ui/TabBarBackground';
+import { ChatSheet } from '@/components/ChatSheet';
+import { MicFab } from '@/components/MicFab';
+import { TabBarBackground } from '@/components/TabBarBackground';
 import {
-  Book as BookIcon,
-  History as HistoryIcon,
   Home as HomeIcon,
+  MessageSquare as MessageSquareIcon,
+  Sparkles as SparklesIcon,
   User as UserIcon,
 } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
@@ -12,7 +12,6 @@ import { useTheme } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
-  console.log(theme);
   return (
     <>
       <Tabs
@@ -51,10 +50,10 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="history/index"
+          name="chats/index"
           options={{
-            title: 'History',
-            tabBarIcon: ({ color }) => <HistoryIcon size={24} color={color} />, // History
+            title: 'Chats',
+            tabBarIcon: ({ color }) => <MessageSquareIcon size={24} color={color} />, // Chats
           }}
         />
         <Tabs.Screen
@@ -66,10 +65,10 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="advice/index"
+          name="insights/index"
           options={{
-            title: 'Tips',
-            tabBarIcon: ({ color }) => <BookIcon size={24} color={color} />, // Tips
+            title: 'Insights',
+            tabBarIcon: ({ color }) => <SparklesIcon size={24} color={color} />, // Insights
           }}
         />
         <Tabs.Screen

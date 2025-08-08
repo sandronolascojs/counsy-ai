@@ -28429,26 +28429,64 @@
     "onlyAllowShorthands": false,
     "fontLanguages": [],
     "animations": {
+      "isReactNative": true,
       "animations": {
-        "75ms": "ease-in 75ms",
-        "100ms": "ease-in 100ms",
-        "200ms": "ease-in 200ms",
-        "bouncy": "ease-in 200ms",
-        "superBouncy": "ease-in 500ms",
-        "lazy": "ease-in 1000ms",
-        "medium": "ease-in 300ms",
-        "slow": "ease-in 500ms",
-        "quick": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 400ms",
-        "quicker": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 300ms",
-        "quickest": "cubic-bezier(0.215, 0.610, 0.355, 1.000) 200ms",
-        "tooltip": "ease-in 400ms"
+        "fast": {
+          "damping": 20,
+          "mass": 1.2,
+          "stiffness": 250
+        },
+        "medium": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "slow": {
+          "damping": 20,
+          "stiffness": 60
+        },
+        "lazy": {
+          "damping": 20,
+          "stiffness": 60
+        },
+        "bouncy": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "spring": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "fast-in": {
+          "damping": 20,
+          "mass": 1.2,
+          "stiffness": 250
+        },
+        "fast-out": {
+          "damping": 20,
+          "mass": 1.2,
+          "stiffness": 250
+        },
+        "medium-in": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "medium-out": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        }
       },
-      "usePresence": "Function",
-      "ResetPresence": "Function",
-      "supportsCSS": true,
+      "View": "Component",
+      "Text": "Component",
       "useAnimatedNumber": "Function",
       "useAnimatedNumberReaction": "Function",
       "useAnimatedNumberStyle": "Function",
+      "usePresence": "Function",
+      "ResetPresence": "Function",
       "useAnimations": "Function"
     },
     "media": {
