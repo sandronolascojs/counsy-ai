@@ -1,0 +1,21 @@
+{
+  "account": "Cuenta",
+  "change_language": "Cambiar idioma",
+  "chats": "Conversaciones",
+  "good_afternoon": "Buenas tardes",
+  "good_evening": "Buenas tardes",
+  "good_morning": "Buenos días",
+  "good_night": "Buenas noches",
+  "goodbye": "Adiós",
+  "hello": "Hola",
+  "home": "Inicio",
+  "insights": "Análisis",
+  "language": "Idioma",
+  "listening": "Escuchando…",
+  "remaining_time": "{{time}} / {{totalTime}} min restantes",
+  "speak": "Hablar",
+  "stop": "Detener",
+  "stopped": "Detenido",
+  "voice_session": "Sesión de voz",
+  "welcome": "Bienvenido"
+}
