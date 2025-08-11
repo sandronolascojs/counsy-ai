@@ -1,6 +1,7 @@
 import { ChatSheet } from '@/components/ChatSheet';
 import { MicFab } from '@/components/MicFab';
 import { TabBarBackground } from '@/components/TabBarBackground';
+import { NAMESPACES, NavigationTranslations } from '@/i18n/constants';
 import {
   Home as HomeIcon,
   MessageSquare as MessageSquareIcon,
@@ -8,10 +9,13 @@ import {
   User as UserIcon,
 } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
+  const { t } = useTranslation(NAMESPACES.NAVIGATION);
+
   return (
     <>
       <Tabs
@@ -43,14 +47,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
+            title: t(NavigationTranslations.HOME),
             tabBarIcon: ({ color }) => <HomeIcon size={24} color={color} />, // Home
           }}
         />
         <Tabs.Screen
           name="chats/index"
           options={{
-            title: 'Chats',
+            title: t(NavigationTranslations.CHATS),
             tabBarIcon: ({ color }) => <MessageSquareIcon size={24} color={color} />, // Chats
           }}
         />
@@ -65,14 +69,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name="insights/index"
           options={{
-            title: 'Insights',
+            title: t(NavigationTranslations.INSIGHTS),
             tabBarIcon: ({ color }) => <SparklesIcon size={24} color={color} />, // Insights
           }}
         />
         <Tabs.Screen
-          name="account/index"
+          name="account"
           options={{
-            title: 'Account',
+            title: t(NavigationTranslations.ACCOUNT),
             tabBarIcon: ({ color }) => <UserIcon size={24} color={color} />, // Account
           }}
         />

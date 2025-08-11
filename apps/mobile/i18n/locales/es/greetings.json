@@ -1,0 +1,11 @@
+{
+  "greetings": {
+    "hello": "Hola",
+    "welcome": "Bienvenido",
+    "goodbye": "Adiós",
+    "good_morning": "Buenos días",
+    "good_afternoon": "Buenas tardes",
+    "good_evening": "Buenas tardes",
+    "good_night": "Buenas noches"
+  }
+}
