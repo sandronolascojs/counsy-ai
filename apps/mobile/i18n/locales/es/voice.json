@@ -1,0 +1,10 @@
+{
+  "voice": {
+    "session": "Sesión de voz",
+    "listening": "Escuchando…",
+    "speak": "Hablar",
+    "stop": "Detener",
+    "stopped": "Detenido",
+    "remaining_time": "{{time}} / {{totalTime}} min restantes"
+  }
+}

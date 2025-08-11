@@ -1,20 +1,38 @@
+import { NAMESPACES, SecurityTranslations } from '@/i18n/constants';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
 
 export default function AccountSecurityScreen() {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
+
+  const securityItems = [
+    {
+      key: 'two_factor',
+      label: t(SecurityTranslations.TWO_FACTOR_LABEL),
+      description: t(SecurityTranslations.TWO_FACTOR_DESCRIPTION),
+    },
+    {
+      key: 'manage_devices',
+      label: t(SecurityTranslations.MANAGE_DEVICES_LABEL),
+      description: t(SecurityTranslations.MANAGE_DEVICES_DESCRIPTION),
+    },
+    {
+      key: 'session_history',
+      label: t(SecurityTranslations.SESSION_HISTORY_LABEL),
+      description: t(SecurityTranslations.SESSION_HISTORY_DESCRIPTION),
+    },
+  ];
+
   return (
     <ScrollView flex={1} backgroundColor="$background" padding="$4">
       <YStack gap="$6" paddingBottom={100}>
         <YStack>
           <Text fontWeight="700" fontSize="$6" marginBottom="$2">
-            Security
+            {t(SecurityTranslations.TITLE)}
           </Text>
           <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
-            {[
-              { label: 'Two-Factor Authentication', description: 'Enhance account security' },
-              { label: 'Manage Devices', description: 'View and manage logged-in devices' },
-              { label: 'Session History', description: 'See recent account activity' },
-            ].map((item, idx, arr) => (
+            {securityItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
                 alignItems="center"

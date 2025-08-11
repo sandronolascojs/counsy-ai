@@ -1,0 +1,62 @@
+{
+  "account": {
+    "title": "Account",
+    "change_name": {
+      "label": "Change Name",
+      "description": "Update your display name"
+    },
+    "change_email": {
+      "label": "Change Email",
+      "description": "Update your email address"
+    },
+    "change_password": {
+      "label": "Change Password",
+      "description": "Update your password"
+    },
+    "language": {
+      "label": "Language",
+      "description": "Select your preferred language"
+    }
+  },
+  "danger": {
+    "title": "Danger Zone",
+    "delete_data": {
+      "label": "Delete Chats & Data",
+      "description": "Remove all chat history"
+    },
+    "pause_account": {
+      "label": "Pause Account",
+      "description": "Temporarily disable your account"
+    },
+    "delete_account": {
+      "label": "Delete Account",
+      "description": "Permanently delete your account"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "dark_mode": {
+      "label": "Dark Mode",
+      "description": "Toggle dark theme"
+    },
+    "cloud_sync": {
+      "label": "Cloud Sync",
+      "description": "Enable encrypted chat sync"
+    }
+  },
+  "security": {
+    "title": "Security",
+    "two_factor": {
+      "label": "Two-Factor Authentication",
+      "description": "Enhance account security"
+    },
+    "manage_devices": {
+      "label": "Manage Devices",
+      "description": "View and manage logged-in devices"
+    },
+    "session_history": {
+      "label": "Session History",
+      "description": "See recent account activity"
+    }
+  }
+}

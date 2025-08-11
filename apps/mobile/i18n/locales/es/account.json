@@ -1,0 +1,62 @@
+{
+  "account": {
+    "title": "Cuenta",
+    "change_name": {
+      "label": "Cambiar Nombre",
+      "description": "Actualizar tu nombre de usuario"
+    },
+    "change_email": {
+      "label": "Cambiar Correo",
+      "description": "Actualizar tu dirección de correo"
+    },
+    "change_password": {
+      "label": "Cambiar Contraseña",
+      "description": "Actualizar tu contraseña"
+    },
+    "language": {
+      "label": "Idioma",
+      "description": "Seleccionar tu idioma preferido"
+    }
+  },
+  "danger": {
+    "title": "Zona de Peligro",
+    "delete_data": {
+      "label": "Eliminar Chats y Datos",
+      "description": "Eliminar todo el historial de chats"
+    },
+    "pause_account": {
+      "label": "Pausar Cuenta",
+      "description": "Deshabilitar temporalmente tu cuenta"
+    },
+    "delete_account": {
+      "label": "Eliminar Cuenta",
+      "description": "Eliminar permanentemente tu cuenta"
+    }
+  },
+  "preferences": {
+    "title": "Preferencias",
+    "dark_mode": {
+      "label": "Modo Oscuro",
+      "description": "Alternar tema oscuro"
+    },
+    "cloud_sync": {
+      "label": "Sincronización en la Nube",
+      "description": "Habilitar sincronización encriptada de chats"
+    }
+  },
+  "security": {
+    "title": "Seguridad",
+    "two_factor": {
+      "label": "Autenticación de Dos Factores",
+      "description": "Mejorar la seguridad de la cuenta"
+    },
+    "manage_devices": {
+      "label": "Administrar Dispositivos",
+      "description": "Ver y gestionar dispositivos conectados"
+    },
+    "session_history": {
+      "label": "Historial de Sesiones",
+      "description": "Ver actividad reciente de la cuenta"
+    }
+  }
+}

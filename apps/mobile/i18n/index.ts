@@ -2,12 +2,35 @@ import { Locale, useLocales } from 'expo-localization';
 import i18n, { changeLanguage } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import enCommon from './locales/en/common.json';
-import esCommon from './locales/es/common.json';
+import { NAMESPACES } from './constants';
+
+import enAccount from './locales/en/account.json';
+import enGreetings from './locales/en/greetings.json';
+import enNavigation from './locales/en/navigation.json';
+import enSettings from './locales/en/settings.json';
+import enVoice from './locales/en/voice.json';
+
+import esAccount from './locales/es/account.json';
+import esGreetings from './locales/es/greetings.json';
+import esNavigation from './locales/es/navigation.json';
+import esSettings from './locales/es/settings.json';
+import esVoice from './locales/es/voice.json';
 
 export const resources = {
-  en: { common: enCommon },
-  es: { common: esCommon },
+  en: {
+    [NAMESPACES.NAVIGATION]: enNavigation,
+    [NAMESPACES.GREETINGS]: enGreetings,
+    [NAMESPACES.VOICE]: enVoice,
+    [NAMESPACES.SETTINGS]: enSettings,
+    [NAMESPACES.ACCOUNT]: enAccount,
+  },
+  es: {
+    [NAMESPACES.NAVIGATION]: esNavigation,
+    [NAMESPACES.GREETINGS]: esGreetings,
+    [NAMESPACES.VOICE]: esVoice,
+    [NAMESPACES.SETTINGS]: esSettings,
+    [NAMESPACES.ACCOUNT]: esAccount,
+  },
 } as const;
 
 const SUPPORTED_LANGUAGES = ['en', 'es'] as const;
@@ -28,24 +51,23 @@ export function useCurrentLanguage(): SupportedLanguage {
   return getPreferredLanguage(locales);
 }
 
-// i18n initialization (runs once)
+i18n.use(initReactI18next).init({
+  compatibilityJSON: 'v4',
+  resources,
+  lng: 'en',
+  fallbackLng: 'en',
+  ns: Object.values(NAMESPACES),
+  defaultNS: NAMESPACES.NAVIGATION,
+  interpolation: {
+    escapeValue: false,
+  },
+  react: {
+    useSuspense: false,
+  },
+});
+
 function initializeI18n(language: SupportedLanguage) {
-  if (!i18n.isInitialized) {
-    i18n.use(initReactI18next).init({
-      compatibilityJSON: 'v4',
-      resources,
-      lng: language,
-      fallbackLng: 'en',
-      ns: ['common'],
-      defaultNS: 'common',
-      interpolation: {
-        escapeValue: false,
-      },
-      react: {
-        useSuspense: false,
-      },
-    });
-  } else {
+  if (i18n.language !== language) {
     changeLanguage(language);
   }
 }

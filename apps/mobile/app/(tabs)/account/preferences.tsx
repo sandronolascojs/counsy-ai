@@ -1,30 +1,37 @@
+import { NAMESPACES, PreferencesTranslations } from '@/i18n/constants';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Switch, Text, XStack, YStack } from 'tamagui';
 
 export default function AccountPreferencesScreen() {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
   const [darkMode, setDarkMode] = useState(false);
   const [cloudSync, setCloudSync] = useState(false);
+
+  const preferenceItems = [
+    {
+      key: 'dark_mode',
+      label: t(PreferencesTranslations.DARK_MODE_LABEL),
+      description: t(PreferencesTranslations.DARK_MODE_DESCRIPTION),
+      right: <Switch checked={darkMode} onCheckedChange={setDarkMode} />,
+    },
+    {
+      key: 'cloud_sync',
+      label: t(PreferencesTranslations.CLOUD_SYNC_LABEL),
+      description: t(PreferencesTranslations.CLOUD_SYNC_DESCRIPTION),
+      right: <Switch checked={cloudSync} onCheckedChange={setCloudSync} />,
+    },
+  ];
 
   return (
     <ScrollView flex={1} backgroundColor="$background" padding="$4">
       <YStack gap="$6" paddingBottom={100}>
         <YStack>
           <Text fontWeight="700" fontSize="$6" marginBottom="$2">
-            Preferences
+            {t(PreferencesTranslations.TITLE)}
           </Text>
           <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
-            {[
-              {
-                label: 'Dark Mode',
-                description: 'Toggle dark theme',
-                right: <Switch checked={darkMode} onCheckedChange={setDarkMode} />,
-              },
-              {
-                label: 'Cloud Sync',
-                description: 'Enable encrypted chat sync',
-                right: <Switch checked={cloudSync} onCheckedChange={setCloudSync} />,
-              },
-            ].map((item, idx, arr) => (
+            {preferenceItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
                 alignItems="center"

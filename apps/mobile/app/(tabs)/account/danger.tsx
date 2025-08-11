@@ -1,20 +1,38 @@
+import { DangerTranslations, NAMESPACES } from '@/i18n/constants';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, XStack, YStack } from 'tamagui';
 
 export default function AccountDangerScreen() {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
+
+  const dangerItems = [
+    {
+      key: 'delete_data',
+      label: t(DangerTranslations.DELETE_DATA_LABEL),
+      description: t(DangerTranslations.DELETE_DATA_DESCRIPTION),
+    },
+    {
+      key: 'pause_account',
+      label: t(DangerTranslations.PAUSE_ACCOUNT_LABEL),
+      description: t(DangerTranslations.PAUSE_ACCOUNT_DESCRIPTION),
+    },
+    {
+      key: 'delete_account',
+      label: t(DangerTranslations.DELETE_ACCOUNT_LABEL),
+      description: t(DangerTranslations.DELETE_ACCOUNT_DESCRIPTION),
+    },
+  ];
+
   return (
     <ScrollView flex={1} backgroundColor="$background" padding="$4">
       <YStack gap="$6" paddingBottom={100}>
         <YStack>
           <Text fontWeight="700" fontSize="$6" marginBottom="$2" color="$red10">
-            Danger Zone
+            {t(DangerTranslations.TITLE)}
           </Text>
           <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
-            {[
-              { label: 'Delete Chats & Data', description: 'Remove all chat history' },
-              { label: 'Pause Account', description: 'Temporarily disable your account' },
-              { label: 'Delete Account', description: 'Permanently delete your account' },
-            ].map((item, idx, arr) => (
+            {dangerItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
                 alignItems="center"

@@ -1,21 +1,43 @@
+import { AccountTranslations, NAMESPACES } from '@/i18n/constants';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, XStack, YStack } from 'tamagui';
 
 export default function AccountDetailsScreen() {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
+
+  const accountItems = [
+    {
+      key: 'change_name',
+      label: t(AccountTranslations.CHANGE_NAME_LABEL),
+      description: t(AccountTranslations.CHANGE_NAME_DESCRIPTION),
+    },
+    {
+      key: 'change_email',
+      label: t(AccountTranslations.CHANGE_EMAIL_LABEL),
+      description: t(AccountTranslations.CHANGE_EMAIL_DESCRIPTION),
+    },
+    {
+      key: 'change_password',
+      label: t(AccountTranslations.CHANGE_PASSWORD_LABEL),
+      description: t(AccountTranslations.CHANGE_PASSWORD_DESCRIPTION),
+    },
+    {
+      key: 'language',
+      label: t(AccountTranslations.LANGUAGE_LABEL),
+      description: t(AccountTranslations.LANGUAGE_DESCRIPTION),
+    },
+  ];
+
   return (
     <ScrollView flex={1} backgroundColor="$background" padding="$4">
       <YStack gap="$6" paddingBottom={100}>
         <YStack>
           <Text fontWeight="700" fontSize="$6" marginBottom="$2">
-            Account
+            {t(AccountTranslations.TITLE)}
           </Text>
           <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
-            {[
-              { label: 'Change Name', description: 'Update your display name' },
-              { label: 'Change Email', description: 'Update your email address' },
-              { label: 'Change Password', description: 'Update your password' },
-              { label: 'Language', description: 'Select your preferred language' },
-            ].map((item, idx, arr) => (
+            {accountItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
                 alignItems="center"
