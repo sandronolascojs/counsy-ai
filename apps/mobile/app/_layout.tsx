@@ -1,6 +1,7 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -8,12 +9,9 @@ import config from '@/tamagui.config';
 import { useEffect, useRef } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaView } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 import { i18n, initializeI18n, useCurrentLanguage } from '../i18n';
-
-const FONTS = {
-  SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-} as const;
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -29,7 +27,9 @@ export default function RootLayout() {
     }
   }, [language]);
 
-  const [fontsLoaded] = useFonts(FONTS);
+  const [fontsLoaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
 
   if (!fontsLoaded) {
     return null;
@@ -37,19 +37,21 @@ export default function RootLayout() {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
-        <Theme name={effectiveScheme}>
-          <YStack flex={1} backgroundColor="$background">
-            <SafeAreaView style={{ flex: 1 }}>
-              <ThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                </Stack>
-              </ThemeProvider>
-            </SafeAreaView>
-          </YStack>
-        </Theme>
-      </TamaguiProvider>
+      <SafeAreaProvider>
+        <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
+          <Theme name={effectiveScheme}>
+            <YStack flex={1} backgroundColor="$background">
+              <SafeAreaView style={{ flex: 1 }}>
+                <ThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                  <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  </Stack>
+                </ThemeProvider>
+              </SafeAreaView>
+            </YStack>
+          </Theme>
+        </TamaguiProvider>
+      </SafeAreaProvider>
     </I18nextProvider>
   );
 }
