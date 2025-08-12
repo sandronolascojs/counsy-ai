@@ -2,18 +2,24 @@ import { ChatSheet } from '@/components/ChatSheet';
 import { MicFab } from '@/components/MicFab';
 import { TabBarBackground } from '@/components/TabBarBackground';
 import { NAMESPACES, NavigationTranslations } from '@/i18n/constants';
+import { authClient } from '@/lib/auth';
 import {
   Home as HomeIcon,
   MessageSquare as MessageSquareIcon,
   Sparkles as SparklesIcon,
   User as UserIcon,
 } from '@tamagui/lucide-icons';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) return null;
+  if (!session?.user) return <Redirect href="/(public)/sign-in" />;
+
   const { t } = useTranslation(NAMESPACES.NAVIGATION);
 
   return (

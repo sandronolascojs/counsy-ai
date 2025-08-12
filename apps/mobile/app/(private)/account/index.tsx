@@ -1,4 +1,4 @@
-import { AccountSettingsView } from '@/views/account';
+import { AccountSettingsView } from '@/screens/account';
 
 export default function Account() {
   return <AccountSettingsView />;

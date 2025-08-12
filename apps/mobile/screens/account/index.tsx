@@ -23,7 +23,7 @@ export const AccountSettingsView = () => {
           label: 'Open Account',
           description: 'Profile and identity settings',
           right: (
-            <Link href="/(tabs)/account/account" asChild>
+            <Link href="/(private)/account/account" asChild>
               <Text color="$accentColor" fontWeight="700">
                 Open
               </Text>
@@ -40,7 +40,7 @@ export const AccountSettingsView = () => {
           description: 'Review all security settings',
           onPress: undefined,
           right: (
-            <Link href="/(tabs)/account/security" asChild>
+            <Link href="/(private)/account/security" asChild>
               <Text color="$accentColor" fontWeight="700">
                 Open
               </Text>
@@ -56,7 +56,7 @@ export const AccountSettingsView = () => {
           label: 'Open Preferences',
           description: 'Theme and sync options',
           right: (
-            <Link href="/(tabs)/account/preferences" asChild>
+            <Link href="/(private)/account/preferences" asChild>
               <Text color="$accentColor" fontWeight="700">
                 Open
               </Text>
@@ -73,7 +73,7 @@ export const AccountSettingsView = () => {
           description: 'Sensitive destructive actions',
           isDanger: true,
           right: (
-            <Link href="/(tabs)/account/danger" asChild>
+            <Link href="/(private)/account/danger" asChild>
               <Text color="$red10" fontWeight="700">
                 Open
               </Text>

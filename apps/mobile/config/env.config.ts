@@ -1,17 +1,16 @@
+import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
-export const envSchema = z
-  .object({
-    EXPO_APP_ENV: z
+export const env = createEnv({
+  clientPrefix: 'EXPO_PUBLIC_',
+  server: {
+    EAS_BUILD_PROFILE: z.string(),
+  },
+  client: {
+    EXPO_PUBLIC_APP_ENV: z
       .enum(['development', 'staging', 'production', 'preview'])
       .default('development'),
-    EXPO_API_URL: z.string(),
-    EAS_BUILD_PROFILE: z.string(),
-  })
-  .safeParse(process.env);
-
-if (!envSchema.success) {
-  throw new Error('Invalid environment variables', envSchema.error);
-}
-
-export const env = envSchema.data;
+    EXPO_PUBLIC_API_URL: z.string(),
+  },
+  runtimeEnv: process.env,
+});

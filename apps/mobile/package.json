@@ -28,6 +28,7 @@
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
+    "@t3-oss/env-core": "catalog:",
     "@tamagui/config": "^1.132.16",
     "@tamagui/font-inter": "^1.132.16",
     "@tamagui/lucide-icons": "^1.132.16",

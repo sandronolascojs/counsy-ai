@@ -13,7 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 import { i18n, initializeI18n, useCurrentLanguage } from '../i18n';
 
-export default function RootLayout() {
+const RootLayout = () => {
   const colorScheme = useColorScheme();
   const effectiveScheme = colorScheme ?? 'dark';
   const language = useCurrentLanguage();
@@ -44,7 +44,9 @@ export default function RootLayout() {
               <SafeAreaView style={{ flex: 1 }}>
                 <ThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
                   <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(public)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(private)" options={{ headerShown: false }} />
                   </Stack>
                 </ThemeProvider>
               </SafeAreaView>
@@ -54,4 +56,6 @@ export default function RootLayout() {
       </SafeAreaProvider>
     </I18nextProvider>
   );
-}
+};
+
+export default RootLayout;
