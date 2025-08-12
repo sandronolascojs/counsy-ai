@@ -4,7 +4,7 @@ type AppEnvironment = 'development' | 'staging' | 'production';
 
 const getAppEnvironment = (): AppEnvironment => {
   const envFromProcess = (
-    process.env.EXPO_APP_ENV ||
+    process.env.EXPO_PUBLIC_APP_ENV ||
     process.env.EAS_BUILD_PROFILE ||
     'development'
   ).toLowerCase();
