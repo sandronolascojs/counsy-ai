@@ -1,14 +1,30 @@
 import { env } from '@/config/env.config';
+import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
 import * as schema from '@counsy-ai/db/schema';
+import { APP_CONFIG } from '@counsy-ai/types';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { haveIBeenPwned, magicLink } from 'better-auth/plugins';
+import { haveIBeenPwned, HaveIBeenPwnedOptions, magicLink } from 'better-auth/plugins';
+
+const haveIBeenPwnedPlugin: HaveIBeenPwnedOptions = {
+  customPasswordCompromisedMessage:
+    'This password has been compromised in a data breach. Please choose a different password.',
+};
 
 const cacheTTL = 5 * 60 * 1000; // 5 minutes
 const TTL = 60 * 60 * 1000; // 1 hour
 
-export const auth = betterAuth({
+const mobileOrigins = [
+  env.APP_ENV === 'production'
+    ? `${APP_CONFIG.basics.prefix}://`
+    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://`,
+  env.APP_ENV === 'production'
+    ? `${APP_CONFIG.basics.prefix}://*`
+    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
+];
+
+export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
@@ -18,9 +34,8 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   rateLimit: {
     enabled: true,
-    trustProxy: true,
     max: 100,
-    ttl: TTL,
+    window: TTL,
   },
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -29,9 +44,12 @@ export const auth = betterAuth({
     },
     usePlural: true,
   }),
-  trustedOrigins: env.ALLOWED_ORIGINS.split(',')
-    .map((origin) => origin.trim())
-    .filter((origin) => origin.length > 0),
+  trustedOrigins: [
+    ...mobileOrigins,
+    ...env.ALLOWED_ORIGINS.split(',')
+      .map((origin) => origin.trim())
+      .filter((origin) => origin.length > 0),
+  ],
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async () => {
@@ -53,6 +71,8 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    expo(),
+    haveIBeenPwned(haveIBeenPwnedPlugin),
     magicLink({
       sendMagicLink: async () => {
         /* const magicLinkUrl = `${url}?token=${token}`;
@@ -63,10 +83,6 @@ export const auth = betterAuth({
         }); */
       },
       disableSignUp: true,
-    }),
-    haveIBeenPwned({
-      customPasswordCompromisedMessage:
-        'This password has been compromised in a data breach. Please choose a different password.',
     }),
   ],
 });
