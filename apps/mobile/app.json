@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Counsy AI",
+    "slug": "counsy-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "counsy-ai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "updates": {
