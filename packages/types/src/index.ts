@@ -1,3 +1,3 @@
-export * from './constants/index';
-export * from './enums/index';
-export * from './schemas/index';
+export * from './constants';
+export * from './enums';
+export * from './schemas';
