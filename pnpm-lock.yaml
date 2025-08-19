@@ -191,7 +191,7 @@ importers:
         version: 0.542.0(react@19.1.0)
       next:
         specifier: 15.5.2
-        version: 15.5.2(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.5.2(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -262,8 +262,6 @@ importers:
       '@react-navigation/native':
         specifier: ^7.1.6
         version: 7.1.17(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-<<<<<<< HEAD
-=======
       '@t3-oss/env-core':
         specifier: 'catalog:'
         version: 0.13.8(typescript@5.8.3)(zod@4.0.14)
@@ -273,7 +271,6 @@ importers:
       '@tamagui/colors':
         specifier: 1.132.17
         version: 1.132.17
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
       '@tamagui/config':
         specifier: 1.132.17
         version: 1.132.17(react-dom@19.0.0(react@19.0.0))(react-native-reanimated@3.17.5(@babel/core@7.28.0)(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -880,6 +877,9 @@ importers:
 
   services/api:
     dependencies:
+      '@better-auth/expo':
+        specifier: ^1.3.5
+        version: 1.3.5(better-auth@1.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.14))
       '@counsy-ai/ai':
         specifier: workspace:*
         version: link:../../packages/ai
@@ -2257,10 +2257,7 @@ packages:
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
 
   '@hookform/resolvers@5.2.1':
-    resolution:
-      {
-        integrity: sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==,
-      }
+    resolution: {integrity: sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==}
     peerDependencies:
       react-hook-form: ^7.55.0
 
@@ -2284,24 +2281,12 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-<<<<<<< HEAD
+  '@ide/backoff@1.0.0':
+    resolution: {integrity: sha512-F0YfUDjvT+Mtt/R4xdl2X0EYCHMMiJqNLdxHD++jDT5ydEFIyqbCHh51Qx2E211dgZprPKhV7sHmnXKpLuvc5g==}
+
   '@img/sharp-darwin-arm64@0.34.3':
     resolution: {integrity: sha512-ryFMfvxxpQRsgZJqBd4wsttYQbCxsJksrv9Lw/v798JcQ8+w84mBWuXwl+TT0WJ/WrYOLaYpwQXi3sA9nTIaIg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
-=======
-  '@ide/backoff@1.0.0':
-    resolution:
-      {
-        integrity: sha512-F0YfUDjvT+Mtt/R4xdl2X0EYCHMMiJqNLdxHD++jDT5ydEFIyqbCHh51Qx2E211dgZprPKhV7sHmnXKpLuvc5g==,
-      }
-
-  '@img/sharp-darwin-arm64@0.34.2':
-    resolution:
-      {
-        integrity: sha512-OfXHZPppddivUJnqyKoi5YVeHRkkNE2zUFT2gbpKxp/JZCFYEYubnMg+gOp6lWfasPrTS+KPosKqdI+ELYVDtg==,
-      }
-    engines: { node: ^18.17.0 || ^20.3.0 || >=21.0.0 }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
     cpu: [arm64]
     os: [darwin]
 
@@ -3991,28 +3976,16 @@ packages:
       '@redis/client': ^1.0.0
 
   '@revenuecat/purchases-js-hybrid-mappings@16.2.1':
-    resolution:
-      {
-        integrity: sha512-TXYw6lh5rg/kGI44kayU4TGSXKDcc35TdB0vBuZfllSokY1tnyYmP8Pm2eZamLN8ycrTuCysoPxknW2Klh1H1g==,
-      }
+    resolution: {integrity: sha512-TXYw6lh5rg/kGI44kayU4TGSXKDcc35TdB0vBuZfllSokY1tnyYmP8Pm2eZamLN8ycrTuCysoPxknW2Klh1H1g==}
 
   '@revenuecat/purchases-js@1.11.1':
-    resolution:
-      {
-        integrity: sha512-P0jxwUBWOIFSZQ1/NIMpbOXG3brraNDGYoCnES1r5w97yonhAw1brpKwhFKUhlq+DvAUDCG1q1d8FdTzI+MgXg==,
-      }
+    resolution: {integrity: sha512-P0jxwUBWOIFSZQ1/NIMpbOXG3brraNDGYoCnES1r5w97yonhAw1brpKwhFKUhlq+DvAUDCG1q1d8FdTzI+MgXg==}
 
   '@revenuecat/purchases-typescript-internal@16.2.1':
-    resolution:
-      {
-        integrity: sha512-g7FhNA6nxr9686klimlfueMQqQl34pHUHXeCKXqeuaPJOOsFc7qcOGhGZdyLGulIAgpkctrvcAbeDyBk7t5QRg==,
-      }
+    resolution: {integrity: sha512-g7FhNA6nxr9686klimlfueMQqQl34pHUHXeCKXqeuaPJOOsFc7qcOGhGZdyLGulIAgpkctrvcAbeDyBk7t5QRg==}
 
   '@revenuecat/purchases-typescript-internal@16.2.2':
-    resolution:
-      {
-        integrity: sha512-+fLbgE6OUaHG0n98v/MO8faaR8asSIDvbOWH4LH58kbLcBxaeXr3LP46Sc2GdWhksYSCZMEXyMuvIA6aRFVd2g==,
-      }
+    resolution: {integrity: sha512-+fLbgE6OUaHG0n98v/MO8faaR8asSIDvbOWH4LH58kbLcBxaeXr3LP46Sc2GdWhksYSCZMEXyMuvIA6aRFVd2g==}
 
   '@rollup/plugin-alias@5.1.1':
     resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
@@ -4460,127 +4433,85 @@ packages:
     resolution: {integrity: sha512-slcr1wdRbX7NFphXZOxtxRNA7hXAAtJAXJDE/wdoMAos27SIquVCKiSqfB6/28YzQ8FCsB5NKkhdM5gMADbqxg==}
     engines: {node: '>=18.0.0'}
 
-  '@swc/helpers@0.5.15':
-    resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
-
   '@standard-schema/utils@0.3.0':
-    resolution:
-      {
-        integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==,
-      }
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0':
-    resolution:
-      {
-        integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-remove-jsx-attribute@8.0.0':
-    resolution:
-      {
-        integrity: sha512-BcCkm/STipKvbCl6b7QFrMh/vx00vIP63k2eM66MfHJzPr6O2U0jYEViXkHJWqXqQYjdeA9cuCl5KWmlwjDvbA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-BcCkm/STipKvbCl6b7QFrMh/vx00vIP63k2eM66MfHJzPr6O2U0jYEViXkHJWqXqQYjdeA9cuCl5KWmlwjDvbA==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-remove-jsx-empty-expression@8.0.0':
-    resolution:
-      {
-        integrity: sha512-5BcGCBfBxB5+XSDSWnhTThfI9jcO5f0Ai2V24gZpG+wXF14BzwxxdDb4g6trdOux0rhibGs385BeFMSmxtS3uA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-5BcGCBfBxB5+XSDSWnhTThfI9jcO5f0Ai2V24gZpG+wXF14BzwxxdDb4g6trdOux0rhibGs385BeFMSmxtS3uA==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-replace-jsx-attribute-value@8.0.0':
-    resolution:
-      {
-        integrity: sha512-KVQ+PtIjb1BuYT3ht8M5KbzWBhdAjjUPdlMtpuw/VjT8coTrItWX6Qafl9+ji831JaJcu6PJNKCV0bp01lBNzQ==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-KVQ+PtIjb1BuYT3ht8M5KbzWBhdAjjUPdlMtpuw/VjT8coTrItWX6Qafl9+ji831JaJcu6PJNKCV0bp01lBNzQ==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-svg-dynamic-title@8.0.0':
-    resolution:
-      {
-        integrity: sha512-omNiKqwjNmOQJ2v6ge4SErBbkooV2aAWwaPFs2vUY7p7GhVkzRkJ00kILXQvRhA6miHnNpXv7MRnnSjdRjK8og==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-omNiKqwjNmOQJ2v6ge4SErBbkooV2aAWwaPFs2vUY7p7GhVkzRkJ00kILXQvRhA6miHnNpXv7MRnnSjdRjK8og==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-svg-em-dimensions@8.0.0':
-    resolution:
-      {
-        integrity: sha512-mURHYnu6Iw3UBTbhGwE/vsngtCIbHE43xCRK7kCw4t01xyGqb2Pd+WXekRRoFOBIY29ZoOhUCTEweDMdrjfi9g==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-mURHYnu6Iw3UBTbhGwE/vsngtCIbHE43xCRK7kCw4t01xyGqb2Pd+WXekRRoFOBIY29ZoOhUCTEweDMdrjfi9g==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-transform-react-native-svg@8.1.0':
-    resolution:
-      {
-        integrity: sha512-Tx8T58CHo+7nwJ+EhUwx3LfdNSG9R2OKfaIXXs5soiy5HtgoAEkDay9LIimLOcG8dJQH1wPZp/cnAv6S9CrR1Q==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-Tx8T58CHo+7nwJ+EhUwx3LfdNSG9R2OKfaIXXs5soiy5HtgoAEkDay9LIimLOcG8dJQH1wPZp/cnAv6S9CrR1Q==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-plugin-transform-svg-component@8.0.0':
-    resolution:
-      {
-        integrity: sha512-DFx8xa3cZXTdb/k3kfPeaixecQLgKh5NVBMwD0AQxOzcZawK4oo1Jh9LbrcACUivsCA7TLG8eeWgrDXjTMhRmw==,
-      }
-    engines: { node: '>=12' }
+    resolution: {integrity: sha512-DFx8xa3cZXTdb/k3kfPeaixecQLgKh5NVBMwD0AQxOzcZawK4oo1Jh9LbrcACUivsCA7TLG8eeWgrDXjTMhRmw==}
+    engines: {node: '>=12'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/babel-preset@8.1.0':
-    resolution:
-      {
-        integrity: sha512-7EYDbHE7MxHpv4sxvnVPngw5fuR6pw79SkcrILHJ/iMpuKySNCl5W1qcwPEpU+LgyRXOaAFgH0KhwD18wwg6ug==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-7EYDbHE7MxHpv4sxvnVPngw5fuR6pw79SkcrILHJ/iMpuKySNCl5W1qcwPEpU+LgyRXOaAFgH0KhwD18wwg6ug==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@svgr/core@8.1.0':
-    resolution:
-      {
-        integrity: sha512-8QqtOQT5ACVlmsvKOJNEaWmRPmcojMOzCz4Hs2BGG/toAp/K38LcsMRyLp349glq5AzJbCEeimEoxaX6v/fLrA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-8QqtOQT5ACVlmsvKOJNEaWmRPmcojMOzCz4Hs2BGG/toAp/K38LcsMRyLp349glq5AzJbCEeimEoxaX6v/fLrA==}
+    engines: {node: '>=14'}
 
   '@svgr/hast-util-to-babel-ast@8.0.0':
-    resolution:
-      {
-        integrity: sha512-EbDKwO9GpfWP4jN9sGdYwPBU0kdomaPIL2Eu4YwmgP+sJeXT+L7bMwJUBnhzfH8Q2qMBqZ4fJwpCyYsAN3mt2Q==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-EbDKwO9GpfWP4jN9sGdYwPBU0kdomaPIL2Eu4YwmgP+sJeXT+L7bMwJUBnhzfH8Q2qMBqZ4fJwpCyYsAN3mt2Q==}
+    engines: {node: '>=14'}
 
   '@svgr/plugin-jsx@8.1.0':
-    resolution:
-      {
-        integrity: sha512-0xiIyBsLlr8quN+WyuxooNW9RJ0Dpr8uOnH/xrCVO8GLUcwHISwj1AG0k+LFzteTkAA0GbX0kj9q6Dk70PTiPA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-0xiIyBsLlr8quN+WyuxooNW9RJ0Dpr8uOnH/xrCVO8GLUcwHISwj1AG0k+LFzteTkAA0GbX0kj9q6Dk70PTiPA==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@svgr/core': '*'
 
   '@svgr/plugin-svgo@8.1.0':
-    resolution:
-      {
-        integrity: sha512-Ywtl837OGO9pTLIN/onoWLmDQ4zFUycI1g76vuKGEz6evR/ZTJlJuz3G/fIkb6OVBJ2g0o6CGJzaEjfmEo3AHA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-Ywtl837OGO9pTLIN/onoWLmDQ4zFUycI1g76vuKGEz6evR/ZTJlJuz3G/fIkb6OVBJ2g0o6CGJzaEjfmEo3AHA==}
+    engines: {node: '>=14'}
     peerDependencies:
       '@svgr/core': '*'
+
+  '@swc/helpers@0.5.15':
+    resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
   '@t3-oss/env-core@0.13.8':
     resolution: {integrity: sha512-L1inmpzLQyYu4+Q1DyrXsGJYCXbtXjC4cICw1uAKv0ppYPQv656lhZPU91Qd1VS6SO/bou1/q5ufVzBGbNsUpw==}
@@ -4599,7 +4530,6 @@ packages:
       zod:
         optional: true
 
-<<<<<<< HEAD
   '@tailwindcss/node@4.1.12':
     resolution: {integrity: sha512-3hm9brwvQkZFe++SBt+oLjo4OLDtkvlE8q2WalaD/7QWaeM7KEJbAiY/LJZUaCs7Xa8aUu4xy3uoyX4q54UVdQ==}
 
@@ -4688,1372 +4618,548 @@ packages:
   '@tailwindcss/postcss@4.1.12':
     resolution: {integrity: sha512-5PpLYhCAwf9SJEeIsSmCDLgyVfdBhdBpzX1OJ87anT9IVR0Z9pjM0FNixCAUAHGnMBGB8K99SwAheXrT0Kh6QQ==}
 
-  '@tamagui/accordion@1.132.16':
-    resolution: {integrity: sha512-y7DawhErl8TZC788+KH1x9FtE4aVSBSaxZHA409n7nDpv6TjGcsPjF/odEXWE6USUEE/YrLzx4v2ZZ8GbdFZtQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/adapt@1.132.16':
-    resolution: {integrity: sha512-97s6ZGMmMAmQffbhDBiqahga46N3ZVRX1UeX/T9gv/TS+VEmFSDtZ0SMWFv5k/e0AdsGiDbI+ltw8JJ1abZqJA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/alert-dialog@1.132.16':
-    resolution: {integrity: sha512-8Qts4Vot31p+GmqGQSUV4kMgmYRq9iplUKWV3vRUErnYNsOghYBSz34QipHkINRdOpoKh7sJoOlvR5fhIjQybg==}
-=======
   '@tamagui/accordion@1.132.17':
-    resolution:
-      {
-        integrity: sha512-DJE0EoGrPf7G+WK8kMdFw7YIaECdpV7jILbapTE2qMAkV7IMkcV+f31U2d881pOaHSUSgiTSW4B2/MZ+eDLifw==,
-      }
+    resolution: {integrity: sha512-DJE0EoGrPf7G+WK8kMdFw7YIaECdpV7jILbapTE2qMAkV7IMkcV+f31U2d881pOaHSUSgiTSW4B2/MZ+eDLifw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/adapt@1.132.17':
-    resolution:
-      {
-        integrity: sha512-y5Ss1TXtEs6iAPcUMaF0wlsx1zNsbpXW04rcEvVpu4suq4d/GNU+em4sbHKMsMwEAP/iMwuLOE9fmq/Ac5dTPw==,
-      }
+    resolution: {integrity: sha512-y5Ss1TXtEs6iAPcUMaF0wlsx1zNsbpXW04rcEvVpu4suq4d/GNU+em4sbHKMsMwEAP/iMwuLOE9fmq/Ac5dTPw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/alert-dialog@1.132.17':
-    resolution:
-      {
-        integrity: sha512-vvUizGK+SX4XeIyAEpxsv8O8AtZeqjHD08/g/zfsRdSZOIkiEBXM8WYJ5/Cw/9x01VNiVAx5UcUJrG9H4L7Dig==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-vvUizGK+SX4XeIyAEpxsv8O8AtZeqjHD08/g/zfsRdSZOIkiEBXM8WYJ5/Cw/9x01VNiVAx5UcUJrG9H4L7Dig==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/animate-presence@1.132.16':
-    resolution: {integrity: sha512-7XzFCy2pyn+l8gYXYL6VRcpPN64Jd3SWFZdjeR/FjIeVIT0ETrzQlwolQP6wqvd+1kh/SgiBYsTuDiPCPunsog==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/animate@1.132.16':
-    resolution: {integrity: sha512-nNz5lQnWLnjKLTalNVdVblH7uvZ1p39f38SYYBUi17HpfXFbQ79AvNQdM3wkazKCP6eRslp2dWkAPdCw2VCpfw==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/animations-css@1.132.16':
-    resolution: {integrity: sha512-5GVyoVADmb6WS+qgxxGKef8AD06dOGVB1iVICBslzlb+IwjhJjotgLCMz8ZH9IiEc7hLgCvUpfE9XrRmqHVKvQ==}
-=======
   '@tamagui/animate-presence@1.132.17':
-    resolution:
-      {
-        integrity: sha512-4eElyupOO0fUvNaNQMS4PJQ8c0WI2dTT1JNm6dgJuvZv8l2PKaq0tfXP8K/w3IY5FGCCOJ/gqJvg/1JhcBqtuA==,
-      }
+    resolution: {integrity: sha512-4eElyupOO0fUvNaNQMS4PJQ8c0WI2dTT1JNm6dgJuvZv8l2PKaq0tfXP8K/w3IY5FGCCOJ/gqJvg/1JhcBqtuA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/animate@1.132.17':
-    resolution:
-      {
-        integrity: sha512-YxWQQg86O6e+wrgnJn0RpS1GRNFGlbPyaKC1e7180Wb8J3Q3VOPuPZMnnlIocjWEkFDT1trWSze9DsQ4AecbUQ==,
-      }
+    resolution: {integrity: sha512-YxWQQg86O6e+wrgnJn0RpS1GRNFGlbPyaKC1e7180Wb8J3Q3VOPuPZMnnlIocjWEkFDT1trWSze9DsQ4AecbUQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/animations-css@1.132.17':
-    resolution:
-      {
-        integrity: sha512-Tr82XZTraILzikNhClVbfVGD7k71svXNj1x6zAsl5FHspo2eo9Yan3+RdHXf1Y4g9xyMwglmxex9achpjfye9g==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-Tr82XZTraILzikNhClVbfVGD7k71svXNj1x6zAsl5FHspo2eo9Yan3+RdHXf1Y4g9xyMwglmxex9achpjfye9g==}
     peerDependencies:
       react: '*'
       react-dom: '*'
 
-<<<<<<< HEAD
-  '@tamagui/animations-moti@1.132.16':
-    resolution: {integrity: sha512-JTR9r+aMRG3HUnkL005p5yP98hMVx4RzBsoTBReBd/jFfH3+j4DRnVaXstgZt0zomt8PiMDpDlQl53qdLosCxg==}
-=======
   '@tamagui/animations-moti@1.132.17':
-    resolution:
-      {
-        integrity: sha512-8AVKVWv0PHUw0CH3lTZIV4ponyvIVA98xJ0UrNZXlF0HTlPuiE2nSRPB0w9Jiy7atSKaWi7ykFxTprhlvj3geg==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-8AVKVWv0PHUw0CH3lTZIV4ponyvIVA98xJ0UrNZXlF0HTlPuiE2nSRPB0w9Jiy7atSKaWi7ykFxTprhlvj3geg==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/animations-react-native@1.132.16':
-    resolution: {integrity: sha512-MJ4FdXaeehePaBogOGLY3JbygF3BjJNVBRLtn41pJMPosXTyVwoxdwhRDdJ6lGAhVABi4a5zYSILRL5Kh9bs1w==}
-=======
   '@tamagui/animations-react-native@1.132.17':
-    resolution:
-      {
-        integrity: sha512-1a8IT6j59n8I+f8YqNBhtafOHh2Cfooht5lD+/K+Iojx+WURQZUsxk4ev9+9D/n9jWFr9n8dZPRaTSs2EWuzQQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-1a8IT6j59n8I+f8YqNBhtafOHh2Cfooht5lD+/K+Iojx+WURQZUsxk4ev9+9D/n9jWFr9n8dZPRaTSs2EWuzQQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/avatar@1.132.16':
-    resolution: {integrity: sha512-J4Isz1u1H+dFMt8rEIi3M83PJDfrBrKT8l4K9GwdrDLVeNrlpeNnLa197K+5X2OWHH9yktzZj78x9W4yZFsLrQ==}
-=======
   '@tamagui/avatar@1.132.17':
-    resolution:
-      {
-        integrity: sha512-I7RpP18rTLOQZCOOe6bP7QQTBuHXuuMtMhRKM397VcCWLrMBbIfH4031IvyH4oIFYQDBeQZAcwlrgFwqser/lA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-I7RpP18rTLOQZCOOe6bP7QQTBuHXuuMtMhRKM397VcCWLrMBbIfH4031IvyH4oIFYQDBeQZAcwlrgFwqser/lA==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/babel-plugin@1.132.16':
-    resolution: {integrity: sha512-n7oG8eqYqJpaQgZlKMreuFtkw7kwjtzIGLUnQFP5mOxfcSbd6TdSCrVsU0PYLVDPTQEX20PN2zgk8VBpC5CGiw==}
-
-  '@tamagui/button@1.132.16':
-    resolution: {integrity: sha512-gM0LujypZwn/ZFJ0cSpxtTNt0qLROhOxIo2F2d7/aQfkb8XmQJKB0ihCPIhMuHQ3JiS8ZFVTA8l4wfg2xOx++w==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/card@1.132.16':
-    resolution: {integrity: sha512-eNKOpvPkRDe4TIkJgPcnHP0OvWcOGmgkK0SnkVTgBy9bz88ySs3LMopwZ474LyNISyzb7mIpYmZPvTCmX30ufg==}
-=======
   '@tamagui/babel-plugin@1.132.17':
-    resolution:
-      {
-        integrity: sha512-3oKMDvkxd4c2aKZ5mAbmzlOg295qiWRzkrLBkVhhdUILXFsJhPva/NFA2NVVa5mZ8/0R3L2fv8a2gfu8sIAczA==,
-      }
+    resolution: {integrity: sha512-3oKMDvkxd4c2aKZ5mAbmzlOg295qiWRzkrLBkVhhdUILXFsJhPva/NFA2NVVa5mZ8/0R3L2fv8a2gfu8sIAczA==}
 
   '@tamagui/button@1.132.17':
-    resolution:
-      {
-        integrity: sha512-gfITUScpbMioQwXQgFN81EdkYV8s7AtZr4S2aumAa9wK+vJqCIx+07UmbCrr/gBOrK26GBGrlY7r9Yl63ycd5A==,
-      }
+    resolution: {integrity: sha512-gfITUScpbMioQwXQgFN81EdkYV8s7AtZr4S2aumAa9wK+vJqCIx+07UmbCrr/gBOrK26GBGrlY7r9Yl63ycd5A==}
     peerDependencies:
       react: '*'
 
   '@tamagui/card@1.132.17':
-    resolution:
-      {
-        integrity: sha512-caralDXBbTEB7NrU1NVePNMwrjPS+lu/HLbRSSuKu/vk6TxqKbq4rWI3yt/yIbi8dJ1Nh+fGEoxDfmPVtbTOyg==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-caralDXBbTEB7NrU1NVePNMwrjPS+lu/HLbRSSuKu/vk6TxqKbq4rWI3yt/yIbi8dJ1Nh+fGEoxDfmPVtbTOyg==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/checkbox-headless@1.132.16':
-    resolution: {integrity: sha512-7QSKnYC5iPTnG6uKLfi+XsZZSKsDPO6ZyHFIjPogGj1QL+sXCqFI1MIYBQcqKL6thSEHH3MblxXLXw8Od9OstQ==}
-=======
   '@tamagui/checkbox-headless@1.132.17':
-    resolution:
-      {
-        integrity: sha512-jVNIQL6W/fcgBpQL5Hkiqopo62iv7MQq/N0tmrq718es0ZLt224jSooVNUVDz/Q9xTeynubErtQtg2chrq34+Q==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-jVNIQL6W/fcgBpQL5Hkiqopo62iv7MQq/N0tmrq718es0ZLt224jSooVNUVDz/Q9xTeynubErtQtg2chrq34+Q==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/checkbox@1.132.16':
-    resolution: {integrity: sha512-gIiypwgcukWHimT06t3+ambt3dWPhMRwRQ6d7Kw3C7zYXsDqHxltWLB72B3cVr6jNxMvXAY57xMerJ0b5SFMdA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/cli-color@1.132.16':
-    resolution: {integrity: sha512-e01Ku+4Ug2mZPJimmA1lYlTgCvD1jQhRzcO4k5dxozp3zKDDBrCRURT3iyRotAknjoe3zp2ZVyIXst07arK8nQ==}
-
-  '@tamagui/collapsible@1.132.16':
-    resolution: {integrity: sha512-HupuTTYtmpxX1puOCqO4yHoF/GLX2kCpkdYCTsiC327DsgqdceVrQJ+3QFu1Z6LBBwX2k69Sxi/hrRKWFgIQgQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/collection@1.132.16':
-    resolution: {integrity: sha512-gZnTJlPdafOkfqVG9rE6Yqr4J5maeHD081ixPvrWSmu91vI4qptO/mKVZUukZH6iAfoLU0TNHw0WEWvHW8jbSA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/colors@1.132.16':
-    resolution: {integrity: sha512-gvR0r8SrDHFX7cOcDOey2xBQzFS413h1U+0pFCixA9F/d7+nJYXrzTqnph+35Lxa/x+++W5uqWy32e9CTOp9+w==}
-
-  '@tamagui/compose-refs@1.132.16':
-    resolution: {integrity: sha512-gQEgr0NTPFGJZZZ20WAMzb4W2F5Kq9xV0LLZbB5HxApWg4vZqCJ+HtO5PjUvZYHLEda02YNhmM97jMzIgzrC6Q==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/config-default@1.132.16':
-    resolution: {integrity: sha512-KJ55pRAaCuV38IkJ/QiF195+SL8Eh9yl812X0je2fDqiBPyTttXhMV8Fwv8MY7af17HO/u4QDH3014dmztP7wA==}
-
-  '@tamagui/config@1.132.16':
-    resolution: {integrity: sha512-i1TZzekZCrQIn4QBXO6bAUrk3Eul3P9S0n08rOGiVMhi1GoH8l44rJYiNKtlo4OHtqp/q8TcsqpH6zj3f8wFbg==}
-
-  '@tamagui/constants@1.132.16':
-    resolution: {integrity: sha512-ET3d0vpS92mLIJjTuXjLy8BcKfy/hli5abBZrQ+T8vmakLa6P3+ymVsd6NvsE90DzYaaCndxixtCPn/Ru+ANag==}
-=======
   '@tamagui/checkbox@1.132.17':
-    resolution:
-      {
-        integrity: sha512-BbZyUlnMBp760QjJHU5SygqnF1HTOjmagtxk35/rnLhc6p6Av3LLpOk0OiVIMv/yGR58UOIzkscmEfsGTJv2nQ==,
-      }
+    resolution: {integrity: sha512-BbZyUlnMBp760QjJHU5SygqnF1HTOjmagtxk35/rnLhc6p6Av3LLpOk0OiVIMv/yGR58UOIzkscmEfsGTJv2nQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/cli-color@1.132.17':
-    resolution:
-      {
-        integrity: sha512-1gPpE9q3R3gEkbmKrPB5HRxp4RPAM//cKSD6dE3BNXGBjQ3yRLVmE2JeoD4Qb/oSvmwp18hBq1gRNbgZVgu/Ig==,
-      }
+    resolution: {integrity: sha512-1gPpE9q3R3gEkbmKrPB5HRxp4RPAM//cKSD6dE3BNXGBjQ3yRLVmE2JeoD4Qb/oSvmwp18hBq1gRNbgZVgu/Ig==}
 
   '@tamagui/collapsible@1.132.17':
-    resolution:
-      {
-        integrity: sha512-CLK4FfjwHscadQZyJb5TBCy3CTF63nfPhopJEdfb62V3fPJfpgZWw/mdM1c6BQzXuIbPkEhohc+9+2cCh2MWkg==,
-      }
+    resolution: {integrity: sha512-CLK4FfjwHscadQZyJb5TBCy3CTF63nfPhopJEdfb62V3fPJfpgZWw/mdM1c6BQzXuIbPkEhohc+9+2cCh2MWkg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/collection@1.132.17':
-    resolution:
-      {
-        integrity: sha512-F2Ahnz+WTxV/UmRzMocqN4X4viaMQKl3Ttu7uqSl6dToPP35BTgkIEVy/P0T8Tw4SQZgpKUA42q5btaPcGBzsQ==,
-      }
+    resolution: {integrity: sha512-F2Ahnz+WTxV/UmRzMocqN4X4viaMQKl3Ttu7uqSl6dToPP35BTgkIEVy/P0T8Tw4SQZgpKUA42q5btaPcGBzsQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/colors@1.132.17':
-    resolution:
-      {
-        integrity: sha512-WLuwqDcg1oKeIFhfJ6I1yi+6WTdv354MNZ8hnmohH2Qoeb3VYwET87LMDGgxjYUz8Ef+gGdISEeh+ZhrBWVnnQ==,
-      }
+    resolution: {integrity: sha512-WLuwqDcg1oKeIFhfJ6I1yi+6WTdv354MNZ8hnmohH2Qoeb3VYwET87LMDGgxjYUz8Ef+gGdISEeh+ZhrBWVnnQ==}
 
   '@tamagui/compose-refs@1.132.17':
-    resolution:
-      {
-        integrity: sha512-Y9osRk/kDJ6Q6XTLeWynmbTYn/VEj7xhiM9UuFW80LUbs1vJFXKLlvU7gdnAXGCXUQZQCPpPh65I5G6qjhtlwQ==,
-      }
+    resolution: {integrity: sha512-Y9osRk/kDJ6Q6XTLeWynmbTYn/VEj7xhiM9UuFW80LUbs1vJFXKLlvU7gdnAXGCXUQZQCPpPh65I5G6qjhtlwQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/config-default@1.132.17':
-    resolution:
-      {
-        integrity: sha512-9Pw9IIhqDccEZevLmJkEjzmE99DCbBTZn07e4gbFfbK5B53NdNEI4UHnDKZDvJe+F8dLtDTcVlq7ncnecFKUFg==,
-      }
+    resolution: {integrity: sha512-9Pw9IIhqDccEZevLmJkEjzmE99DCbBTZn07e4gbFfbK5B53NdNEI4UHnDKZDvJe+F8dLtDTcVlq7ncnecFKUFg==}
 
   '@tamagui/config@1.132.17':
-    resolution:
-      {
-        integrity: sha512-h8+xHJYhf47ymaRz0gTnsCdbTwF5HrxsMf4kCQokL4GxEo1YAwxv5KSRE/Lj3bY1LlOMsYtb3R+Q0n1Rd6pHdA==,
-      }
+    resolution: {integrity: sha512-h8+xHJYhf47ymaRz0gTnsCdbTwF5HrxsMf4kCQokL4GxEo1YAwxv5KSRE/Lj3bY1LlOMsYtb3R+Q0n1Rd6pHdA==}
 
   '@tamagui/constants@1.132.17':
-    resolution:
-      {
-        integrity: sha512-lN8KM7+rLIKNEPFDRpJ6HZZqrX86rew8UySbNhu4AU1VM59Dqg4rrp8mXLIjXhvRzWir6A/DAi6d7TbyHqEkHQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-lN8KM7+rLIKNEPFDRpJ6HZZqrX86rew8UySbNhu4AU1VM59Dqg4rrp8mXLIjXhvRzWir6A/DAi6d7TbyHqEkHQ==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/core@1.132.16':
-    resolution: {integrity: sha512-Qq7InhfsLYoHoNCvtgEJdI8iRrSUozBjvQvrChEyx2qL1gsQr2MX9rfTIRWu7TLkvdkFCrLgl4aXK5dkHtYKqA==}
-=======
   '@tamagui/core@1.132.17':
-    resolution:
-      {
-        integrity: sha512-mpP1uCO3nAPCrDDY9TQel4iIMS/tAs4ccWi7fWNXjw2za/uvZFpeN+KDauZS6+gjOVZYPMHZJKOEvgXGMuFUng==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-mpP1uCO3nAPCrDDY9TQel4iIMS/tAs4ccWi7fWNXjw2za/uvZFpeN+KDauZS6+gjOVZYPMHZJKOEvgXGMuFUng==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/create-context@1.132.16':
-    resolution: {integrity: sha512-eQH+OtTRpWNpy5satgLrm5vW4LfApyCBq7bffsmfQjH3T2lIjqqBWaDzoP7pydJXFScriOp/Hh/v2Kr3nqlS+Q==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/create-theme@1.132.16':
-    resolution: {integrity: sha512-SUxyGaOxkqXVLA7ibKEJZtGd+g7QGUzI4eSqNC5D28IiMKQExbDE8PQV6rhQgX4bGvEAQI7LL2Cq3mleolZ35Q==}
-
-  '@tamagui/cubic-bezier-animator@1.132.16':
-    resolution: {integrity: sha512-Uog80Cw7SEeuMNo3vuNWdYl5JpPOqzJhUWKeoDCvGxDOiPHO3cmZCs+bd/SPOGP+Lrhdu4Le6+M+F16DTDCB0Q==}
-
-  '@tamagui/dialog@1.132.16':
-    resolution: {integrity: sha512-1ToyECRyN5Q8tHRgtkEPouLZC5CrHZCnRbzD0JXXA3XQsEkI4ys4V6kEzfViHROUWp4YNYYmkT8AqjLEjlQTrw==}
-=======
   '@tamagui/create-context@1.132.17':
-    resolution:
-      {
-        integrity: sha512-noQ2e7b18R9hL36gUoRoecxGXIGNM9pzTOS+/uDdofVsMmvVb7wlbp1p/52K4xr0N+23UI14NzNtUpMzZt6evw==,
-      }
+    resolution: {integrity: sha512-noQ2e7b18R9hL36gUoRoecxGXIGNM9pzTOS+/uDdofVsMmvVb7wlbp1p/52K4xr0N+23UI14NzNtUpMzZt6evw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/create-theme@1.132.17':
-    resolution:
-      {
-        integrity: sha512-UVY6tgALFnKWmTesbejoIXSIsoXIOtFL+B5x87lyoyFyWosLw7UCIfkUe+xO9vjszobKkDs7bnKv9+SUGnmweQ==,
-      }
+    resolution: {integrity: sha512-UVY6tgALFnKWmTesbejoIXSIsoXIOtFL+B5x87lyoyFyWosLw7UCIfkUe+xO9vjszobKkDs7bnKv9+SUGnmweQ==}
 
   '@tamagui/cubic-bezier-animator@1.132.17':
-    resolution:
-      {
-        integrity: sha512-D/wq9inVuV20AmWHXw8i1TjR3x/CEBjhMZHsmKcMey9OYCtw/c37q9XFgM/s5Lgx3tJ2TvF352tfRaF7ZXRlkg==,
-      }
+    resolution: {integrity: sha512-D/wq9inVuV20AmWHXw8i1TjR3x/CEBjhMZHsmKcMey9OYCtw/c37q9XFgM/s5Lgx3tJ2TvF352tfRaF7ZXRlkg==}
 
   '@tamagui/dialog@1.132.17':
-    resolution:
-      {
-        integrity: sha512-FGG+YXVo8TUJO9AYwFA9DX0Ky/X203XXHMR2tfNkTv9dzBQIe8wLzxZJtFFh6OvKdE81PKnFB8qGa/hLB7b0mg==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-FGG+YXVo8TUJO9AYwFA9DX0Ky/X203XXHMR2tfNkTv9dzBQIe8wLzxZJtFFh6OvKdE81PKnFB8qGa/hLB7b0mg==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/dismissable@1.132.16':
-    resolution: {integrity: sha512-YnMntmuNEzYN+8iHGrT/Ws+HQBqVxjXJ3L44372G/d0qeZq71iKTpibDO8TU1ofjeEatnpbO+bTV4xaVimOTFA==}
-=======
   '@tamagui/dismissable@1.132.17':
-    resolution:
-      {
-        integrity: sha512-qO3jD2rmFScCoNdFEQ1lS401vyH/ga39dkqvEQzhzc5/SO/+JVWN5Oaj3XeLQMa5PXiqXffuKnXV5fkB6iivfQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-qO3jD2rmFScCoNdFEQ1lS401vyH/ga39dkqvEQzhzc5/SO/+JVWN5Oaj3XeLQMa5PXiqXffuKnXV5fkB6iivfQ==}
     peerDependencies:
       react: '*'
       react-dom: '*'
 
-<<<<<<< HEAD
-  '@tamagui/elements@1.132.16':
-    resolution: {integrity: sha512-updCm6GGmpyjfZHZJF1xDUKkg1NwnETv4NWqXDD2tLnGywPx3YhgKtBlmrbamMFFc//iP+X+1u3HhW72umCXRg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/fake-react-native@1.132.16':
-    resolution: {integrity: sha512-mVRk6BagvW6LliPOhgPsAqupM2l0XY6eXqiMavR6p4MLil/HFUI62z+e8DfclMRBAg9ZzFcXHMA4JcJgrtCJiQ==}
-
-  '@tamagui/floating@1.132.16':
-    resolution: {integrity: sha512-lbOxZE8DTc1NC/Wz2+JHPNLieS0m3Vzg05xf+TpPB7pU0tw33nWZqRgQX5aprrhAxsTzqfo6sJ1UTEG2MDjfzQ==}
-=======
   '@tamagui/elements@1.132.17':
-    resolution:
-      {
-        integrity: sha512-AGGOMXOU2/qO0H11AmneZ0ZGZgGMUcI+hd8u42LIObvXRPTjPmcTBzYa9cawET6enbXahZXy4fWb8+61ZoeAnQ==,
-      }
+    resolution: {integrity: sha512-AGGOMXOU2/qO0H11AmneZ0ZGZgGMUcI+hd8u42LIObvXRPTjPmcTBzYa9cawET6enbXahZXy4fWb8+61ZoeAnQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/fake-react-native@1.132.17':
-    resolution:
-      {
-        integrity: sha512-pZK/J0YikZ2uzKjKlET1K3VyQcXhRuS5bmiSBbmiY/Fojgw+TChpsbpja3GrNh60Ffr0aN7x3BHpOtMT+cyHKg==,
-      }
+    resolution: {integrity: sha512-pZK/J0YikZ2uzKjKlET1K3VyQcXhRuS5bmiSBbmiY/Fojgw+TChpsbpja3GrNh60Ffr0aN7x3BHpOtMT+cyHKg==}
 
   '@tamagui/floating@1.132.17':
-    resolution:
-      {
-        integrity: sha512-yP44EgaUgv1XzCzaBowQPF9nKj1qkLxDO9nEB/6XA/4hKoHhtuCA5zX3DYtGQyuqUvHAQ5n0XYYTSgGjQ3AaHQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-yP44EgaUgv1XzCzaBowQPF9nKj1qkLxDO9nEB/6XA/4hKoHhtuCA5zX3DYtGQyuqUvHAQ5n0XYYTSgGjQ3AaHQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/focus-scope@1.132.16':
-    resolution: {integrity: sha512-VFiowRSf7lktqETGm9fp+d74g0INj9YUUrt47zdkVJIAEPI1ngF5sX6oGWBIXIRm+zftWTNmwtl9HaxM1srfbQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/focusable@1.132.16':
-    resolution: {integrity: sha512-1WbtqLxg+c72bp09Y5fSp28AhWsC6OLIFxi3FdD9YSV3vkDdJEGxrH27BwZcm5wo1wD4Bo/aNv/Ae/9pQ36etA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/font-inter@1.132.16':
-    resolution: {integrity: sha512-m6XUDkCsPJYcPHPIYaWHZ3TjFh0boHJsI8Sd1D6c88lVT9y2vRMmr+4d2PD01Hzk+l87iwplsW8RfQnOh5uFJw==}
-
-  '@tamagui/font-silkscreen@1.132.16':
-    resolution: {integrity: sha512-KennqVoPKDRtUKfgt6jzjf4yi/Y2bSgGND5SRZ1VYxd39IuCjuAgkyxzNvCmZTHBX/EJuVd7+cKQf69mw8MyaA==}
-
-  '@tamagui/font-size@1.132.16':
-    resolution: {integrity: sha512-plirao2b3qRK0/T62yxbKwA5pBGncFhOUL41SKCxvFTKk6Bsccz1J+XAVqeUE/fk/NZmTZK4aGkNPf3kteVAIg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/form@1.132.16':
-    resolution: {integrity: sha512-RRRwyZ3JZPDp6MoZmtUy9W0+qh5f78ToFhwQWwgRJ1jLGfFZ7QH/5UrTPPSHuJavVoOHN+RFWJy4/QqgsVM7dQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/generate-themes@1.132.16':
-    resolution: {integrity: sha512-JfApEtMukc0dEzo3pQXAB7gljwUrkgoZbcjzCshvSgt9GqpFbpNUuzZB9VjOsUukh80sd6q8dgBrLyI1OM/YrA==}
-
-  '@tamagui/get-button-sized@1.132.16':
-    resolution: {integrity: sha512-nCWekfeDTMfY4y+Fbm4eGPuosi5iOb4FswgeGqErHenJZ43CW/pD5/UERVfbNYo6BWUZNdOX+icVSLF2+7gYCw==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/get-font-sized@1.132.16':
-    resolution: {integrity: sha512-B1gEBS2wwO8EerQDeDCKk5lDJ43fuEyP8rKfWIY8al0jSfjWnIMWOmranAsPgEI4mMZ0mv2C3+3Mxcq3yersFA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/get-token@1.132.16':
-    resolution: {integrity: sha512-2wmOmIOUz7S/8RRIfO9fWRWGSCzYab3NvG/eoguT1ev4HIjNqdxeLgjk4p5y6SVU9+/Esx/O7n6HK6acupQCpQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/group@1.132.16':
-    resolution: {integrity: sha512-BnhWuxT3yccR+ovC2v7kdNQyG6Y/tnJvyK8hR7SgPz0NGsM3BycE5sf7X72V+9YKSvgb8hPMqjyQ3OL1hO9zHQ==}
-=======
   '@tamagui/focus-scope@1.132.17':
-    resolution:
-      {
-        integrity: sha512-lX63hSSGHyRvZWaawlh2I048OrPANljToslK0naPShunSrcnQ3OI9zu85X4OurpBQsDAdSRIYwme8T4zn4WieA==,
-      }
+    resolution: {integrity: sha512-lX63hSSGHyRvZWaawlh2I048OrPANljToslK0naPShunSrcnQ3OI9zu85X4OurpBQsDAdSRIYwme8T4zn4WieA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/focusable@1.132.17':
-    resolution:
-      {
-        integrity: sha512-C8o+8u5bZu9l5P2JPXnobWSzu3iqdKSZYq8UaS3q9q//GakUhsJyBQWUVWX0/xy4OcAfrJRMVyVJFXjdfk+t3A==,
-      }
+    resolution: {integrity: sha512-C8o+8u5bZu9l5P2JPXnobWSzu3iqdKSZYq8UaS3q9q//GakUhsJyBQWUVWX0/xy4OcAfrJRMVyVJFXjdfk+t3A==}
     peerDependencies:
       react: '*'
 
   '@tamagui/font-inter@1.132.17':
-    resolution:
-      {
-        integrity: sha512-qyCdSrSLgt062OZ54lF0IkXtX4+fnG7g4AT6fobWHb9taNyKBe0Y4EjVinLrL7ljsRxPjFS2KQFHggIUSLlZ5w==,
-      }
+    resolution: {integrity: sha512-qyCdSrSLgt062OZ54lF0IkXtX4+fnG7g4AT6fobWHb9taNyKBe0Y4EjVinLrL7ljsRxPjFS2KQFHggIUSLlZ5w==}
 
   '@tamagui/font-silkscreen@1.132.17':
-    resolution:
-      {
-        integrity: sha512-nN26t/4g32kIrGUFljftReER69Lb60tbxKltKpeAQDCy5QA+D6XZuPAYiG8oiH+x2CQcm9Ge1ffJzz+Fb5WOyw==,
-      }
+    resolution: {integrity: sha512-nN26t/4g32kIrGUFljftReER69Lb60tbxKltKpeAQDCy5QA+D6XZuPAYiG8oiH+x2CQcm9Ge1ffJzz+Fb5WOyw==}
 
   '@tamagui/font-size@1.132.17':
-    resolution:
-      {
-        integrity: sha512-VaeOiwfRQTBur9xOLUWxojuq2pRELQwJKPvLDuHbOlcnJb9TT4eMUadpg2S/WrpnCwY6w8/FYKREtSyeg3PIgw==,
-      }
+    resolution: {integrity: sha512-VaeOiwfRQTBur9xOLUWxojuq2pRELQwJKPvLDuHbOlcnJb9TT4eMUadpg2S/WrpnCwY6w8/FYKREtSyeg3PIgw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/form@1.132.17':
-    resolution:
-      {
-        integrity: sha512-UIjJUyez9OfftMmgFDJ95/7n8TUZxtSLGEmj4RvsLsW0C1AVDQ2eg9746YlYuW//Zbde26oct2xvWSJKY1Q78w==,
-      }
+    resolution: {integrity: sha512-UIjJUyez9OfftMmgFDJ95/7n8TUZxtSLGEmj4RvsLsW0C1AVDQ2eg9746YlYuW//Zbde26oct2xvWSJKY1Q78w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/generate-themes@1.132.17':
-    resolution:
-      {
-        integrity: sha512-2FYRFqE/v34PutkezigQHobbUn/xBMpxSCSXIqVOg0uqJGdI6yHEkOD3QIQxC/GymCgSXKG6hCnCJMxhePGaIg==,
-      }
+    resolution: {integrity: sha512-2FYRFqE/v34PutkezigQHobbUn/xBMpxSCSXIqVOg0uqJGdI6yHEkOD3QIQxC/GymCgSXKG6hCnCJMxhePGaIg==}
 
   '@tamagui/get-button-sized@1.132.17':
-    resolution:
-      {
-        integrity: sha512-Uo+QjqxTolNytQQw8RGCESysWrCvSstzJXTPbnl4bcXIyjmLXgfwuiboa9VZ2Eyl/9L+pfBQPzA9kqlZkhKhaQ==,
-      }
+    resolution: {integrity: sha512-Uo+QjqxTolNytQQw8RGCESysWrCvSstzJXTPbnl4bcXIyjmLXgfwuiboa9VZ2Eyl/9L+pfBQPzA9kqlZkhKhaQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/get-font-sized@1.132.17':
-    resolution:
-      {
-        integrity: sha512-n//ogXWlVqcQ9JWvGWD0Rdj6T2E1Oa1M9N7c/Auu5or63IMvBeLuXvPxSR167NTCVBZus0YJrP2PdA4CRz3zwQ==,
-      }
+    resolution: {integrity: sha512-n//ogXWlVqcQ9JWvGWD0Rdj6T2E1Oa1M9N7c/Auu5or63IMvBeLuXvPxSR167NTCVBZus0YJrP2PdA4CRz3zwQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/get-token@1.132.17':
-    resolution:
-      {
-        integrity: sha512-uHjPHuibEnX3vK6N0VpdiJAmNcmKICR9d4YWiz++IVJnTpS0REucII+zwsP5xBiR/xw0bJZf1kFPAxCfk/VcsQ==,
-      }
+    resolution: {integrity: sha512-uHjPHuibEnX3vK6N0VpdiJAmNcmKICR9d4YWiz++IVJnTpS0REucII+zwsP5xBiR/xw0bJZf1kFPAxCfk/VcsQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/group@1.132.17':
-    resolution:
-      {
-        integrity: sha512-hAdxpVkOPWHTabY1tquuXYPICfMbnb+QnUXjTH7mKjxgStIpyQKK6W/Z0IWUkoYtdhdbKvz0fZwjnZ5ajfmkBA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-hAdxpVkOPWHTabY1tquuXYPICfMbnb+QnUXjTH7mKjxgStIpyQKK6W/Z0IWUkoYtdhdbKvz0fZwjnZ5ajfmkBA==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/helpers-icon@1.132.16':
-    resolution: {integrity: sha512-UDn0nRLgGDVyVPkTGoBIOJejghDsDTV3yF5iHCl1OKNFFeyIgAJkH9Jw0CE1uNQ9UDVplQou73+ETmHgX7IPNA==}
-=======
   '@tamagui/helpers-icon@1.132.17':
-    resolution:
-      {
-        integrity: sha512-vZI2qSmwo/Zz89cGVRWasPwk7mm+iJRmmCUd+3HIGrmTzkEVyhrHbgBCR3aal1/O3/2+zQ54TBf35wne7KcRhw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-vZI2qSmwo/Zz89cGVRWasPwk7mm+iJRmmCUd+3HIGrmTzkEVyhrHbgBCR3aal1/O3/2+zQ54TBf35wne7KcRhw==}
     peerDependencies:
       react: '*'
       react-native-svg: '>=12'
 
-<<<<<<< HEAD
-  '@tamagui/helpers-node@1.132.16':
-    resolution: {integrity: sha512-n5OcIgutWMyXo+mZqQHoieIJU5M3Q4s8NfoEU6EaV8yrrCsY+PycGej1Jt/hT4dNGnLtDAamxAOwaqgP06Kjsw==}
-
-  '@tamagui/helpers-tamagui@1.132.16':
-    resolution: {integrity: sha512-u+1xy/mUfO5Q2mW47510CNSKDYpIfadjXM/Jb0H/qz0lmuHa0cDXzUPult3y9WM24zp+H1G4jU/tR60TKGJf+g==}
-=======
   '@tamagui/helpers-node@1.132.17':
-    resolution:
-      {
-        integrity: sha512-MIJheiwxl2RF5ofVrQ70hFbK5ZggXR1c58dOfJn7j0v3J9lUB6aNsu8d1d58thvfegFXKDLNJ7+XXqyQfheGag==,
-      }
+    resolution: {integrity: sha512-MIJheiwxl2RF5ofVrQ70hFbK5ZggXR1c58dOfJn7j0v3J9lUB6aNsu8d1d58thvfegFXKDLNJ7+XXqyQfheGag==}
 
   '@tamagui/helpers-tamagui@1.132.17':
-    resolution:
-      {
-        integrity: sha512-HNVoK5sdwsIluyVw0mCf9mWsyJD2/DiTlCF0VO836okOaXIWL06do8sGqdbZ+DL3ku1Ls/jTpN7hs/6QYrFYSQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-HNVoK5sdwsIluyVw0mCf9mWsyJD2/DiTlCF0VO836okOaXIWL06do8sGqdbZ+DL3ku1Ls/jTpN7hs/6QYrFYSQ==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/helpers@1.132.16':
-    resolution: {integrity: sha512-+2sGk02EaX6+FGaK4Q5Dr/M7wZa4FO1VUxLZyyRPI80e3zcJ/7k7C6/HGidV8mdLTfbTsEYwyVQHWlPWX2421Q==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/image@1.132.16':
-    resolution: {integrity: sha512-2b9hdQb+JIDS2oGkfX7zynLLPGpETBV4Gfrl/JZyphiMHQr/23b9nJB+bWb+/ino3R3MfxqzsWXjQfeBdUkekA==}
-=======
   '@tamagui/helpers@1.132.17':
-    resolution:
-      {
-        integrity: sha512-d6T9Gnw3Fia1oq7Aavriv29pQew0hzgugYZLZnrAUNQPbcE4Mf8mxEbuYcuDs7NkAtuXq2DxuTlElNG0uOc5+w==,
-      }
+    resolution: {integrity: sha512-d6T9Gnw3Fia1oq7Aavriv29pQew0hzgugYZLZnrAUNQPbcE4Mf8mxEbuYcuDs7NkAtuXq2DxuTlElNG0uOc5+w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/image@1.132.17':
-    resolution:
-      {
-        integrity: sha512-IeuiMmssJ4LftsUf1Y+Nm7uUbgusLfDgbN5otfu+xReDxQwPy9qqsw/uhPCc6CQz6+rDW3w7J4WF2ArHcA5VVA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-IeuiMmssJ4LftsUf1Y+Nm7uUbgusLfDgbN5otfu+xReDxQwPy9qqsw/uhPCc6CQz6+rDW3w7J4WF2ArHcA5VVA==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/is-equal-shallow@1.132.16':
-    resolution: {integrity: sha512-qLCEUBo+5iYgtv55I4wAHPjgin7EedMzIxj5iSmlGe/HEPIw9cMy7xcUN0Nou6qS9dUktRcl3Kr1Ev6iFYxORg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/label@1.132.16':
-    resolution: {integrity: sha512-T1cDXGJ8ogPzokFb+1QaYkYn3FlOUdpkD0U0Afe9egQU73GHdejMvWVhOUwUN5+TxUGC8OroZHN+tNFaeVmS8A==}
-=======
   '@tamagui/is-equal-shallow@1.132.17':
-    resolution:
-      {
-        integrity: sha512-YiBfh0tjvQTCEOofTnSMZbTYRrUbKNiAKfCrfYniSKn0wwk1OaHMQ9sOlWh0fw162UlhZtEnJLxlgnhTG8FDAA==,
-      }
+    resolution: {integrity: sha512-YiBfh0tjvQTCEOofTnSMZbTYRrUbKNiAKfCrfYniSKn0wwk1OaHMQ9sOlWh0fw162UlhZtEnJLxlgnhTG8FDAA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/label@1.132.17':
-    resolution:
-      {
-        integrity: sha512-2jy158kTxk/XzYlMYhEiBoGXBVnWq7upLEqp2CeX47b4LXjXZeCAXvYOw44UWA5u2PMEH4vrBfIJqGQNhwLw4g==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-2jy158kTxk/XzYlMYhEiBoGXBVnWq7upLEqp2CeX47b4LXjXZeCAXvYOw44UWA5u2PMEH4vrBfIJqGQNhwLw4g==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/linear-gradient@1.132.16':
-    resolution: {integrity: sha512-kc4hHj68bgACLxTkjkU24cYJ6xbE3Hw/17whwI2KE/U67FEw7e2E9zznaYqSCRDNOphIIRJ1GABjXxZu0mtPHw==}
-=======
   '@tamagui/linear-gradient@1.132.17':
-    resolution:
-      {
-        integrity: sha512-WTi8Lt1CaVu9TKjf8AhgwGLLrPMDiGfTPm4vXcPd13ywy6exUx9CPTHsAPO1uWzgTvy5W+RcSwI2YewGjuUS1A==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-WTi8Lt1CaVu9TKjf8AhgwGLLrPMDiGfTPm4vXcPd13ywy6exUx9CPTHsAPO1uWzgTvy5W+RcSwI2YewGjuUS1A==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/list-item@1.132.16':
-    resolution: {integrity: sha512-nTCRiehInbg4K2l4luJrTLfVNNZnZqbFQElgUYaVqU6axT60tRrfqu8T540tkTyWorzXtThW0chUr6Y10u+OZA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/lucide-icons@1.132.16':
-    resolution: {integrity: sha512-OmmH/yLfZz6P3KMlHr8ugGv1kkjRNOa5M8Kr+rQ2Vo+XuGQj4r3+iREEx+w1YA72PC+vZ3mNLf9kw6g4aitWQA==}
-=======
   '@tamagui/list-item@1.132.17':
-    resolution:
-      {
-        integrity: sha512-c0t2++VkNDXYn0izgPT7T1OEnV/tPRp9TQJZU9/9XN2pdD8op8SDWQMynO7sl4OH4nIjkhYmf6f+hdFkA50xVA==,
-      }
+    resolution: {integrity: sha512-c0t2++VkNDXYn0izgPT7T1OEnV/tPRp9TQJZU9/9XN2pdD8op8SDWQMynO7sl4OH4nIjkhYmf6f+hdFkA50xVA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/lucide-icons@1.132.17':
-    resolution:
-      {
-        integrity: sha512-b8PGQ/5TchB7KHTRmnUsoWFnIa9wYx/QPJDxBmZj5wlaEVt42C96FzMY6A2zAHVs+cUfmAUX3f2diR1BvUb+Dw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-b8PGQ/5TchB7KHTRmnUsoWFnIa9wYx/QPJDxBmZj5wlaEVt42C96FzMY6A2zAHVs+cUfmAUX3f2diR1BvUb+Dw==}
     peerDependencies:
       react: '*'
       react-native-svg: '>=12'
 
-<<<<<<< HEAD
-  '@tamagui/normalize-css-color@1.132.16':
-    resolution: {integrity: sha512-iJ9QXavj5MJBx2SzjOPv7pbnxQO84c+9aaO3aF0PLZLBI7ifgfU/dtXIsqPrvPjfKdIIIghN5mrJtOlpc0Anmw==}
-
-  '@tamagui/polyfill-dev@1.132.16':
-    resolution: {integrity: sha512-7DQiyuhqXs2yRDD0sdxLbB17EPVwR8PXU2dQMZSDA84k/HD8jHcbRCZhw3nTt4GLngNihSNC9k4dbSMomt5/hg==}
-
-  '@tamagui/popover@1.132.16':
-    resolution: {integrity: sha512-brJpcWJPEmDOQVI2AHsf77v+erd8DWxH1TUKFb0DsAtmJUYcxNVObeEmetHxcgRH3i6WodQgTNYbO16Pm3F46g==}
-=======
   '@tamagui/normalize-css-color@1.132.17':
-    resolution:
-      {
-        integrity: sha512-sgoozNPsk4jTuDt8pwG9s1Lmc3Z5IJTL61OFSBpD9Ab0UHXNMa4aIndaahfuqNYLPV02UBSKJP9zm9wR+O4MOw==,
-      }
+    resolution: {integrity: sha512-sgoozNPsk4jTuDt8pwG9s1Lmc3Z5IJTL61OFSBpD9Ab0UHXNMa4aIndaahfuqNYLPV02UBSKJP9zm9wR+O4MOw==}
 
   '@tamagui/polyfill-dev@1.132.17':
-    resolution:
-      {
-        integrity: sha512-4Slk/TKkerAUMROZQ7o6LIkOi/Kdg1JXYOr2uQDvEDWwXrHP9Cgfl/w/UjmFqXhFXB+xi+I+EJndQfK2GZT5+A==,
-      }
+    resolution: {integrity: sha512-4Slk/TKkerAUMROZQ7o6LIkOi/Kdg1JXYOr2uQDvEDWwXrHP9Cgfl/w/UjmFqXhFXB+xi+I+EJndQfK2GZT5+A==}
 
   '@tamagui/popover@1.132.17':
-    resolution:
-      {
-        integrity: sha512-uHQfLUyhcU9ZYGqsQ9bunXp4YmH/Ra3MMS86uyxsqgb3Xe78ZdWe3N5wioSjmzJVHIVdxrm/7hzZmD1rCDsfmw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-uHQfLUyhcU9ZYGqsQ9bunXp4YmH/Ra3MMS86uyxsqgb3Xe78ZdWe3N5wioSjmzJVHIVdxrm/7hzZmD1rCDsfmw==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/popper@1.132.16':
-    resolution: {integrity: sha512-1Kn5WYJZv8YJQAbVJbZoqLUNmlg1QG6Ex9weofJxmofc7iEPv2H9ej2vYvY8JqaXFSiZhLevgJSDYb2OuxOsiQ==}
-=======
   '@tamagui/popper@1.132.17':
-    resolution:
-      {
-        integrity: sha512-16n5JesCh7KiF+j6npnW8y0hfsstVQltLWgdh0lvgRQhnQf4iIldMP/tmAmNVc3qX06k1WTDkGdRfUVrJfUNSw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-16n5JesCh7KiF+j6npnW8y0hfsstVQltLWgdh0lvgRQhnQf4iIldMP/tmAmNVc3qX06k1WTDkGdRfUVrJfUNSw==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/portal@1.132.16':
-    resolution: {integrity: sha512-MeQT803rj1dk5bDERCNwNtSjluUp+ZkzD6UwpSd9l0ZbMn3v8PvdVOEyjF8Zr/7KXX0HqeTDvBN9L9L0QESw2g==}
-=======
   '@tamagui/portal@1.132.17':
-    resolution:
-      {
-        integrity: sha512-y/pEkM0TTgvJHUO0M8CI1qOHBGCjzyxpVtlU55yPRkUdgktCJ9UMraouCTGpRFpM3MOFuziSierOXa91QVQtxQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-y/pEkM0TTgvJHUO0M8CI1qOHBGCjzyxpVtlU55yPRkUdgktCJ9UMraouCTGpRFpM3MOFuziSierOXa91QVQtxQ==}
     peerDependencies:
       react: '*'
       react-dom: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/progress@1.132.16':
-    resolution: {integrity: sha512-lSfdPaJ7QrMSk8sR/KzoaAH5hI0wqBDCR/7+TruoByyzTGWZFJdgLVanc7yKThovYGHuL9swpGnMpMb/xoogwQ==}
-=======
   '@tamagui/progress@1.132.17':
-    resolution:
-      {
-        integrity: sha512-sIYmsSm39QangfQmikrQAX9fsoB7hGOG80H7awHwcpJwb30vLzQU4QMkV7gjTMIbh1VnnRll/mEYp5axaHbcdA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-sIYmsSm39QangfQmikrQAX9fsoB7hGOG80H7awHwcpJwb30vLzQU4QMkV7gjTMIbh1VnnRll/mEYp5axaHbcdA==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/proxy-worm@1.132.16':
-    resolution: {integrity: sha512-qd2URTN9ieBiwnlLfF0HvG50nV26WYBqumLpzrh2DL5gg4NJLKu5sMAYjPTmdhotFQXmxk+VDIqqM05rPxBqBg==}
-
-  '@tamagui/radio-group@1.132.16':
-    resolution: {integrity: sha512-dWL6SeDLnGisyHvkjZR5faL1pmuOxonxqF7gdU59g8mjjdAMzICavJoKGe5n7CfhSdcrAAfh1oW1e8giNxtpWA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/radio-headless@1.132.16':
-    resolution: {integrity: sha512-iJ+gM3vnwtLKNkkausUdH66VQwxKDkn16pQlVvh6QrbJ0VKrW7h1XSf1QGycNc4b5S6DEcDYNUL0E3sqlYnL0A==}
-=======
   '@tamagui/proxy-worm@1.132.17':
-    resolution:
-      {
-        integrity: sha512-/TCpSAGS2a2QR1WxV7wBN58m3AXF7OkFLhAHsmV09nV/bd4hGEV0Urzcb9np407l6/RWT7h+YNFdyAEg0ese9g==,
-      }
+    resolution: {integrity: sha512-/TCpSAGS2a2QR1WxV7wBN58m3AXF7OkFLhAHsmV09nV/bd4hGEV0Urzcb9np407l6/RWT7h+YNFdyAEg0ese9g==}
 
   '@tamagui/radio-group@1.132.17':
-    resolution:
-      {
-        integrity: sha512-/tNFjnn8SNbGb1+TrKbU72KLw426Hi/cTw6CjvUk2yyA9LFvQQHmyGGEetB2VVz6RgQXflwT/NUmzHexsONTQw==,
-      }
+    resolution: {integrity: sha512-/tNFjnn8SNbGb1+TrKbU72KLw426Hi/cTw6CjvUk2yyA9LFvQQHmyGGEetB2VVz6RgQXflwT/NUmzHexsONTQw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/radio-headless@1.132.17':
-    resolution:
-      {
-        integrity: sha512-EP+UlHa/ER9cpyFZKME087kqLEwSDl2yVgDg53cZIff9Iez4I+bxfigeCJYJEEwNUhVRrWjojyZT96ktRMPnJA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-EP+UlHa/ER9cpyFZKME087kqLEwSDl2yVgDg53cZIff9Iez4I+bxfigeCJYJEEwNUhVRrWjojyZT96ktRMPnJA==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/react-native-media-driver@1.132.16':
-    resolution: {integrity: sha512-NXQ3Q4LhSsnfbsqQ7IUWe5nE2JPH6jjOsjWfYGTHW5AJD6oxZ1HpGnuMN+erYtdyY8t02s9e8Wb6Hhdb2kbpUg==}
-    peerDependencies:
-      react-native: '*'
-
-  '@tamagui/react-native-use-pressable@1.132.16':
-    resolution: {integrity: sha512-LMJ29XvOj9E409hQ4LBPOskGfBSwfbKiNuXN+JYrUD1smBdwgFZ+CkKvocAmyOUt7V4nu05CAC0l3/zz4KR9zA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/react-native-use-responder-events@1.132.16':
-    resolution: {integrity: sha512-WScwS22MtmZVv5TuOE0AYcN/5m1Cr1q7CQ2gGSDClpWaoLwYf5LG7FCKgpkVhB3jb0MTlBPHrnwx2GTfOOr+sw==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/react-native-web-internals@1.132.16':
-    resolution: {integrity: sha512-vkWag3r27PpqCIGy4qk/oGA/+U6BF5ktpVCs2KoLzqgf6a2+A2xGXKwz32HPSfvln2q3q9iMcxj2L535dR5nGw==}
-=======
   '@tamagui/react-native-media-driver@1.132.17':
-    resolution:
-      {
-        integrity: sha512-1J7nQqpPjViuNTrODRnlXylmRr2jRQlodT+0TBpp/PJEwDTyLt0bJ0su9tGP38ufiO/nIKAfjOs3RavsMNliDg==,
-      }
+    resolution: {integrity: sha512-1J7nQqpPjViuNTrODRnlXylmRr2jRQlodT+0TBpp/PJEwDTyLt0bJ0su9tGP38ufiO/nIKAfjOs3RavsMNliDg==}
     peerDependencies:
       react-native: '*'
 
   '@tamagui/react-native-use-pressable@1.132.17':
-    resolution:
-      {
-        integrity: sha512-6QY6r9E/eWNxBHMKbifKd3SWzghirw9o3hKu5BJ0FInLpZTm8Iz+hhkrREjuQqbztl/MvEEmnQzO9Ndcsatq3w==,
-      }
+    resolution: {integrity: sha512-6QY6r9E/eWNxBHMKbifKd3SWzghirw9o3hKu5BJ0FInLpZTm8Iz+hhkrREjuQqbztl/MvEEmnQzO9Ndcsatq3w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/react-native-use-responder-events@1.132.17':
-    resolution:
-      {
-        integrity: sha512-X0qH609eFNXVS6QdgsSrXmmDvenaKQCQEcc7hwALlXPSayCueK4ifo/SSme54ZGxQegyWust0qNViJ3NpE62qg==,
-      }
+    resolution: {integrity: sha512-X0qH609eFNXVS6QdgsSrXmmDvenaKQCQEcc7hwALlXPSayCueK4ifo/SSme54ZGxQegyWust0qNViJ3NpE62qg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/react-native-web-internals@1.132.17':
-    resolution:
-      {
-        integrity: sha512-dy7JKXnZVV+lvn+f5lOdhW5Y1AJQgocAN/nxcEQr3ES/3ygxId0R66igYYqE2XKE5EJN7Y5kQJ8+3JQjJHxUvQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-dy7JKXnZVV+lvn+f5lOdhW5Y1AJQgocAN/nxcEQr3ES/3ygxId0R66igYYqE2XKE5EJN7Y5kQJ8+3JQjJHxUvQ==}
     peerDependencies:
       react: '*'
       react-dom: '*'
 
-<<<<<<< HEAD
-  '@tamagui/react-native-web-lite@1.132.16':
-    resolution: {integrity: sha512-gLaq1qp5ZMbcBIl4q2zujtQaBUsjEN8rt5r5UveRONcETj5dfD0Vy4YqEtSCkP5TGITsOHFgfeUezgqTLCm3vg==}
-=======
   '@tamagui/react-native-web-lite@1.132.17':
-    resolution:
-      {
-        integrity: sha512-N5xD9tgWuBQ8x+6JC9G9Uk3pxqJxUvYoufXOKZlZRJG8akOx9DhZwfXqbw2db03U2hUi+b8PRdnYYbVSi+AmjQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-N5xD9tgWuBQ8x+6JC9G9Uk3pxqJxUvYoufXOKZlZRJG8akOx9DhZwfXqbw2db03U2hUi+b8PRdnYYbVSi+AmjQ==}
     peerDependencies:
       react: '*'
       react-dom: '*'
 
-<<<<<<< HEAD
-  '@tamagui/remove-scroll@1.132.16':
-    resolution: {integrity: sha512-pW8wFP6f06wRh+3tyDBUYyA5OikiOks08O5FZBlE4VFm6/sU8Oi+9iMBJ+U8HnCInWJAM5pqRd9RoqKAQciEbQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/roving-focus@1.132.16':
-    resolution: {integrity: sha512-O7/TxLWs4S1a2orUrQ8OIyxt9+M9/RCuQ5nZrvYbvYpY9wOMbWgE5EzTmCHHwoZHLu2SVDZqGnCkLmeNdxDkaQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/scroll-view@1.132.16':
-    resolution: {integrity: sha512-dwLz0fKmwYJ5YLMT6ACMZ4eg2o/gh+d0OeC66jgJZ5fzpmxQHFnykJaz1UhlWrPB9+KiRouuntwtA4m+w/hkng==}
-=======
   '@tamagui/remove-scroll@1.132.17':
-    resolution:
-      {
-        integrity: sha512-qiillGcJK7+1OkZhh4BzZFbX5i1nZ/YBDLpfY/dZTZDTikACtMdjT/Bn/FThtQOEwvogvsClZlcEgtWQm5aJmg==,
-      }
+    resolution: {integrity: sha512-qiillGcJK7+1OkZhh4BzZFbX5i1nZ/YBDLpfY/dZTZDTikACtMdjT/Bn/FThtQOEwvogvsClZlcEgtWQm5aJmg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/roving-focus@1.132.17':
-    resolution:
-      {
-        integrity: sha512-OBs9yha9NmEzDLUqrccKmGL0TNJH/Kd22eHvf3nhJGwqEvgvRBb20nNt36MTuLjUOJWk5QvtYTRYfoTIApw7rg==,
-      }
+    resolution: {integrity: sha512-OBs9yha9NmEzDLUqrccKmGL0TNJH/Kd22eHvf3nhJGwqEvgvRBb20nNt36MTuLjUOJWk5QvtYTRYfoTIApw7rg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/scroll-view@1.132.17':
-    resolution:
-      {
-        integrity: sha512-gSnzy8IJYGO+l584LpaG9BDF6aIa8XkST2Fh8i4Ul2BQbKN27n2wxSObsREj8dqsV0gy1BQLtYJEUF+e85ByvA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-gSnzy8IJYGO+l584LpaG9BDF6aIa8XkST2Fh8i4Ul2BQbKN27n2wxSObsREj8dqsV0gy1BQLtYJEUF+e85ByvA==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/select@1.132.16':
-    resolution: {integrity: sha512-+STiO+wEELjXFcxETRQENDBK/h/Dyr9BQYmrXMW2BvjS/vn1KrP/q7CCkl17G7V11PN1m+kBZ1/+Obtjq7OQ+Q==}
-=======
   '@tamagui/select@1.132.17':
-    resolution:
-      {
-        integrity: sha512-O2CJfe0nXVL/HG+IVSUOap9Y+B//dBFdOlBWw4QYh0V/KLFxypwT0+e/c3KUfXLUisECxOltk8HM1h88L0gTMA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-O2CJfe0nXVL/HG+IVSUOap9Y+B//dBFdOlBWw4QYh0V/KLFxypwT0+e/c3KUfXLUisECxOltk8HM1h88L0gTMA==}
     peerDependencies:
       react: '*'
       react-dom: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/separator@1.132.16':
-    resolution: {integrity: sha512-wnPKi+XomWnhGHvWqEI7vVsUMy86rpuGq5R+182E8N1MGJrdyKff3Tmmi4W/89DNwysblH1KGcTsR621CpVcIg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/shapes@1.132.16':
-    resolution: {integrity: sha512-QK3cyEaK1opuxG1FCpJoEdq2Nvua7ZAPb3g9uBvmWN1yn7mIFPu5hzZUnTR6SFwagVZMMnc0K0PBVHINBH7Zzg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/sheet@1.132.16':
-    resolution: {integrity: sha512-6UPfpx9zCZB4TAdr/Lubtx+zyHjja5tGVjRTidYzByNOlnE/8HRliodEvvw6uZOZ+hbMJG4DfV4Xd5L2DaB26A==}
-=======
   '@tamagui/separator@1.132.17':
-    resolution:
-      {
-        integrity: sha512-W6jRv9b5/bHUyUURbnXHC6oWiX7oodiekrNuVnbkkTM/gvNLrWIX9PMqYsQcy9kRRCPjMrDQuo6lQi1fQqhuVg==,
-      }
+    resolution: {integrity: sha512-W6jRv9b5/bHUyUURbnXHC6oWiX7oodiekrNuVnbkkTM/gvNLrWIX9PMqYsQcy9kRRCPjMrDQuo6lQi1fQqhuVg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/shapes@1.132.17':
-    resolution:
-      {
-        integrity: sha512-Y7fm0Thrrp3yTGVGvRnm5/v5qvyXHT8vtH83Y7+D1+i0DZkjaUJTO7kakBj20/w/R3vdj3iRPNGJWJcu0J0j8w==,
-      }
+    resolution: {integrity: sha512-Y7fm0Thrrp3yTGVGvRnm5/v5qvyXHT8vtH83Y7+D1+i0DZkjaUJTO7kakBj20/w/R3vdj3iRPNGJWJcu0J0j8w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/sheet@1.132.17':
-    resolution:
-      {
-        integrity: sha512-tGPrTIuKN1ZftGlGAQ5gN4JUnKh/ZWmWeK3ALZgYbn4XpLqD7lod2i4JXavjTZaQX9k5tMPnd1VjpGj0hofQFw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-tGPrTIuKN1ZftGlGAQ5gN4JUnKh/ZWmWeK3ALZgYbn4XpLqD7lod2i4JXavjTZaQX9k5tMPnd1VjpGj0hofQFw==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/shorthands@1.132.16':
-    resolution: {integrity: sha512-fGlebGoBUhWx3PiBsD6zSvzClAhJ9p6dPFBdSMd95H5XXZ35WqmP/U+c0keA62/mDyaljcniOjH6QKOKm/i59A==}
-
-  '@tamagui/simple-hash@1.132.16':
-    resolution: {integrity: sha512-udwjZk4XqbNsJNOACyqDsPE7ysYubA2HK4+se6ICJ8XJwi8XeDAR/RY6+ImG8N0O2MlttpDMyPdUbdKyzDXzPw==}
-
-  '@tamagui/slider@1.132.16':
-    resolution: {integrity: sha512-XeQKZTdrME1kLu7YMMVbZKyqKzKQFGk1om4+O5oNWJQczVEnFDpOw6rZVgYXhmc01HQLL2IHl6CMYHBDqoYYwQ==}
-=======
   '@tamagui/shorthands@1.132.17':
-    resolution:
-      {
-        integrity: sha512-CMKZvq0eMzaLiqmOuW88Lnn2MlEn9qauYcZ6CiQPNyxDPsxu+SztMidN7UsLCffym32RnbsFx1d2PJwkkkxKwg==,
-      }
+    resolution: {integrity: sha512-CMKZvq0eMzaLiqmOuW88Lnn2MlEn9qauYcZ6CiQPNyxDPsxu+SztMidN7UsLCffym32RnbsFx1d2PJwkkkxKwg==}
 
   '@tamagui/simple-hash@1.132.17':
-    resolution:
-      {
-        integrity: sha512-fYa55m2JQzgPXQsVFSFv71VJSXfQeNz6huh9lKdKPlTm/Zpiyi5KGk8CbvHB7CbtCKmq2cQwYtf39uFYQK4OTQ==,
-      }
+    resolution: {integrity: sha512-fYa55m2JQzgPXQsVFSFv71VJSXfQeNz6huh9lKdKPlTm/Zpiyi5KGk8CbvHB7CbtCKmq2cQwYtf39uFYQK4OTQ==}
 
   '@tamagui/slider@1.132.17':
-    resolution:
-      {
-        integrity: sha512-91Z+TbVu/yY2UPa2vWyd1vNjASmQRKwdFhgPB3ibOBrjedvUMVnzBnRjd42j5uzDq1SIj0+gFTYhnFKbic001A==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-91Z+TbVu/yY2UPa2vWyd1vNjASmQRKwdFhgPB3ibOBrjedvUMVnzBnRjd42j5uzDq1SIj0+gFTYhnFKbic001A==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/stacks@1.132.16':
-    resolution: {integrity: sha512-8KSqF8Yf4CYuQjbLundBLg1yM0bI1PFSrUHZ6y8tpGumNyRzPnwBTpeHMuj5xHpJPceoL2ToUqm0rMK8nUGW4g==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/start-transition@1.132.16':
-    resolution: {integrity: sha512-1TN+3xdHYEU8/G/ECMKwGCDgs/tD+ijBCRtHtslYQYYv0H0WqZuHBLGO+RGi0dce9TfE1OeSAyF8NPGqG45Qag==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/static@1.132.16':
-    resolution: {integrity: sha512-x68+mkJBNGAw7/JSysYO4Tit8eKcEI+A69+TEIWCdqLF9o5q97Zin5McCMx2Z3jsJvXriYmEjUd7KsEed6SnRw==}
-=======
   '@tamagui/stacks@1.132.17':
-    resolution:
-      {
-        integrity: sha512-hH+4XKsynUKuh6UcJsnfim+gL9Ibl5TsNkrOXacnlA1yd9xfcm6+9nKZ2mpX4cSX7ErEipegi/aJl2l2cc2+WQ==,
-      }
+    resolution: {integrity: sha512-hH+4XKsynUKuh6UcJsnfim+gL9Ibl5TsNkrOXacnlA1yd9xfcm6+9nKZ2mpX4cSX7ErEipegi/aJl2l2cc2+WQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/start-transition@1.132.17':
-    resolution:
-      {
-        integrity: sha512-A0HiSJh/QGHkvdnRUNreqq+fEgKth9LwWyC+rSUyr2Oqic9fAoTHSMHDS9+VL7wLGbY/P9aHymE5IdEDtuR57w==,
-      }
+    resolution: {integrity: sha512-A0HiSJh/QGHkvdnRUNreqq+fEgKth9LwWyC+rSUyr2Oqic9fAoTHSMHDS9+VL7wLGbY/P9aHymE5IdEDtuR57w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/static@1.132.17':
-    resolution:
-      {
-        integrity: sha512-QE679TDsyE3mV2kM6WHgpAFHPv+vHVH0di/qyP9jDAgx+eiz7iyDb6M5I00rh44DX6i/ahWx4VIWM8Wc1wqMnw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-QE679TDsyE3mV2kM6WHgpAFHPv+vHVH0di/qyP9jDAgx+eiz7iyDb6M5I00rh44DX6i/ahWx4VIWM8Wc1wqMnw==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/switch-headless@1.132.16':
-    resolution: {integrity: sha512-zFnBNOw90G/5KG1ipqzBDhG1wRAzryIW64FHDUL7PQ9fX1ZYMNCmfssfnaIKgYoDuWOabTxUONteygDLitFckg==}
-=======
   '@tamagui/switch-headless@1.132.17':
-    resolution:
-      {
-        integrity: sha512-YXmO03K6FoeTLSub3jganEBIDTSME8dDencCh5hVmq20fxSfeDmEcoays8+2ZrFvTEVu3BlyOiFmxRIjm+xZnA==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-YXmO03K6FoeTLSub3jganEBIDTSME8dDencCh5hVmq20fxSfeDmEcoays8+2ZrFvTEVu3BlyOiFmxRIjm+xZnA==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/switch@1.132.16':
-    resolution: {integrity: sha512-OTnoxiP/9eVOAP4Xhcomnh4bsRqaz+ElsLB8dgA0peryfS08FVbgd8ltS3DzbwXs7eIRcLfBZS5dln6IrtjmAA==}
-=======
   '@tamagui/switch@1.132.17':
-    resolution:
-      {
-        integrity: sha512-o3CwbJY0oW5TTyYqXkmmUiAPqBcObtqTP5LyjDVioNcgP+T4cp1pWfQfb7MHiK3B+wtGPvV+qKDPJWwf8nAUYg==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-o3CwbJY0oW5TTyYqXkmmUiAPqBcObtqTP5LyjDVioNcgP+T4cp1pWfQfb7MHiK3B+wtGPvV+qKDPJWwf8nAUYg==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/tabs@1.132.16':
-    resolution: {integrity: sha512-litTIBzjs2tZqD1l+BzMHHNFOkRmGWQHdI9HfGdHg5loINSA3Bjl2lT0EiSIcdF4kqRaCv1ygetgYJJdn4jqsQ==}
-=======
   '@tamagui/tabs@1.132.17':
-    resolution:
-      {
-        integrity: sha512-ydLIFoVLIDtxCMNyLYtW6I3NW5RY7fLxvF4HOzH+ZRqUgcf2+jNi5hILH20qcxgS3EB2yBVhlmmgeKXF9Mawyw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-ydLIFoVLIDtxCMNyLYtW6I3NW5RY7fLxvF4HOzH+ZRqUgcf2+jNi5hILH20qcxgS3EB2yBVhlmmgeKXF9Mawyw==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
 
-<<<<<<< HEAD
-  '@tamagui/text@1.132.16':
-    resolution: {integrity: sha512-25tHYrhCY13T6ckIhNzsfsQkxrq3vtTSDocZQRmeQkf6f3aSyOBe98KoGK44QMqrbKFjEom1qt++cwt6O2PHUQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/theme-builder@1.132.16':
-    resolution: {integrity: sha512-QWAlSvhoUPmX1vCoeQBTCLUEcgake4/+xOQ0p1g65NDxAon9OQO7HPBT4T0neeg5KHS2PKGPoYI6sCGQ/yFNHg==}
-
-  '@tamagui/theme@1.132.16':
-    resolution: {integrity: sha512-smkxTEOhfsG3BzBJdpsTV2oUK9BlABFV77WeRQo6Xn5UfZ/I3QPlobHZXeeuLKHpB1T0EsALA6iB5C2UEHM49w==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/themes@1.132.16':
-    resolution: {integrity: sha512-97ql5Ku75PJpzJJGYMUvSuJTZIEd2lq1OM9T8+Vo2bqZmR3QsnV1JwZ5v7uwCOUU90QBfmCcjTTI/5caVcI04A==}
-
-  '@tamagui/timer@1.132.16':
-    resolution: {integrity: sha512-N351JE19B/6Sx4LgwEypHgGhK0sIOZsIvfPkoyEjXhGo+LXf+TAnKIFOt9eRJ3Z+Nqk2o2rrVIv6StxJaae8Pw==}
-
-  '@tamagui/toggle-group@1.132.16':
-    resolution: {integrity: sha512-AZCDTP6uo2Lk8xLdsHwo8juoTPvFX8ff8t8hQuKHXloD/+UO9rxSNx730NJJXYQkCmhG4gaW/iMIvVHBaKY7yQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/tooltip@1.132.16':
-    resolution: {integrity: sha512-T3xij94EXjVSnPp6dIVB2tcJEAK3NHGuqvgwz0Cs/r8m1DO4NLpCwrA/tWRZaoMFah08Y3Ao+BxuFrN54Z6OiA==}
-=======
   '@tamagui/text@1.132.17':
-    resolution:
-      {
-        integrity: sha512-mCqkWsjj+zhkRbctdAq/LZiUi+UMpK7UFp4k5DCcD2qIvTzi5OVZnPXiTalsSr19BbN4p046+58uImIU4I36xA==,
-      }
+    resolution: {integrity: sha512-mCqkWsjj+zhkRbctdAq/LZiUi+UMpK7UFp4k5DCcD2qIvTzi5OVZnPXiTalsSr19BbN4p046+58uImIU4I36xA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/theme-builder@1.132.17':
-    resolution:
-      {
-        integrity: sha512-viSoc5zh0aiq8WA7Th9X8YcrB2OHn9Iu8BXdtdVUUTW+W1huSDPrK0gdl+sFxvl4calqm0GoNrYHgva++R+C8Q==,
-      }
+    resolution: {integrity: sha512-viSoc5zh0aiq8WA7Th9X8YcrB2OHn9Iu8BXdtdVUUTW+W1huSDPrK0gdl+sFxvl4calqm0GoNrYHgva++R+C8Q==}
 
   '@tamagui/theme@1.132.17':
-    resolution:
-      {
-        integrity: sha512-EE7r9k1HduATq1fxzMtviwQbmEYWFGrnBkAh9LxRwIahI+HiaRzKElddlUfiGDm2YpSAdUiGgcwl6LB+o61Rhg==,
-      }
+    resolution: {integrity: sha512-EE7r9k1HduATq1fxzMtviwQbmEYWFGrnBkAh9LxRwIahI+HiaRzKElddlUfiGDm2YpSAdUiGgcwl6LB+o61Rhg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/themes@1.132.17':
-    resolution:
-      {
-        integrity: sha512-pF1gtWAAvgwuOpiR9uTizEspAi7fdNJoJaWLicEY/ABHSmDbVd4gbBGufi/eCvujEVRM/XTx+KjeRKwgJDzKxA==,
-      }
+    resolution: {integrity: sha512-pF1gtWAAvgwuOpiR9uTizEspAi7fdNJoJaWLicEY/ABHSmDbVd4gbBGufi/eCvujEVRM/XTx+KjeRKwgJDzKxA==}
 
   '@tamagui/timer@1.132.17':
-    resolution:
-      {
-        integrity: sha512-cYltgvN2sERmmO/mwYxWCUAZZD4vU8Y4IgfXbiz/EoX7CvN5dV7AolCW4LOYdqKvoc6aCWb95PT8tW0efd193w==,
-      }
+    resolution: {integrity: sha512-cYltgvN2sERmmO/mwYxWCUAZZD4vU8Y4IgfXbiz/EoX7CvN5dV7AolCW4LOYdqKvoc6aCWb95PT8tW0efd193w==}
 
   '@tamagui/toast@1.132.17':
-    resolution:
-      {
-        integrity: sha512-FQhVE+Tw3viHmi1bzV0a0xMUUB+h7lIj80yew9pqLkBF/feXctCyX+IZHREtVmBd3LNaKQXfkZLr1cGu5uyfqw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-FQhVE+Tw3viHmi1bzV0a0xMUUB+h7lIj80yew9pqLkBF/feXctCyX+IZHREtVmBd3LNaKQXfkZLr1cGu5uyfqw==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/types@1.132.16':
-    resolution: {integrity: sha512-dyOVAWP7AIaHtFwYrNbp2lWU3gEBxD6XE+A5oc5KIo6inwnMh+sKPrh+Hzql/kOX8pwlk+MlMPHdwURiUR5A8w==}
-
-  '@tamagui/use-async@1.132.16':
-    resolution: {integrity: sha512-bKhEPExKGn+imsZTKFYAq2lISRbwql9I4CWihtptJUFb1zJw+zU51GdyaJK73JfEUn2PXOt22iXGqb5pvJrymA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-callback-ref@1.132.16':
-    resolution: {integrity: sha512-VB8KdHLJASxR1Tig8R2PcCmdna6sPLT46pa7v0oFfV8P4qKG9JNnunSj6TC9wyTndn0TkZiZAsukBzPMTwah+g==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-constant@1.132.16':
-    resolution: {integrity: sha512-9uiv1NTZtX0h83zILgj3swsNvkMMpCSAC+tlokSb2mh63XY2zM5xvhvYB1IoPmsj+PWYSBevfin9037/CEEtmQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-controllable-state@1.132.16':
-    resolution: {integrity: sha512-w194xd4XMkdQxzU5xC1NDzoV+dxo/o/LC4sIkAI6kL4I0jw0/VnYiNNxCykKMfH3aT4dvb8f5g6vzUcmh0nMcg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-debounce@1.132.16':
-    resolution: {integrity: sha512-XtJ7YBxJzgWaCyr8G6dxdnKXt9IiqjdysCS8A6luWHJwECxvZdTlVsZJXZjtiM0Q6+zeEo+mtsUF/XNierJu7A==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-did-finish-ssr@1.132.16':
-    resolution: {integrity: sha512-HxxvcMITMZX4UcrFLilAAFU78RYbe7k9xkk6y2jRQqPQOyvVIRBftENnjQfDjF30Ksxx8qMtOGwldpyuz549VA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-direction@1.132.16':
-    resolution: {integrity: sha512-YBbboaW5qSvgsB/vPzBugC7c/mueIG/rgGmhAKYXvYdEtkCCicc/nwcECL+yKm943QAweANuqZnh2nPHSONMCw==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-element-layout@1.132.16':
-    resolution: {integrity: sha512-sONpgEvrCWL0Wl+INM2tbZgfxTue5IKQzzlvnrK+pLJ0gPQn8imOyFNU/+7p3XcBE9C1Yx/VxWYMIduhP8a+1g==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-escape-keydown@1.132.16':
-    resolution: {integrity: sha512-Rr3maAhorTjMdk1sz24EvR8bky4nBjMxBF1aOtE1Fnhoetobm1z8NmP+nhiAo33kp2BqImY1s2hNO2iDcglF+g==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-event@1.132.16':
-    resolution: {integrity: sha512-iwA0p0SVQJXbN1zKfW6DNzGEpsKis10P8tk1QCbZLcr7sZiC9/b0qAFHX4Z9boV9aJwqK6SYySeFasvFT/chXg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-force-update@1.132.16':
-    resolution: {integrity: sha512-z2pQJjEnJStFxiT6JZog1QqKp0vGTcLcidnEi4YkPpcz+OGcfR4wMAEjdDjws8jdq+MYuAhH2hg5rgAAmWZzjg==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-keyboard-visible@1.132.16':
-    resolution: {integrity: sha512-cs2JqFpoUVoJw58/9vTcr4OmWEPUVw+BR/I67ZvX5txHw7TaSMeOMGOTkmEheFCTpStUkZSy1agc+FkASywaug==}
-=======
   '@tamagui/toggle-group@1.132.17':
-    resolution:
-      {
-        integrity: sha512-4rqnQpJ6H+irAsjwAy9ISCrk+0MuHqrLgJ2WIvrITA1OQJBWURWTROKtu0fWxBGRvw76WjWXEUzkmrDMvK7SLg==,
-      }
+    resolution: {integrity: sha512-4rqnQpJ6H+irAsjwAy9ISCrk+0MuHqrLgJ2WIvrITA1OQJBWURWTROKtu0fWxBGRvw76WjWXEUzkmrDMvK7SLg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/tooltip@1.132.17':
-    resolution:
-      {
-        integrity: sha512-vklqVx6h4O7U5hR2lMul2gsmOsB2LZb9lTQRaWaLMvRKhc7SfGE1NsDeBRv0KKJKK8kiXpBJgFfCSQAqMgiK0g==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-vklqVx6h4O7U5hR2lMul2gsmOsB2LZb9lTQRaWaLMvRKhc7SfGE1NsDeBRv0KKJKK8kiXpBJgFfCSQAqMgiK0g==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/use-presence@1.132.16':
-    resolution: {integrity: sha512-7p0O3JlBzdlQsau0q0MigIRVVGy1k9BabAVsFjo6sj8OFHBtWE/zpOtOJ/k8PRsin+am2j2+IyDWEv5wQiRzWA==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-previous@1.132.16':
-    resolution: {integrity: sha512-1MhpeboY7PCE4JHEpuZvPnLITYShy15O/W73iRoFnxjOsZKLMa25Bfy4bEZqLjOWv2fQIgomZZbUF3LSfjqS+Q==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/use-window-dimensions@1.132.16':
-    resolution: {integrity: sha512-N/xTJZR92F2qHl5XlWmJwroXEn/wHcAw6p2FaQA0LhbjxcNMuu7Xq3SISw7IsfBGQPfkAXd+0amwSGGPti9Tvw==}
-=======
   '@tamagui/types@1.132.17':
-    resolution:
-      {
-        integrity: sha512-qTbZDhg9TwW5sQdJCX+rpPwKn6NhlMfh0Eje/TMcwwW5bbxV9NdXpEm0qITfhhDfwcfFgDCnY1BeMMZMmOO2mQ==,
-      }
+    resolution: {integrity: sha512-qTbZDhg9TwW5sQdJCX+rpPwKn6NhlMfh0Eje/TMcwwW5bbxV9NdXpEm0qITfhhDfwcfFgDCnY1BeMMZMmOO2mQ==}
 
   '@tamagui/use-async@1.132.17':
-    resolution:
-      {
-        integrity: sha512-XjCzbwA6HCgICdwozqIJzupNKUSF95lAfnQjo+jxbkevciuFkQuoRd6XRax4v3WB5LIiegBw3m3q5/EyK3j6mQ==,
-      }
+    resolution: {integrity: sha512-XjCzbwA6HCgICdwozqIJzupNKUSF95lAfnQjo+jxbkevciuFkQuoRd6XRax4v3WB5LIiegBw3m3q5/EyK3j6mQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-callback-ref@1.132.17':
-    resolution:
-      {
-        integrity: sha512-FSckOujFP24TmPJt4wHJWNr6YNqp4YRBIOlB13ORMfDUDzMjzkMVOeH9BVhmUwdCgxTpF1WVYDp0w89rrDwnoQ==,
-      }
+    resolution: {integrity: sha512-FSckOujFP24TmPJt4wHJWNr6YNqp4YRBIOlB13ORMfDUDzMjzkMVOeH9BVhmUwdCgxTpF1WVYDp0w89rrDwnoQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-constant@1.132.17':
-    resolution:
-      {
-        integrity: sha512-plAUh20T6jvA5vDYQa5I4ubWxydj4MapDFUkOVrcB9/0koIsRGQBYqKJENERu/fTgcfs2cEswlw9n4Su9yfd/w==,
-      }
+    resolution: {integrity: sha512-plAUh20T6jvA5vDYQa5I4ubWxydj4MapDFUkOVrcB9/0koIsRGQBYqKJENERu/fTgcfs2cEswlw9n4Su9yfd/w==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-controllable-state@1.132.17':
-    resolution:
-      {
-        integrity: sha512-RgAfOEeFbF9in0cckEHJi42KSiK8BhdXA8L97NVdqJATJ+ollYIm+IK76Iv00+rXMhjEDp5HoKPKswLNjwQxJA==,
-      }
+    resolution: {integrity: sha512-RgAfOEeFbF9in0cckEHJi42KSiK8BhdXA8L97NVdqJATJ+ollYIm+IK76Iv00+rXMhjEDp5HoKPKswLNjwQxJA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-debounce@1.132.17':
-    resolution:
-      {
-        integrity: sha512-4Kaud1XogRaRKpcape4Fxrx15aJLq0fL2hFyqVwXdmv8nVfTsXlgTUBZji2X9AGFjvFd7Jw/Vd49rOVAVaMWYw==,
-      }
+    resolution: {integrity: sha512-4Kaud1XogRaRKpcape4Fxrx15aJLq0fL2hFyqVwXdmv8nVfTsXlgTUBZji2X9AGFjvFd7Jw/Vd49rOVAVaMWYw==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-did-finish-ssr@1.132.17':
-    resolution:
-      {
-        integrity: sha512-8XCo8asBW4MvznEPVvhLiN64Xt9JCjoqAHBBGAlqw4vPj1pu/3chquIY0aGyEmL5RryrHEufBF8W8KdQS3eAvQ==,
-      }
+    resolution: {integrity: sha512-8XCo8asBW4MvznEPVvhLiN64Xt9JCjoqAHBBGAlqw4vPj1pu/3chquIY0aGyEmL5RryrHEufBF8W8KdQS3eAvQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-direction@1.132.17':
-    resolution:
-      {
-        integrity: sha512-ihHyoSQAN2HBC//enALGs1m2KyfTLbHv8yqSaBQri6AR/IJybgGk0rw4Jylovu0pa1BdaFBze9um9WYzia57vA==,
-      }
+    resolution: {integrity: sha512-ihHyoSQAN2HBC//enALGs1m2KyfTLbHv8yqSaBQri6AR/IJybgGk0rw4Jylovu0pa1BdaFBze9um9WYzia57vA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-element-layout@1.132.17':
-    resolution:
-      {
-        integrity: sha512-qgljMXyuVe5Ij+x+4Vnti2vxnBX69Hp0b2Cyrkok24SfjrTQVKtoEg4NAtOrrKpDZVR2rK19qwhT5z3HhAJl9Q==,
-      }
+    resolution: {integrity: sha512-qgljMXyuVe5Ij+x+4Vnti2vxnBX69Hp0b2Cyrkok24SfjrTQVKtoEg4NAtOrrKpDZVR2rK19qwhT5z3HhAJl9Q==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-escape-keydown@1.132.17':
-    resolution:
-      {
-        integrity: sha512-5HBfpiZLbcKXfsEzQSnG5NnKr4mVwh2+acrGtIrP8qLjEOK3S8TFOWkjWPYvoM3cArjCaRBsGcb2uk3eJyU7lg==,
-      }
+    resolution: {integrity: sha512-5HBfpiZLbcKXfsEzQSnG5NnKr4mVwh2+acrGtIrP8qLjEOK3S8TFOWkjWPYvoM3cArjCaRBsGcb2uk3eJyU7lg==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-event@1.132.17':
-    resolution:
-      {
-        integrity: sha512-w6KLXoSgJsvxzitcHT+4MeQi3pqlkKHfeiOCM/zZA8fSvLwRPr/uWaGUvaUeKPh7zjP6+2Jtf/C/vHk/uooQMA==,
-      }
+    resolution: {integrity: sha512-w6KLXoSgJsvxzitcHT+4MeQi3pqlkKHfeiOCM/zZA8fSvLwRPr/uWaGUvaUeKPh7zjP6+2Jtf/C/vHk/uooQMA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-force-update@1.132.17':
-    resolution:
-      {
-        integrity: sha512-RIFxIH4lZmZ9WwVa/Zrom6twnoj/RBVkcFuvW+8eWeNwRyj9tPkbzTBErmWQ+s6iTvXlRNEeHFfGConSOGiqtQ==,
-      }
+    resolution: {integrity: sha512-RIFxIH4lZmZ9WwVa/Zrom6twnoj/RBVkcFuvW+8eWeNwRyj9tPkbzTBErmWQ+s6iTvXlRNEeHFfGConSOGiqtQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-keyboard-visible@1.132.17':
-    resolution:
-      {
-        integrity: sha512-z5Yg6EtYaZ9YcO/KT7NxNHJKNX34uMaRZ+i5+0ECEdjlTfOUIUeefMk2QIuxB3Z0nkOIhUzwFX/2CyvZOYCbdw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-z5Yg6EtYaZ9YcO/KT7NxNHJKNX34uMaRZ+i5+0ECEdjlTfOUIUeefMk2QIuxB3Z0nkOIhUzwFX/2CyvZOYCbdw==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/visually-hidden@1.132.16':
-    resolution: {integrity: sha512-QL5R+mhTZz5Ippi8XODfWnHTeEONUskE37NDMutK7oQ/AOPgTJeO6cEq73QKZQ7N8Q3s1/Nj34bEpFuN3h6xiQ==}
-    peerDependencies:
-      react: '*'
-
-  '@tamagui/web@1.132.16':
-    resolution: {integrity: sha512-qUMDQLZHdNf4O9QPyBDItI7sLLiz/vwyJvdn/KCCJLokmkQnczmC6v7w9c9QXAZakZJDiPPjKMPuG+woRkgQpQ==}
-=======
   '@tamagui/use-presence@1.132.17':
-    resolution:
-      {
-        integrity: sha512-orZa/qRcz7eug04JpVKyG0zR93P/YIl7I8R86HUYQ3TnvSXOw2+xXSEm+p40R6SP+07/Nh6CrVGg/nRyvHofMQ==,
-      }
+    resolution: {integrity: sha512-orZa/qRcz7eug04JpVKyG0zR93P/YIl7I8R86HUYQ3TnvSXOw2+xXSEm+p40R6SP+07/Nh6CrVGg/nRyvHofMQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-previous@1.132.17':
-    resolution:
-      {
-        integrity: sha512-cmOqgtI0IxQXo/1eUe3us+7yAJkl/hmMBd1jNieohMqhjD7q5/lX2gvMSUJcOiNZN4YR0qTsvr8SRXffh/ontA==,
-      }
+    resolution: {integrity: sha512-cmOqgtI0IxQXo/1eUe3us+7yAJkl/hmMBd1jNieohMqhjD7q5/lX2gvMSUJcOiNZN4YR0qTsvr8SRXffh/ontA==}
     peerDependencies:
       react: '*'
 
   '@tamagui/use-window-dimensions@1.132.17':
-    resolution:
-      {
-        integrity: sha512-Va9Lp8KojovsyXcJl2f91++mbf4lXp5YCw4s5IzOBw/qC1WMDJhrlARzpi9ycqpL2GwtFxRj86aewtTAoeC2jQ==,
-      }
+    resolution: {integrity: sha512-Va9Lp8KojovsyXcJl2f91++mbf4lXp5YCw4s5IzOBw/qC1WMDJhrlARzpi9ycqpL2GwtFxRj86aewtTAoeC2jQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
 
   '@tamagui/visually-hidden@1.132.17':
-    resolution:
-      {
-        integrity: sha512-65ATP3sP1amxR7f2QpBOwNnLJ0K42fW/5H40Wldl4IQkvcsHU69AFbD+FT5eMZhPROhaETI6Z5iqXjjDYmSplQ==,
-      }
+    resolution: {integrity: sha512-65ATP3sP1amxR7f2QpBOwNnLJ0K42fW/5H40Wldl4IQkvcsHU69AFbD+FT5eMZhPROhaETI6Z5iqXjjDYmSplQ==}
     peerDependencies:
       react: '*'
 
   '@tamagui/web@1.132.17':
-    resolution:
-      {
-        integrity: sha512-in41iZZFjApSNHe5VRrrQDQ3j3lUt2/jd0/5QV6N8e9pbnH+zeeCmcuELpp9H8HJ1Fuke622AmykLSSh61mNCw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-in41iZZFjApSNHe5VRrrQDQ3j3lUt2/jd0/5QV6N8e9pbnH+zeeCmcuELpp9H8HJ1Fuke622AmykLSSh61mNCw==}
     peerDependencies:
       react: '*'
       react-dom: '*'
       react-native: '*'
 
-<<<<<<< HEAD
-  '@tamagui/z-index-stack@1.132.16':
-    resolution: {integrity: sha512-RyR8PzFpGxLnw28LT4foS0O9GZhCAcxR3crsQgwnau31DHxUIIPEuS6zRHfJYHjUHUL2WlruwXEbfeRo4g9NJA==}
-=======
   '@tamagui/z-index-stack@1.132.17':
-    resolution:
-      {
-        integrity: sha512-es3Dm+JL2cWY+6UVtyjODu60TLVCaQApEdOyJ3v5AzOFKyneblxaMUsr4uHfTFgZMWUFlzlHj9IihAyJPKllmw==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-es3Dm+JL2cWY+6UVtyjODu60TLVCaQApEdOyJ3v5AzOFKyneblxaMUsr4uHfTFgZMWUFlzlHj9IihAyJPKllmw==}
     peerDependencies:
       react: '*'
 
@@ -6066,11 +5172,8 @@ packages:
       react: ^18 || ^19
 
   '@trysound/sax@0.2.0':
-    resolution:
-      {
-        integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==,
-      }
-    engines: { node: '>=10.13.0' }
+    resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
+    engines: {node: '>=10.13.0'}
 
   '@ts-rest/core@3.52.1':
     resolution: {integrity: sha512-tAjz7Kxq/grJodcTA1Anop4AVRDlD40fkksEV5Mmal88VoZeRKAG8oMHsDwdwPZz+B/zgnz0q2sF+cm5M7Bc7g==}
@@ -6603,10 +5706,7 @@ packages:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
   ajv@8.11.0:
-    resolution:
-      {
-        integrity: sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==,
-      }
+    resolution: {integrity: sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==}
 
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
@@ -6717,10 +5817,7 @@ packages:
     engines: {node: '>=12.0.0'}
 
   assert@2.1.0:
-    resolution:
-      {
-        integrity: sha512-eLHpSK/Y4nhMJ07gDaAzoX/XAKS8PSaojml3M0DM4JpV1LAi5JOJ/p6H/XWrl8L+DzVEvVCW1z3vWAaB9oTsQw==,
-      }
+    resolution: {integrity: sha512-eLHpSK/Y4nhMJ07gDaAzoX/XAKS8PSaojml3M0DM4JpV1LAi5JOJ/p6H/XWrl8L+DzVEvVCW1z3vWAaB9oTsQw==}
 
   ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
@@ -6862,10 +5959,7 @@ packages:
       '@babel/core': ^7.0.0
 
   badgin@1.2.3:
-    resolution:
-      {
-        integrity: sha512-NQGA7LcfCpSzIbGRbkgjgdWkjy7HI+Th5VLxTJfW5EeaAf3fnS+xWQaQOCYiny+q6QSvxqoSO04vCx+4u++EJw==,
-      }
+    resolution: {integrity: sha512-NQGA7LcfCpSzIbGRbkgjgdWkjy7HI+Th5VLxTJfW5EeaAf3fnS+xWQaQOCYiny+q6QSvxqoSO04vCx+4u++EJw==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -6977,10 +6071,7 @@ packages:
       esbuild: '>=0.18'
 
   burnt@0.13.0:
-    resolution:
-      {
-        integrity: sha512-LjlQa7CLkGWUdz08YUIaGCJ8BLXib31/ztKqowgwqd7UH283A/kmdCj+1PYAQwDQEMPNmvSUfFHrjXbcwZibFQ==,
-      }
+    resolution: {integrity: sha512-LjlQa7CLkGWUdz08YUIaGCJ8BLXib31/ztKqowgwqd7UH283A/kmdCj+1PYAQwDQEMPNmvSUfFHrjXbcwZibFQ==}
     peerDependencies:
       expo: '*'
       react: '*'
@@ -7279,11 +6370,8 @@ packages:
     engines: {node: '>=10'}
 
   cosmiconfig@8.3.6:
-    resolution:
-      {
-        integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==,
-      }
-    engines: { node: '>=14' }
+    resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
+    engines: {node: '>=14'}
     peerDependencies:
       typescript: '>=4.9.5'
     peerDependenciesMeta:
@@ -7324,29 +6412,20 @@ packages:
     engines: {node: '>=8.0.0'}
 
   css-tree@2.2.1:
-    resolution:
-      {
-        integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==,
-      }
-    engines: { node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0' }
+    resolution: {integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
   css-tree@2.3.1:
-    resolution:
-      {
-        integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==,
-      }
-    engines: { node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0 }
+    resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
   css-what@6.2.2:
     resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
     engines: {node: '>= 6'}
 
   csso@5.0.5:
-    resolution:
-      {
-        integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==,
-      }
-    engines: { node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0' }
+    resolution: {integrity: sha512-0LrrStPOdJj+SPCCrGhzryycLjwcgUSHBtxNA8aIDxf0GLsRh1cKYhB00Gd1lDOS4yGH69+SNn13+TWbVHETFQ==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0, npm: '>=7.0.0'}
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
@@ -7531,10 +6610,7 @@ packages:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
 
   dot-case@3.0.4:
-    resolution:
-      {
-        integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==,
-      }
+    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
   dotenv-cli@8.0.0:
     resolution: {integrity: sha512-aLqYbK7xKOiTMIRf1lDPbI+Y+Ip/wo5k3eyp6ePysVaSqbyxjyK3dK35BTxG+rmd7djf5q2UPs4noPNH+cj0Qw==}
@@ -8079,10 +7155,7 @@ packages:
     engines: {node: '>=18'}
 
   expo-application@6.1.5:
-    resolution:
-      {
-        integrity: sha512-ToImFmzw8luY043pWFJhh2ZMm4IwxXoHXxNoGdlhD4Ym6+CCmkAvCglg0FK8dMLzAb+/XabmOE7Rbm8KZb6NZg==,
-      }
+    resolution: {integrity: sha512-ToImFmzw8luY043pWFJhh2ZMm4IwxXoHXxNoGdlhD4Ym6+CCmkAvCglg0FK8dMLzAb+/XabmOE7Rbm8KZb6NZg==}
     peerDependencies:
       expo: '*'
 
@@ -8101,10 +7174,7 @@ packages:
       react-native: '*'
 
   expo-build-properties@0.14.8:
-    resolution:
-      {
-        integrity: sha512-GTFNZc5HaCS9RmCi6HspCe2+isleuOWt2jh7UEKHTDQ9tdvzkIoWc7U6bQO9lH3Mefk4/BcCUZD/utl7b1wdqw==,
-      }
+    resolution: {integrity: sha512-GTFNZc5HaCS9RmCi6HspCe2+isleuOWt2jh7UEKHTDQ9tdvzkIoWc7U6bQO9lH3Mefk4/BcCUZD/utl7b1wdqw==}
     peerDependencies:
       expo: '*'
 
@@ -8115,42 +7185,27 @@ packages:
       react-native: '*'
 
   expo-dev-client@5.2.4:
-    resolution:
-      {
-        integrity: sha512-s/N/nK5LPo0QZJpV4aPijxyrzV4O49S3dN8D2fljqrX2WwFZzWwFO6dX1elPbTmddxumdcpczsdUPY+Ms8g43g==,
-      }
+    resolution: {integrity: sha512-s/N/nK5LPo0QZJpV4aPijxyrzV4O49S3dN8D2fljqrX2WwFZzWwFO6dX1elPbTmddxumdcpczsdUPY+Ms8g43g==}
     peerDependencies:
       expo: '*'
 
   expo-dev-launcher@5.1.16:
-    resolution:
-      {
-        integrity: sha512-tbCske9pvbozaEblyxoyo/97D6od9Ma4yAuyUnXtRET1CKAPKYS+c4fiZ+I3B4qtpZwN3JNFUjG3oateN0y6Hg==,
-      }
+    resolution: {integrity: sha512-tbCske9pvbozaEblyxoyo/97D6od9Ma4yAuyUnXtRET1CKAPKYS+c4fiZ+I3B4qtpZwN3JNFUjG3oateN0y6Hg==}
     peerDependencies:
       expo: '*'
 
   expo-dev-menu-interface@1.10.0:
-    resolution:
-      {
-        integrity: sha512-NxtM/qot5Rh2cY333iOE87dDg1S8CibW+Wu4WdLua3UMjy81pXYzAGCZGNOeY7k9GpNFqDPNDXWyBSlk9r2pBg==,
-      }
+    resolution: {integrity: sha512-NxtM/qot5Rh2cY333iOE87dDg1S8CibW+Wu4WdLua3UMjy81pXYzAGCZGNOeY7k9GpNFqDPNDXWyBSlk9r2pBg==}
     peerDependencies:
       expo: '*'
 
   expo-dev-menu@6.1.14:
-    resolution:
-      {
-        integrity: sha512-yonNMg2GHJZtuisVowdl1iQjZfYP85r1D1IO+ar9D9zlrBPBJhq2XEju52jd1rDmDkmDuEhBSbPNhzIcsBNiPg==,
-      }
+    resolution: {integrity: sha512-yonNMg2GHJZtuisVowdl1iQjZfYP85r1D1IO+ar9D9zlrBPBJhq2XEju52jd1rDmDkmDuEhBSbPNhzIcsBNiPg==}
     peerDependencies:
       expo: '*'
 
   expo-doctor@1.13.5:
-    resolution:
-      {
-        integrity: sha512-Kp9c0+qiQ636ZuKyU+TwSe0oO9kdK1Q+xCD6VBM1zPSv8Grqa5yg1F2EkGvqQeDJYUXUZvPUqVhRBz9sLyvQOg==,
-      }
+    resolution: {integrity: sha512-Kp9c0+qiQ636ZuKyU+TwSe0oO9kdK1Q+xCD6VBM1zPSv8Grqa5yg1F2EkGvqQeDJYUXUZvPUqVhRBz9sLyvQOg==}
     hasBin: true
 
   expo-eas-client@0.14.4:
@@ -8218,10 +7273,7 @@ packages:
     resolution: {integrity: sha512-aIbQxZE2vdCKsolQUl6Q9Farlf8tjh/ROR4hfN1qT7QBGPl1XrJGnaOKkcgYaGrlzCPg/7IBe0Np67GzKMZKKQ==}
 
   expo-notifications@0.31.4:
-    resolution:
-      {
-        integrity: sha512-NnGKIFGpgZU66qfiFUyjEBYsS77VahURpSSeWEOLt+P1zOaUFlgx2XqS+dxH3/Bn1Vm7TMj04qKsK5KvzR/8Lw==,
-      }
+    resolution: {integrity: sha512-NnGKIFGpgZU66qfiFUyjEBYsS77VahURpSSeWEOLt+P1zOaUFlgx2XqS+dxH3/Bn1Vm7TMj04qKsK5KvzR/8Lw==}
     peerDependencies:
       expo: '*'
       react: '*'
@@ -8841,16 +7893,8 @@ packages:
   hyphenate-style-name@1.1.0:
     resolution: {integrity: sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==}
 
-<<<<<<< HEAD
-  i18next@25.3.2:
-    resolution: {integrity: sha512-JSnbZDxRVbphc5jiptxr3o2zocy5dEqpVm9qCGdJwRNO+9saUJS0/u4LnM/13C23fUEWxAylPqKU/NpMV/IjqA==}
-=======
   i18next@25.3.6:
-    resolution:
-      {
-        integrity: sha512-dThZ0CTCM3sUG/qS0ZtQYZQcUI6DtBN8yBHK+SKEqihPcEYmjVWh/YJ4luic73Iq6Uxhp6q7LJJntRK5+1t7jQ==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-dThZ0CTCM3sUG/qS0ZtQYZQcUI6DtBN8yBHK+SKEqihPcEYmjVWh/YJ4luic73Iq6Uxhp6q7LJJntRK5+1t7jQ==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -9042,11 +8086,8 @@ packages:
     resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
 
   is-nan@1.3.2:
-    resolution:
-      {
-        integrity: sha512-E+zBKpQ2t6MEo1VsonYmluk9NxGrbzpeeLC2xIViuO2EjU2xsXsBPwTr3Ykv9l08UYEVEdWeRZNouaZqF6RN0w==,
-      }
-    engines: { node: '>= 0.4' }
+    resolution: {integrity: sha512-E+zBKpQ2t6MEo1VsonYmluk9NxGrbzpeeLC2xIViuO2EjU2xsXsBPwTr3Ykv9l08UYEVEdWeRZNouaZqF6RN0w==}
+    engines: {node: '>= 0.4'}
 
   is-negative-zero@2.0.3:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
@@ -9630,10 +8671,7 @@ packages:
     hasBin: true
 
   lower-case@2.0.2:
-    resolution:
-      {
-        integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==,
-      }
+    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -9684,16 +8722,10 @@ packages:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
 
   mdn-data@2.0.28:
-    resolution:
-      {
-        integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==,
-      }
+    resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}
 
   mdn-data@2.0.30:
-    resolution:
-      {
-        integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==,
-      }
+    resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
   media-typer@1.1.0:
     resolution: {integrity: sha512-aisnrDP4GNe06UcKFnV5bfMNPBUw4jsLGaWwWfnH3v02GnBuXX2MCVn5RbrWo0j3pczUilYblq7fQ7Nw2t5XKw==}
@@ -9958,10 +8990,7 @@ packages:
     resolution: {integrity: sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==}
 
   no-case@3.0.4:
-    resolution:
-      {
-        integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==,
-      }
+    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
 
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
@@ -10041,11 +9070,8 @@ packages:
     engines: {node: '>= 0.4'}
 
   object-is@1.1.6:
-    resolution:
-      {
-        integrity: sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==,
-      }
-    engines: { node: '>= 0.4' }
+    resolution: {integrity: sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==}
+    engines: {node: '>= 0.4'}
 
   object-keys@1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
@@ -10228,10 +9254,7 @@ packages:
     engines: {node: '>= 0.8'}
 
   path-dirname@1.0.2:
-    resolution:
-      {
-        integrity: sha512-ALzNPpyNq9AqXMBjeymIjFDAkAFH06mHJH/cSBHAgU0s4vfpBn6b2nf8tiRLvagKD8RbTpq2FKTBg7cl9l3c7Q==,
-      }
+    resolution: {integrity: sha512-ALzNPpyNq9AqXMBjeymIjFDAkAFH06mHJH/cSBHAgU0s4vfpBn6b2nf8tiRLvagKD8RbTpq2FKTBg7cl9l3c7Q==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -10668,11 +9691,8 @@ packages:
       react: '>=17.0.0'
 
   react-hook-form@7.62.0:
-    resolution:
-      {
-        integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==,
-      }
-    engines: { node: '>=18.0.0' }
+    resolution: {integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
 
@@ -10726,10 +9746,7 @@ packages:
       react-native: '*'
 
   react-native-purchases-ui@9.2.2:
-    resolution:
-      {
-        integrity: sha512-/txUVORPId8+oP6+5PCLSmwL1fXv8D1g/zWlZ4mD7ZB9nGp7yBAF0qmEn1rkzCcPz545y46hNTe2gKLcT18CnQ==,
-      }
+    resolution: {integrity: sha512-/txUVORPId8+oP6+5PCLSmwL1fXv8D1g/zWlZ4mD7ZB9nGp7yBAF0qmEn1rkzCcPz545y46hNTe2gKLcT18CnQ==}
     peerDependencies:
       react: '*'
       react-native: '>= 0.73.0'
@@ -10740,10 +9757,7 @@ packages:
         optional: true
 
   react-native-purchases@9.2.2:
-    resolution:
-      {
-        integrity: sha512-j376mva8G6SLA2HPTROpUGoivfLMZVWPM7mj2bcgTS8y6NzbyQJ20Npe8V3nWc0N5YFTuknTF8pl0tWc6FqYbA==,
-      }
+    resolution: {integrity: sha512-j376mva8G6SLA2HPTROpUGoivfLMZVWPM7mj2bcgTS8y6NzbyQJ20Npe8V3nWc0N5YFTuknTF8pl0tWc6FqYbA==}
     peerDependencies:
       react: '>= 16.6.3'
       react-native: '>= 0.73.0'
@@ -10772,19 +9786,13 @@ packages:
       react-native: '*'
 
   react-native-svg-transformer@1.5.1:
-    resolution:
-      {
-        integrity: sha512-dFvBNR8A9VPum9KCfh+LE49YiJEF8zUSnEFciKQroR/bEOhlPoZA0SuQ0qNk7m2iZl2w59FYjdRe0pMHWMDl0Q==,
-      }
+    resolution: {integrity: sha512-dFvBNR8A9VPum9KCfh+LE49YiJEF8zUSnEFciKQroR/bEOhlPoZA0SuQ0qNk7m2iZl2w59FYjdRe0pMHWMDl0Q==}
     peerDependencies:
       react-native: '>=0.59.0'
       react-native-svg: '>=12.0.0'
 
   react-native-svg@15.11.2:
-    resolution:
-      {
-        integrity: sha512-+YfF72IbWQUKzCIydlijV1fLuBsQNGMT6Da2kFlo1sh+LE3BIm/2Q7AR1zAAR6L0BFLi1WaQPLfFUC9bNZpOmw==,
-      }
+    resolution: {integrity: sha512-+YfF72IbWQUKzCIydlijV1fLuBsQNGMT6Da2kFlo1sh+LE3BIm/2Q7AR1zAAR6L0BFLi1WaQPLfFUC9bNZpOmw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -11164,11 +10172,8 @@ packages:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
   sf-symbols-typescript@1.0.0:
-    resolution:
-      {
-        integrity: sha512-DkS7q3nN68dEMb4E18HFPDAvyrjDZK9YAQQF2QxeFu9gp2xRDXFMF8qLJ1EmQ/qeEGQmop4lmMM1WtYJTIcCMw==,
-      }
-    engines: { node: '>=10' }
+    resolution: {integrity: sha512-DkS7q3nN68dEMb4E18HFPDAvyrjDZK9YAQQF2QxeFu9gp2xRDXFMF8qLJ1EmQ/qeEGQmop4lmMM1WtYJTIcCMw==}
+    engines: {node: '>=10'}
 
   sf-symbols-typescript@2.1.0:
     resolution: {integrity: sha512-ezT7gu/SHTPIOEEoG6TF+O0m5eewl0ZDAO4AtdBi5HjsrUI6JdCG17+Q8+aKp0heM06wZKApRCn5olNbs0Wb/A==}
@@ -11271,19 +10276,13 @@ packages:
     engines: {node: '>=8.0.0'}
 
   snake-case@3.0.4:
-    resolution:
-      {
-        integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==,
-      }
+    resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
   sonic-boom@4.2.0:
     resolution: {integrity: sha512-INb7TM37/mAcsGmc9hyyI6+QR3rR1zVRu36B0NeGXKnOOLiZOfER5SA+N7X7k3yUYRzLWafduTDvJAfDswwEww==}
 
   sonner@2.0.7:
-    resolution:
-      {
-        integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==,
-      }
+    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
@@ -11577,17 +10576,11 @@ packages:
     engines: {node: '>= 0.4'}
 
   svg-parser@2.0.4:
-    resolution:
-      {
-        integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==,
-      }
+    resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
 
   svgo@3.3.2:
-    resolution:
-      {
-        integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==,
-      }
-    engines: { node: '>=14.0.0' }
+    resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
 
   swr@2.3.4:
@@ -11612,16 +10605,8 @@ packages:
   tailwindcss@4.1.12:
     resolution: {integrity: sha512-DzFtxOi+7NsFf7DBtI3BJsynR+0Yp6etH+nRPTbpWnS2pZBaSksv/JGctNwSWzbFjp0vxSqknaUylseZqMDGrA==}
 
-<<<<<<< HEAD
-  tamagui@1.132.16:
-    resolution: {integrity: sha512-BT/qNW75jrX2Yx+VUMTu0L3ALc72o8iZrFWLCijWYHI6tQVwACc0n8e6xq9y8Ln84jNQJEm13j6yLeAxgw9Zpw==}
-=======
   tamagui@1.132.17:
-    resolution:
-      {
-        integrity: sha512-jh01iJC2DYPY4cLs+JGiskMbLtiGHCl7lJ/x9e/n7ABfX+PIHBhASYaYOw7PmIvBFTuKAs5Pt/V3BdEkCv/D9w==,
-      }
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+    resolution: {integrity: sha512-jh01iJC2DYPY4cLs+JGiskMbLtiGHCl7lJ/x9e/n7ABfX+PIHBhASYaYOw7PmIvBFTuKAs5Pt/V3BdEkCv/D9w==}
     peerDependencies:
       react: '*'
       react-native: ^0.79.2
@@ -13462,6 +12447,13 @@ snapshots:
       better-call: 1.0.13
       zod: 4.0.14
 
+  '@better-auth/expo@1.3.5(better-auth@1.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.14))':
+    dependencies:
+      '@better-fetch/fetch': 1.1.18
+      better-auth: 1.3.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.0.14)
+      better-call: 1.0.13
+      zod: 4.0.14
+
   '@better-auth/utils@0.2.6':
     dependencies:
       uncrypto: 0.1.3
@@ -14100,13 +13092,9 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-<<<<<<< HEAD
-  '@img/sharp-darwin-arm64@0.34.3':
-=======
   '@ide/backoff@1.0.0': {}
 
-  '@img/sharp-darwin-arm64@0.34.2':
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+  '@img/sharp-darwin-arm64@0.34.3':
     optionalDependencies:
       '@img/sharp-libvips-darwin-arm64': 1.2.0
     optional: true
@@ -16968,11 +15956,6 @@ snapshots:
       '@smithy/types': 4.3.1
       tslib: 2.8.1
 
-<<<<<<< HEAD
-  '@swc/helpers@0.5.15':
-    dependencies:
-      tslib: 2.8.1
-=======
   '@standard-schema/utils@0.3.0': {}
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.28.0)':
@@ -17053,14 +16036,16 @@ snapshots:
       svgo: 3.3.2
     transitivePeerDependencies:
       - typescript
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
+
+  '@swc/helpers@0.5.15':
+    dependencies:
+      tslib: 2.8.1
 
   '@t3-oss/env-core@0.13.8(typescript@5.8.3)(zod@4.0.14)':
     optionalDependencies:
       typescript: 5.8.3
       zod: 4.0.14
 
-<<<<<<< HEAD
   '@tailwindcss/node@4.1.12':
     dependencies:
       '@jridgewell/remapping': 2.3.5
@@ -17133,10 +16118,7 @@ snapshots:
       postcss: 8.5.6
       tailwindcss: 4.1.12
 
-  '@tamagui/accordion@1.132.16(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
-=======
   '@tamagui/accordion@1.132.17(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
     dependencies:
       '@tamagui/collapsible': 1.132.17(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@tamagui/collection': 1.132.17(react-dom@19.0.0(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -20193,25 +19175,14 @@ snapshots:
 
   eslint-config-expo@9.2.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3):
     dependencies:
-<<<<<<< HEAD
       '@typescript-eslint/eslint-plugin': 8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3)
       '@typescript-eslint/parser': 8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3)
       eslint: 9.30.1(jiti@2.5.1)
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.30.1(jiti@2.5.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1))
       eslint-plugin-expo: 0.1.4(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1))
       eslint-plugin-react: 7.37.5(eslint@9.30.1(jiti@2.5.1))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.30.1(jiti@2.5.1))
-=======
-      '@typescript-eslint/eslint-plugin': 8.37.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-      '@typescript-eslint/parser': 8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-      eslint: 9.30.1(jiti@2.4.2)
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
-      eslint-plugin-expo: 0.1.4(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
-      eslint-plugin-react: 7.37.5(eslint@9.30.1(jiti@2.4.2))
-      eslint-plugin-react-hooks: 5.2.0(eslint@9.30.1(jiti@2.4.2))
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
       globals: 16.3.0
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
@@ -20259,26 +19230,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-<<<<<<< HEAD
   eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1)):
-=======
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)):
-    dependencies:
-      '@nolyfill/is-core-module': 1.0.39
-      debug: 4.4.1
-      eslint: 9.30.1(jiti@2.4.2)
-      get-tsconfig: 4.10.1
-      is-bun-module: 2.0.0
-      stable-hash: 0.0.5
-      tinyglobby: 0.2.14
-      unrs-resolver: 1.9.2
-    optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.30.1(jiti@2.4.2)):
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.1
@@ -20319,22 +19271,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-<<<<<<< HEAD
   eslint-plugin-eslint-comments@3.2.0(eslint@9.30.1(jiti@2.5.1)):
-=======
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)):
-    dependencies:
-      debug: 3.2.7
-    optionalDependencies:
-      '@typescript-eslint/parser': 8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-      eslint: 9.30.1(jiti@2.4.2)
-      eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
-    transitivePeerDependencies:
-      - supports-color
-
-  eslint-plugin-eslint-comments@3.2.0(eslint@9.30.1(jiti@2.4.2)):
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
     dependencies:
       escape-string-regexp: 1.0.5
       eslint: 9.30.1(jiti@2.5.1)
@@ -20378,40 +19315,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-<<<<<<< HEAD
   eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1)):
-=======
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)):
-    dependencies:
-      '@rtsao/scc': 1.1.0
-      array-includes: 3.1.9
-      array.prototype.findlastindex: 1.2.6
-      array.prototype.flat: 1.3.3
-      array.prototype.flatmap: 1.3.3
-      debug: 3.2.7
-      doctrine: 2.1.0
-      eslint: 9.30.1(jiti@2.4.2)
-      eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
-      hasown: 2.0.2
-      is-core-module: 2.16.1
-      is-glob: 4.0.3
-      minimatch: 3.1.2
-      object.fromentries: 2.0.8
-      object.groupby: 1.0.3
-      object.values: 1.2.1
-      semver: 6.3.1
-      string.prototype.trimend: 1.0.9
-      tsconfig-paths: 3.15.0
-    optionalDependencies:
-      '@typescript-eslint/parser': 8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-    transitivePeerDependencies:
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
-      - supports-color
-
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)):
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -20422,11 +19326,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.30.1(jiti@2.5.1)
       eslint-import-resolver-node: 0.3.9
-<<<<<<< HEAD
       eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.5.1))(typescript@5.8.3))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1)))(eslint@9.30.1(jiti@2.5.1))
-=======
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.37.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2)))(eslint@9.30.1(jiti@2.4.2))
->>>>>>> a06b703 (feat: add app dynamic config and eas config for deployments)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -22742,7 +21642,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  next@15.5.2(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.5.2(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@next/env': 15.5.2
       '@swc/helpers': 0.5.15
@@ -22750,7 +21650,7 @@ snapshots:
       postcss: 8.4.31
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      styled-jsx: 5.1.6(react@19.1.0)
+      styled-jsx: 5.1.6(@babel/core@7.28.0)(react@19.1.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.5.2
       '@next/swc-darwin-x64': 15.5.2
@@ -24549,10 +23449,12 @@ snapshots:
       hey-listen: 1.0.8
       tslib: 2.8.1
 
-  styled-jsx@5.1.6(react@19.1.0):
+  styled-jsx@5.1.6(@babel/core@7.28.0)(react@19.1.0):
     dependencies:
       client-only: 0.0.1
       react: 19.1.0
+    optionalDependencies:
+      '@babel/core': 7.28.0
 
   styleq@0.1.3: {}
 

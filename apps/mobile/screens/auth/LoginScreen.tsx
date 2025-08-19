@@ -1,9 +1,12 @@
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
+import { env } from '@/config/env.config';
 import { AuthTranslations, CommonTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient } from '@/lib/auth';
+import { APP_CONFIG } from '@counsy-ai/types';
 import { Ionicons } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
 import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +22,14 @@ export const LoginScreen = () => {
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
   const handleGoogleSignIn = async () => {
+    const scheme =
+      env.EXPO_PUBLIC_APP_ENV === 'production'
+        ? APP_CONFIG.basics.prefix
+        : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
+    const callbackURL = Linking.createURL('/', { scheme });
+
     await authClient.signIn.social(
-      { provider: 'google' },
+      { provider: 'google', callbackURL },
       {
         onError: (err) => {
           error(err.error?.message || t(CommonTranslations.ERROR_GENERIC));
@@ -31,7 +40,13 @@ export const LoginScreen = () => {
 
   const handleAppleSignIn = async () => {
     try {
-      await authClient.signIn.social({ provider: 'apple' });
+      const scheme =
+        env.EXPO_PUBLIC_APP_ENV === 'production'
+          ? APP_CONFIG.basics.prefix
+          : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
+      const callbackURL = Linking.createURL('/', { scheme });
+
+      await authClient.signIn.social({ provider: 'apple', callbackURL });
     } catch (error: unknown) {
       console.error(error);
     }

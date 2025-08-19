@@ -29,7 +29,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarBackground: () => <TabBarBackground />,
           tabBarActiveTintColor: theme.accentColor?.get(),
-          tabBarInactiveTintColor: theme.color?.get(),
+          tabBarInactiveTintColor: theme.color7?.get(),
           tabBarStyle: {
             position: 'absolute',
             alignItems: 'center',
@@ -54,21 +54,14 @@ export default function TabLayout() {
           name="index"
           options={{
             title: t(NavigationTranslations.HOME),
-            tabBarIcon: ({ focused }) => (
-              <HomeIcon size={24} color={(focused ? '$accentColor' : '$color') as ColorTokens} />
-            ),
+            tabBarIcon: ({ color }) => <HomeIcon size={24} color={color as ColorTokens} />,
           }}
         />
         <Tabs.Screen
           name="chats/index"
           options={{
             title: t(NavigationTranslations.CHATS),
-            tabBarIcon: ({ focused }) => (
-              <MessageSquareIcon
-                size={24}
-                color={(focused ? '$accentColor' : '$color') as ColorTokens}
-              />
-            ),
+            tabBarIcon: ({ color }) => <MessageSquareIcon size={24} color={color as ColorTokens} />,
           }}
         />
         <Tabs.Screen
@@ -83,21 +76,14 @@ export default function TabLayout() {
           name="insights/index"
           options={{
             title: t(NavigationTranslations.INSIGHTS),
-            tabBarIcon: ({ focused }) => (
-              <SparklesIcon
-                size={24}
-                color={(focused ? '$accentColor' : '$color') as ColorTokens}
-              />
-            ),
+            tabBarIcon: ({ color }) => <SparklesIcon size={24} color={color as ColorTokens} />,
           }}
         />
         <Tabs.Screen
           name="account"
           options={{
             title: t(NavigationTranslations.ACCOUNT),
-            tabBarIcon: ({ focused }) => (
-              <UserIcon size={24} color={(focused ? '$accentColor' : '$color') as ColorTokens} />
-            ),
+            tabBarIcon: ({ color }) => <UserIcon size={24} color={color as ColorTokens} />,
           }}
         />
       </Tabs>

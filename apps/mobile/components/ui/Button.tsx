@@ -21,14 +21,14 @@ export const Button = ({
   switch (variant) {
     case 'ghost':
       variantProps = {
-        background: 'transparent',
-        borderWidth: '$0',
+        bg: 'transparent',
+        borderWidth: 0,
         color: '$color',
       };
       break;
     case 'outline':
       variantProps = {
-        background: 'transparent',
+        bg: 'transparent',
         borderWidth: 1,
         borderColor: '$borderColor',
         color: '$color',

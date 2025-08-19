@@ -24,7 +24,7 @@ export default function AccountPreferencesScreen() {
   ];
 
   return (
-    <ScrollView flex={1} background="$background" p="$4">
+    <ScrollView flex={1} bg="$background" p="$4">
       <YStack gap="$6" pb={100}>
         <YStack>
           <Text fontWeight="700" fontSize="$6" mb="$2">

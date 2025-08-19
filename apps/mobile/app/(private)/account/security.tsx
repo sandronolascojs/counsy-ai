@@ -25,20 +25,20 @@ export default function AccountSecurityScreen() {
   ];
 
   return (
-    <ScrollView flex={1} backgroundColor="$background" padding="$4">
-      <YStack gap="$6" paddingBottom={100}>
+    <ScrollView flex={1} bg="$background" p="$4">
+      <YStack gap="$6" pb={100}>
         <YStack>
-          <Text fontWeight="700" fontSize="$6" marginBottom="$2">
+          <Text fontWeight="700" fontSize="$6" mb="$2">
             {t(SecurityTranslations.TITLE)}
           </Text>
-          <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
+          <YStack rounded="$4" overflow="hidden" bg="$color2">
             {securityItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
-                alignItems="center"
-                justifyContent="space-between"
-                paddingVertical="$3"
-                paddingHorizontal="$4"
+                items="center"
+                justify="space-between"
+                py="$3"
+                px="$4"
                 borderBottomWidth={idx < arr.length - 1 ? 1 : 0}
                 borderColor="$borderColor"
               >
