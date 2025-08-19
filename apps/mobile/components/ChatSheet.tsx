@@ -27,7 +27,7 @@ export const ChatSheet = () => {
     >
       <YStack gap="$5">
         {/* Recording Status */}
-        <YStack alignItems="center" gap="$3">
+        <YStack items="center" gap="$3">
           {recording ? (
             <Spinner size="large" />
           ) : (
@@ -39,16 +39,16 @@ export const ChatSheet = () => {
         </YStack>
 
         {/* Progress */}
-        <YStack alignItems="center" gap="$2">
+        <YStack items="center" gap="$2">
           <Progress
             value={12}
             max={60}
             height="$1"
-            backgroundColor="$borderColor"
+            background="$borderColor"
             borderWidth="$0.25"
             borderColor="$borderColor"
           >
-            <Progress.Indicator animation="bouncy" backgroundColor="$accentColor" />
+            <Progress.Indicator animation="bouncy" background="$accentColor" />
           </Progress>
           <Text fontSize="$3" fontWeight="500" color="$color">
             {t(VoiceTranslations.REMAINING_TIME, { time: 12, totalTime: 60 })}

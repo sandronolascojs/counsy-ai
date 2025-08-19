@@ -1,9 +1,5 @@
-import { Text, View } from 'tamagui';
+import LoginScreenView from '@/screens/auth/LoginScreen';
 
-export default function SignInView() {
-  return (
-    <View>
-      <Text>Sign In</Text>
-    </View>
-  );
+export default function SignInScreen() {
+  return <LoginScreenView />;
 }

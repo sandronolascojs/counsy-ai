@@ -25,23 +25,23 @@ export default function AccountDangerScreen() {
   ];
 
   return (
-    <ScrollView flex={1} backgroundColor="$background" padding="$4">
-      <YStack gap="$6" paddingBottom={100}>
+    <ScrollView flex={1} background="$background" p="$4">
+      <YStack gap="$6" pb={100}>
         <YStack>
-          <Text fontWeight="700" fontSize="$6" marginBottom="$2" color="$red10">
+          <Text fontWeight="700" fontSize="$6" mb="$2" color="$red10">
             {t(DangerTranslations.TITLE)}
           </Text>
-          <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
+          <YStack rounded="$4" overflow="hidden" bg="$color2">
             {dangerItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
-                alignItems="center"
-                justifyContent="space-between"
-                paddingVertical="$3"
-                paddingHorizontal="$4"
+                items="center"
+                justify="space-between"
+                py="$3"
+                px="$4"
                 borderBottomWidth={idx < arr.length - 1 ? 1 : 0}
                 borderColor="$borderColor"
-                backgroundColor="$red1"
+                bg="$red1"
               >
                 <YStack>
                   <Text fontWeight="700" color="$red10">

@@ -28442,19 +28442,11 @@
           "stiffness": 100
         },
         "slow": {
-          "damping": 20,
-          "stiffness": 60
-        },
-        "lazy": {
-          "damping": 20,
-          "stiffness": 60
-        },
-        "bouncy": {
           "damping": 10,
           "mass": 0.9,
           "stiffness": 100
         },
-        "spring": {
+        "bouncy": {
           "damping": 10,
           "mass": 0.9,
           "stiffness": 100
@@ -28464,17 +28456,37 @@
           "mass": 1.2,
           "stiffness": 250
         },
-        "fast-out": {
-          "damping": 20,
-          "mass": 1.2,
-          "stiffness": 250
-        },
         "medium-in": {
           "damping": 10,
           "mass": 0.9,
           "stiffness": 100
         },
+        "slow-in": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "bouncy-in": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "fast-out": {
+          "damping": 20,
+          "mass": 1.2,
+          "stiffness": 250
+        },
         "medium-out": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "slow-out": {
+          "damping": 10,
+          "mass": 0.9,
+          "stiffness": 100
+        },
+        "bouncy-out": {
           "damping": 10,
           "mass": 0.9,
           "stiffness": 100
@@ -28630,7 +28642,7 @@
         "backgroundHover": "hsla(0, 0%, 100%, 0.8)",
         "backgroundPress": "hsla(0, 0%, 96%, 1)",
         "backgroundFocus": "hsla(0, 0%, 96%, 1)",
-        "borderColor": "hsla(0, 0%, 90%, 1)",
+        "borderColor": "hsla(0, 0%, 85%, 1)",
         "borderColorHover": "hsla(0, 0%, 92%, 1)",
         "borderColorPress": "hsla(0, 0%, 88%, 1)",
         "borderColorFocus": "hsla(0, 0%, 90%, 1)",
@@ -28727,7 +28739,7 @@
         "backgroundHover": "hsla(0, 0%, 10%, 1)",
         "backgroundPress": "hsla(0, 0%, 6%, 0.8)",
         "backgroundFocus": "hsla(0, 0%, 6%, 0.8)",
-        "borderColor": "hsla(0, 0%, 20%, 1)",
+        "borderColor": "hsla(0, 0%, 30%, 1)",
         "borderColorHover": "hsla(0, 0%, 25%, 1)",
         "borderColorPress": "hsla(0, 0%, 15%, 1)",
         "borderColorFocus": "hsla(0, 0%, 20%, 1)",

@@ -9,6 +9,8 @@ export default function PublicLayout() {
     <Stack>
       <Stack.Screen name="sign-in/index" options={{ headerShown: false }} />
       <Stack.Screen name="sign-up/index" options={{ headerShown: false }} />
+      <Stack.Screen name="recover/index" options={{ title: 'Recover Password' }} />
+      <Stack.Screen name="reset/index" options={{ title: 'Reset Password' }} />
     </Stack>
   );
 }

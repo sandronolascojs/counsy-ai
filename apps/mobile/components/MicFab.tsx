@@ -11,7 +11,7 @@ export const MicFab = () => {
       size="$5"
       borderWidth="$0.25"
       borderColor="$borderColor"
-      alignSelf="center"
+      justify="center"
       icon={Mic}
       onPress={toggle}
       scaleIcon={1.5}

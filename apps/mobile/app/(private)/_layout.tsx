@@ -11,7 +11,7 @@ import {
 } from '@tamagui/lucide-icons';
 import { Redirect, Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'tamagui';
+import { type ColorTokens, useTheme } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -29,7 +29,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarBackground: () => <TabBarBackground />,
           tabBarActiveTintColor: theme.accentColor?.get(),
-          tabBarInactiveTintColor: theme.textSecondary?.get(),
+          tabBarInactiveTintColor: theme.color?.get(),
           tabBarStyle: {
             position: 'absolute',
             alignItems: 'center',
@@ -54,14 +54,21 @@ export default function TabLayout() {
           name="index"
           options={{
             title: t(NavigationTranslations.HOME),
-            tabBarIcon: ({ color }) => <HomeIcon size={24} color={color} />, // Home
+            tabBarIcon: ({ focused }) => (
+              <HomeIcon size={24} color={(focused ? '$accentColor' : '$color') as ColorTokens} />
+            ),
           }}
         />
         <Tabs.Screen
           name="chats/index"
           options={{
             title: t(NavigationTranslations.CHATS),
-            tabBarIcon: ({ color }) => <MessageSquareIcon size={24} color={color} />, // Chats
+            tabBarIcon: ({ focused }) => (
+              <MessageSquareIcon
+                size={24}
+                color={(focused ? '$accentColor' : '$color') as ColorTokens}
+              />
+            ),
           }}
         />
         <Tabs.Screen
@@ -76,14 +83,21 @@ export default function TabLayout() {
           name="insights/index"
           options={{
             title: t(NavigationTranslations.INSIGHTS),
-            tabBarIcon: ({ color }) => <SparklesIcon size={24} color={color} />, // Insights
+            tabBarIcon: ({ focused }) => (
+              <SparklesIcon
+                size={24}
+                color={(focused ? '$accentColor' : '$color') as ColorTokens}
+              />
+            ),
           }}
         />
         <Tabs.Screen
           name="account"
           options={{
             title: t(NavigationTranslations.ACCOUNT),
-            tabBarIcon: ({ color }) => <UserIcon size={24} color={color} />, // Account
+            tabBarIcon: ({ focused }) => (
+              <UserIcon size={24} color={(focused ? '$accentColor' : '$color') as ColorTokens} />
+            ),
           }}
         />
       </Tabs>

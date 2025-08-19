@@ -13,31 +13,31 @@ export default function AccountPreferencesScreen() {
       key: 'dark_mode',
       label: t(PreferencesTranslations.DARK_MODE_LABEL),
       description: t(PreferencesTranslations.DARK_MODE_DESCRIPTION),
-      right: <Switch checked={darkMode} onCheckedChange={setDarkMode} />,
+      right: <Switch id="dark_mode" checked={darkMode} onCheckedChange={setDarkMode} />,
     },
     {
       key: 'cloud_sync',
       label: t(PreferencesTranslations.CLOUD_SYNC_LABEL),
       description: t(PreferencesTranslations.CLOUD_SYNC_DESCRIPTION),
-      right: <Switch checked={cloudSync} onCheckedChange={setCloudSync} />,
+      right: <Switch id="cloud_sync" checked={cloudSync} onCheckedChange={setCloudSync} />,
     },
   ];
 
   return (
-    <ScrollView flex={1} backgroundColor="$background" padding="$4">
-      <YStack gap="$6" paddingBottom={100}>
+    <ScrollView flex={1} background="$background" p="$4">
+      <YStack gap="$6" pb={100}>
         <YStack>
-          <Text fontWeight="700" fontSize="$6" marginBottom="$2">
+          <Text fontWeight="700" fontSize="$6" mb="$2">
             {t(PreferencesTranslations.TITLE)}
           </Text>
-          <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
+          <YStack rounded="$4" overflow="hidden" bg="$color2">
             {preferenceItems.map((item, idx, arr) => (
               <XStack
                 key={item.label}
-                alignItems="center"
-                justifyContent="space-between"
-                paddingVertical="$3"
-                paddingHorizontal="$4"
+                items="center"
+                justify="space-between"
+                py="$3"
+                px="$4"
                 borderBottomWidth={idx < arr.length - 1 ? 1 : 0}
                 borderColor="$borderColor"
               >

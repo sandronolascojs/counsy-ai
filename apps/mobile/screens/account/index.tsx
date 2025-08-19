@@ -85,24 +85,24 @@ export const AccountSettingsView = () => {
   ];
 
   return (
-    <ScrollView flex={1} backgroundColor="$background" padding="$4">
-      <YStack gap="$6" paddingBottom={100}>
+    <ScrollView flex={1} bg="$background" p="$4">
+      <YStack gap="$6" pb={100}>
         {settingsSections.map((section) => (
           <YStack key={section.title}>
-            <Text fontWeight="700" fontSize="$6" marginBottom="$2">
+            <Text fontWeight="700" fontSize="$6" mb="$2">
               {section.title}
             </Text>
-            <YStack borderRadius="$4" overflow="hidden" backgroundColor="$color2">
+            <YStack rounded="$4" overflow="hidden" bg="$color2">
               {section.items.map((item, idx) => (
                 <XStack
                   key={item.label}
-                  alignItems="center"
-                  justifyContent="space-between"
-                  paddingVertical="$3"
-                  paddingHorizontal="$4"
+                  items="center"
+                  justify="space-between"
+                  py="$3"
+                  px="$4"
                   borderBottomWidth={idx < section.items.length - 1 ? 1 : 0}
                   borderColor="$borderColor"
-                  backgroundColor={item.isDanger ? '$red1' : 'transparent'}
+                  bg={item.isDanger ? '$red1' : 'transparent'}
                 >
                   <YStack>
                     <Text color={item.isDanger ? '$red10' : '$color'} fontWeight="600">
@@ -120,7 +120,7 @@ export const AccountSettingsView = () => {
             </YStack>
           </YStack>
         ))}
-        <Separator marginVertical="$4" />
+        <Separator my="$4" />
         <Button variant="outline">Logout</Button>
       </YStack>
     </ScrollView>

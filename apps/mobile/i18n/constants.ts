@@ -29,6 +29,20 @@ export enum SettingsTranslations {
   LANGUAGE_CHANGE = 'settings.language.change',
 }
 
+export enum AuthTranslations {
+  WELCOME_TITLE = 'auth.welcome_title',
+  WELCOME_SUBTITLE = 'auth.welcome_subtitle',
+  CONTINUE_WITH_APPLE = 'auth.continue_with_apple',
+  CONTINUE_WITH_GOOGLE = 'auth.continue_with_google',
+  CONTINUE_WITH_EMAIL = 'auth.continue_with_email',
+  OR = 'auth.or',
+  AND = 'auth.and',
+  LEGAL_PREFIX = 'auth.legal_prefix',
+  TERMS = 'auth.terms',
+  PRIVACY = 'auth.privacy',
+  SKIP = 'auth.skip',
+}
+
 export enum AccountTranslations {
   TITLE = 'account.title',
   CHANGE_NAME_LABEL = 'account.change_name.label',
@@ -69,10 +83,23 @@ export enum DangerTranslations {
   DELETE_ACCOUNT_DESCRIPTION = 'danger.delete_account.description',
 }
 
+export enum CommonTranslations {
+  ERROR_GENERIC = 'common.errors.generic',
+  ERROR_NETWORK = 'common.errors.network',
+  ERROR_TIMEOUT = 'common.errors.timeout',
+  ERROR_UNAUTHORIZED = 'common.errors.unauthorized',
+  ERROR_FORBIDDEN = 'common.errors.forbidden',
+  ERROR_NOT_FOUND = 'common.errors.not_found',
+  ERROR_RATE_LIMITED = 'common.errors.rate_limited',
+  ERROR_UNKNOWN = 'common.errors.unknown',
+}
+
 export const NAMESPACES = {
   NAVIGATION: 'navigation',
   GREETINGS: 'greetings',
   VOICE: 'voice',
   SETTINGS: 'settings',
   ACCOUNT: 'account',
+  AUTH: 'auth',
+  COMMON: 'common',
 } as const;

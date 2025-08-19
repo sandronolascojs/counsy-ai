@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button as TamaguiButton, ButtonProps as TamaguiButtonProps } from 'tamagui';
 
 export type ButtonVariant = 'default' | 'ghost' | 'outline';
@@ -20,14 +21,14 @@ export const Button = ({
   switch (variant) {
     case 'ghost':
       variantProps = {
-        backgroundColor: 'transparent',
+        background: 'transparent',
         borderWidth: '$0',
         color: '$color',
       };
       break;
     case 'outline':
       variantProps = {
-        backgroundColor: 'transparent',
+        background: 'transparent',
         borderWidth: 1,
         borderColor: '$borderColor',
         color: '$color',

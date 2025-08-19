@@ -86,6 +86,7 @@ const builtThemes = createThemes({
         ...Colors.red,
         ...Colors.yellow,
         ...lightShadows,
+        borderColor: colors.light.border,
         shadowColor: lightShadows.shadow1,
       },
       dark: {
@@ -93,6 +94,7 @@ const builtThemes = createThemes({
         ...Colors.redDark,
         ...Colors.yellowDark,
         ...darkShadows,
+        borderColor: colors.dark.border,
         shadowColor: darkShadows.shadow1,
       },
     },
@@ -153,8 +155,7 @@ const builtThemes = createThemes({
 });
 
 export type Themes = typeof builtThemes;
+export type ThemeName = keyof Themes;
 
-export const themes: Themes =
-  process.env.TAMAGUI_ENVIRONMENT === 'client' && process.env.NODE_ENV === 'production'
-    ? ({} as any)
-    : (builtThemes as any);
+// Always export full themes so tokens/theme variables are available in all environments
+export const themes: Themes = builtThemes;

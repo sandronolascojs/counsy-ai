@@ -5,12 +5,16 @@ import { initReactI18next } from 'react-i18next';
 import { NAMESPACES } from './constants';
 
 import enAccount from './locales/en/account.json';
+import enAuth from './locales/en/auth.json';
+import enCommon from './locales/en/common.json';
 import enGreetings from './locales/en/greetings.json';
 import enNavigation from './locales/en/navigation.json';
 import enSettings from './locales/en/settings.json';
 import enVoice from './locales/en/voice.json';
 
 import esAccount from './locales/es/account.json';
+import esAuth from './locales/es/auth.json';
+import esCommon from './locales/es/common.json';
 import esGreetings from './locales/es/greetings.json';
 import esNavigation from './locales/es/navigation.json';
 import esSettings from './locales/es/settings.json';
@@ -23,6 +27,8 @@ export const resources = {
     [NAMESPACES.VOICE]: enVoice,
     [NAMESPACES.SETTINGS]: enSettings,
     [NAMESPACES.ACCOUNT]: enAccount,
+    [NAMESPACES.AUTH]: enAuth,
+    [NAMESPACES.COMMON]: enCommon,
   },
   es: {
     [NAMESPACES.NAVIGATION]: esNavigation,
@@ -30,6 +36,8 @@ export const resources = {
     [NAMESPACES.VOICE]: esVoice,
     [NAMESPACES.SETTINGS]: esSettings,
     [NAMESPACES.ACCOUNT]: esAccount,
+    [NAMESPACES.AUTH]: esAuth,
+    [NAMESPACES.COMMON]: esCommon,
   },
 } as const;
 
