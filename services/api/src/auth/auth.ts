@@ -24,6 +24,8 @@ const mobileOrigins = [
     : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
 ];
 
+const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
+
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
     cookieCache: {
@@ -46,6 +48,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   }),
   trustedOrigins: [
     ...mobileOrigins,
+    ...devExpoOrigins,
     ...env.ALLOWED_ORIGINS.split(',')
       .map((origin) => origin.trim())
       .filter((origin) => origin.length > 0),

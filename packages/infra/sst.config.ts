@@ -33,9 +33,9 @@ export default $config({
     const isProduction = $app.stage === 'production';
 
     const APP_NAME = APP_CONFIG.basics.name.toLowerCase().replace(/\s+/g, '-');
-    const ROOT = env.FRONTEND_URL; // counsy.ai
-    const API_ZONE = `api.${ROOT}`; // api.counsy.ai   (zone Route 53)
-    const APP_ZONE = `app.${ROOT}`; // app.counsy.ai   (zone Route 53)
+    const ROOT = env.FRONTEND_URL; // counsy.app
+    const API_ZONE = `api.${ROOT}`; // api.counsy.app   (zone Route 53)
+    const APP_ZONE = `app.${ROOT}`; // app.counsy.app   (zone Route 53)
 
     const API_DOMAIN = isProduction ? `${API_ZONE}` : `${$app.stage}.${API_ZONE}`;
     const FRONT_DOMAIN = isProduction ? `${APP_ZONE}` : `${$app.stage}.${APP_ZONE}`;
@@ -126,10 +126,8 @@ export default $config({
 
     return {
       ApiUrl: api.url,
-      DbHost: db.host,
-      DbUser: db.username,
-      DbName: db.database,
       FrontendUrl: frontend.url,
+      databaseUrl: $interpolate`postgresql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}`,
     };
   },
 });

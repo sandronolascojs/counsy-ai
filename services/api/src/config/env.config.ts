@@ -10,13 +10,6 @@ export const env = createEnv({
     API_BASE_URL: z.string(),
     FRONTEND_URL: z.string(),
 
-    // slack
-    SLACK_CLIENT_ID: z.string(),
-    SLACK_CLIENT_SECRET: z.string(),
-    SLACK_SIGNING_SECRET: z.string(),
-    OAUTH_SCOPES: z.string(),
-    NGROK_SLACK_ENDPOINT: z.string().optional(),
-
     // auth
     BETTER_AUTH_URL: z.string(),
     BETTER_AUTH_SECRET: z.string(),
@@ -35,10 +28,6 @@ export const env = createEnv({
     API_BASE_URL: process.env.API_BASE_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
-    SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
-    SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET,
-    SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
-    OAUTH_SCOPES: process.env.OAUTH_SCOPES,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
@@ -46,6 +35,5 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     FRONTEND_URL: process.env.FRONTEND_URL,
-    NGROK_SLACK_ENDPOINT: process.env.NGROK_SLACK_ENDPOINT,
   },
 });
