@@ -33,6 +33,23 @@
       "description": "Eliminar permanentemente tu cuenta"
     }
   },
+  "overview": {
+    "open": "Abrir",
+    "logout": "Cerrar sesión",
+    "app_version": "Versión de la app {{version}}",
+    "account": {
+      "description": "Configuración de perfil e identidad"
+    },
+    "security": {
+      "description": "Revisar todas las configuraciones de seguridad"
+    },
+    "preferences": {
+      "description": "Opciones de tema y sincronización"
+    },
+    "danger": {
+      "description": "Acciones destructivas sensibles"
+    }
+  },
   "preferences": {
     "title": "Preferencias",
     "dark_mode": {

@@ -1,6 +1,7 @@
 import { ChatSheet } from '@/components/ChatSheet';
 import { MicFab } from '@/components/MicFab';
 import { TabBarBackground } from '@/components/TabBarBackground';
+import { useAuthNavigationGuard } from '@/hooks/useAuthNavigationGuard';
 import { NAMESPACES, NavigationTranslations } from '@/i18n/constants';
 import { authClient } from '@/lib/auth';
 import {
@@ -9,24 +10,26 @@ import {
   Sparkles as SparklesIcon,
   User as UserIcon,
 } from '@tamagui/lucide-icons';
-import { Redirect, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { type ColorTokens, useTheme } from 'tamagui';
+import { useTheme, YStack, type ColorTokens } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
-  const { data: session, isPending } = authClient.useSession();
-
-  if (isPending) return null;
-  if (!session?.user) return <Redirect href="/(public)/sign-in" />;
-
+  const { data: session } = authClient.useSession();
   const { t } = useTranslation(NAMESPACES.NAVIGATION);
+  const { isBlocking } = useAuthNavigationGuard({ mode: 'private' });
+
+  if (isBlocking || !session?.user) {
+    return <YStack flex={1} bg="$background" />;
+  }
 
   return (
     <>
       <Tabs
         screenOptions={{
           headerShown: false,
+          sceneStyle: { backgroundColor: 'transparent' },
           tabBarBackground: () => <TabBarBackground />,
           tabBarActiveTintColor: theme.accentColor?.get(),
           tabBarInactiveTintColor: theme.color7?.get(),

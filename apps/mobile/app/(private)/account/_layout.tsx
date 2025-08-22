@@ -10,7 +10,7 @@ export default function AccountStackLayout() {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false, headerBackTitle: 'Return' }} />
-      <Stack.Screen name="account" options={{ title: 'Account', headerBackTitle: 'Return' }} />
+      <Stack.Screen name="details" options={{ title: 'Account', headerBackTitle: 'Return' }} />
       <Stack.Screen name="security" options={{ title: 'Security', headerBackTitle: 'Return' }} />
       <Stack.Screen
         name="preferences"

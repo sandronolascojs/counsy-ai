@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/Button';
+import { authClient } from '@/lib/auth';
+import { APP_CONFIG } from '@counsy-ai/types';
 import { Link } from 'expo-router';
 import React from 'react';
 import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
@@ -15,6 +17,10 @@ interface SettingsSection {
 }
 
 export const AccountSettingsView = () => {
+  const handleLogout = async () => {
+    await authClient.signOut();
+  };
+
   const settingsSections: SettingsSection[] = [
     {
       title: 'Account',
@@ -23,7 +29,7 @@ export const AccountSettingsView = () => {
           label: 'Open Account',
           description: 'Profile and identity settings',
           right: (
-            <Link href="/(private)/account/account" asChild>
+            <Link href="/(private)/account/details" asChild>
               <Text color="$accentColor" fontWeight="700">
                 Open
               </Text>
@@ -120,8 +126,12 @@ export const AccountSettingsView = () => {
             </YStack>
           </YStack>
         ))}
+        {/* app version */}
+        <Text fontSize="$2" color="$color8">
+          App version {APP_CONFIG.basics.version}
+        </Text>
         <Separator my="$4" />
-        <Button variant="outline">Logout</Button>
+        <Button onPress={handleLogout}>Logout</Button>
       </YStack>
     </ScrollView>
   );

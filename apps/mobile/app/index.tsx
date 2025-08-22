@@ -4,9 +4,9 @@ import type { ReactElement } from 'react';
 
 const Index = (): ReactElement | null => {
   const { data: session, isPending } = authClient.useSession();
+  console.log('session', session);
   if (isPending) return null;
-  if (session?.user) return <Redirect href="/(private)" />;
-  return <Redirect href="/(public)/sign-in" />;
+  return session?.user ? <Redirect href="/(private)" /> : <Redirect href="/(public)/sign-in" />;
 };
 
 export default Index;

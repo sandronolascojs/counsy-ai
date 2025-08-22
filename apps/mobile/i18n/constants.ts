@@ -3,6 +3,7 @@ export enum NavigationTranslations {
   CHATS = 'navigation.chats',
   INSIGHTS = 'navigation.insights',
   ACCOUNT = 'navigation.account',
+  BACK = 'navigation.back',
 }
 
 export enum GreetingsTranslations {
@@ -27,20 +28,6 @@ export enum VoiceTranslations {
 export enum SettingsTranslations {
   LANGUAGE_LABEL = 'settings.language.label',
   LANGUAGE_CHANGE = 'settings.language.change',
-}
-
-export enum AuthTranslations {
-  WELCOME_TITLE = 'auth.welcome_title',
-  WELCOME_SUBTITLE = 'auth.welcome_subtitle',
-  CONTINUE_WITH_APPLE = 'auth.continue_with_apple',
-  CONTINUE_WITH_GOOGLE = 'auth.continue_with_google',
-  CONTINUE_WITH_EMAIL = 'auth.continue_with_email',
-  OR = 'auth.or',
-  AND = 'auth.and',
-  LEGAL_PREFIX = 'auth.legal_prefix',
-  TERMS = 'auth.terms',
-  PRIVACY = 'auth.privacy',
-  SKIP = 'auth.skip',
 }
 
 export enum AccountTranslations {
@@ -83,15 +70,39 @@ export enum DangerTranslations {
   DELETE_ACCOUNT_DESCRIPTION = 'danger.delete_account.description',
 }
 
+export enum AccountOverviewTranslations {
+  OPEN = 'overview.open',
+  LOGOUT = 'overview.logout',
+  APP_VERSION = 'overview.app_version',
+  ACCOUNT_DESCRIPTION = 'overview.account.description',
+  SECURITY_DESCRIPTION = 'overview.security.description',
+  PREFERENCES_DESCRIPTION = 'overview.preferences.description',
+  DANGER_DESCRIPTION = 'overview.danger.description',
+}
+
 export enum CommonTranslations {
   ERROR_GENERIC = 'common.errors.generic',
-  ERROR_NETWORK = 'common.errors.network',
-  ERROR_TIMEOUT = 'common.errors.timeout',
-  ERROR_UNAUTHORIZED = 'common.errors.unauthorized',
-  ERROR_FORBIDDEN = 'common.errors.forbidden',
-  ERROR_NOT_FOUND = 'common.errors.not_found',
-  ERROR_RATE_LIMITED = 'common.errors.rate_limited',
-  ERROR_UNKNOWN = 'common.errors.unknown',
+}
+
+export enum AuthTranslations {
+  EMAIL_LABEL = 'auth.email.label',
+  EMAIL_PLACEHOLDER = 'auth.email.placeholder',
+  PASSWORD_LABEL = 'auth.password.label',
+  PASSWORD_PLACEHOLDER = 'auth.password.placeholder',
+  SIGN_IN = 'auth.sign_in',
+  SIGNING_IN = 'auth.signing_in',
+  SIGN_IN_WITH_EMAIL = 'auth.sign_in_with_email',
+  WELCOME_TITLE = 'auth.welcome_title',
+  WELCOME_SUBTITLE = 'auth.welcome_subtitle',
+  CONTINUE_WITH_EMAIL = 'auth.continue_with_email',
+  CONTINUE_WITH_APPLE = 'auth.continue_with_apple',
+  CONTINUE_WITH_GOOGLE = 'auth.continue_with_google',
+  OR = 'auth.or',
+  AND = 'auth.and',
+  LEGAL_PREFIX = 'auth.legal_prefix',
+  TERMS = 'auth.terms',
+  PRIVACY = 'auth.privacy',
+  SKIP = 'auth.skip',
 }
 
 export const NAMESPACES = {

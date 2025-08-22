@@ -38,7 +38,12 @@ const RootLayout = () => {
             <ToastProvider>
               <YStack flex={1} bg="$background">
                 <SafeAreaView style={{ flex: 1 }}>
-                  <Stack>
+                  <Stack
+                    screenOptions={{
+                      animation: 'none',
+                      contentStyle: { backgroundColor: 'transparent' },
+                    }}
+                  >
                     <Stack.Screen name="index" options={{ headerShown: false }} />
                     <Stack.Screen name="(public)" options={{ headerShown: false }} />
                     <Stack.Screen name="(private)" options={{ headerShown: false }} />
