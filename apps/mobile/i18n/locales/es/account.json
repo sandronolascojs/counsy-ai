@@ -18,6 +18,15 @@
       "description": "Seleccionar tu idioma preferido"
     }
   },
+  "overview": {
+    "open": "Abrir",
+    "logout": "Cerrar sesión",
+    "app_version": "Versión de la app {{version}}",
+    "account": { "description": "Configuración de perfil e identidad" },
+    "security": { "description": "Revisar todas las configuraciones de seguridad" },
+    "preferences": { "description": "Opciones de tema y sincronización" },
+    "danger": { "description": "Acciones destructivas sensibles" }
+  },
   "danger": {
     "title": "Zona de Peligro",
     "delete_data": {

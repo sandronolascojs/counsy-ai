@@ -18,6 +18,15 @@
       "description": "Select your preferred language"
     }
   },
+  "overview": {
+    "open": "Open",
+    "logout": "Logout",
+    "app_version": "App version {{version}}",
+    "account": { "description": "Profile and identity settings" },
+    "security": { "description": "Review all security settings" },
+    "preferences": { "description": "Theme and sync options" },
+    "danger": { "description": "Sensitive destructive actions" }
+  },
   "danger": {
     "title": "Danger Zone",
     "delete_data": {
