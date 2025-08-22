@@ -7,6 +7,9 @@ import {
   NAMESPACES,
   AccountTranslations,
   AccountOverviewTranslations,
+  SecurityTranslations,
+  PreferencesTranslations,
+  DangerTranslations,
 } from '@/i18n/constants';
 import { APP_CONFIG } from '@/config/env.config';
 
@@ -30,8 +33,8 @@ export const AccountSettingsView = () => {
       title: t(AccountTranslations.TITLE),
       items: [
         {
-          label: t('overview.open') + ' ' + t(AccountTranslations.TITLE),
-          description: t('overview.account.description'),
+          label: `${t(AccountOverviewTranslations.OPEN)} ${t(AccountTranslations.TITLE)}`,
+          description: t(AccountOverviewTranslations.ACCOUNT_DESCRIPTION),
           right: (
             <Link href="/(tabs)/account/account" asChild>
               <Text color="$accentColor" fontWeight="700">
@@ -43,11 +46,11 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: t('security.title'),
+      title: t(SecurityTranslations.TITLE),
       items: [
         {
-          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('security.title'),
-          description: t('overview.security.description'),
+          label: `${t(AccountOverviewTranslations.OPEN)} ${t(SecurityTranslations.TITLE)}`,
+          description: t(AccountOverviewTranslations.SECURITY_DESCRIPTION),
           right: (
             <Link href="/(tabs)/account/security" asChild>
               <Text color="$accentColor" fontWeight="700">
@@ -59,11 +62,11 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: t('preferences.title'),
+      title: t(PreferencesTranslations.TITLE),
       items: [
         {
-          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('preferences.title'),
-          description: t('overview.preferences.description'),
+          label: `${t(AccountOverviewTranslations.OPEN)} ${t(PreferencesTranslations.TITLE)}`,
+          description: t(AccountOverviewTranslations.PREFERENCES_DESCRIPTION),
           right: (
             <Link href="/(tabs)/account/preferences" asChild>
               <Text color="$accentColor" fontWeight="700">
@@ -75,11 +78,11 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: t('danger.title'),
+      title: t(DangerTranslations.TITLE),
       items: [
         {
-          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('danger.title'),
-          description: t('overview.danger.description'),
+          label: `${t(AccountOverviewTranslations.OPEN)} ${t(DangerTranslations.TITLE)}`,
+          description: t(AccountOverviewTranslations.DANGER_DESCRIPTION),
           isDanger: true,
           right: (
             <Link href="/(tabs)/account/danger" asChild>
