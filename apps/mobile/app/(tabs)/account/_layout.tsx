@@ -1,6 +1,18 @@
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import {
+  NAMESPACES,
+  NavigationTranslations,
+  AccountTranslations,
+  SecurityTranslations,
+  PreferencesTranslations,
+  DangerTranslations,
+} from '@/i18n/constants';
 
 export default function AccountStackLayout() {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
+  const { t: tNav } = useTranslation(NAMESPACES.NAVIGATION);
+
   return (
     <Stack
       screenOptions={{
@@ -9,14 +21,14 @@ export default function AccountStackLayout() {
         contentStyle: { backgroundColor: 'transparent' },
       }}
     >
-      <Stack.Screen name="index" options={{ headerShown: false, headerBackTitle: 'Return' }} />
-      <Stack.Screen name="account" options={{ title: 'Account', headerBackTitle: 'Return' }} />
-      <Stack.Screen name="security" options={{ title: 'Security', headerBackTitle: 'Return' }} />
+      <Stack.Screen name="index" options={{ headerShown: false, headerBackTitle: tNav(NavigationTranslations.BACK) }} />
+      <Stack.Screen name="account" options={{ title: t(AccountTranslations.TITLE), headerBackTitle: tNav(NavigationTranslations.BACK) }} />
+      <Stack.Screen name="security" options={{ title: t(SecurityTranslations.TITLE), headerBackTitle: tNav(NavigationTranslations.BACK) }} />
       <Stack.Screen
         name="preferences"
-        options={{ title: 'Preferences', headerBackTitle: 'Return' }}
+        options={{ title: t(PreferencesTranslations.TITLE), headerBackTitle: tNav(NavigationTranslations.BACK) }}
       />
-      <Stack.Screen name="danger" options={{ title: 'Danger Zone', headerBackTitle: 'Return' }} />
+      <Stack.Screen name="danger" options={{ title: t(DangerTranslations.TITLE), headerBackTitle: tNav(NavigationTranslations.BACK) }} />
     </Stack>
   );
 }

@@ -3,6 +3,7 @@ export enum NavigationTranslations {
   CHATS = 'navigation.chats',
   INSIGHTS = 'navigation.insights',
   ACCOUNT = 'navigation.account',
+  BACK = 'navigation.back',
 }
 
 export enum GreetingsTranslations {
@@ -67,6 +68,16 @@ export enum DangerTranslations {
   PAUSE_ACCOUNT_DESCRIPTION = 'danger.pause_account.description',
   DELETE_ACCOUNT_LABEL = 'danger.delete_account.label',
   DELETE_ACCOUNT_DESCRIPTION = 'danger.delete_account.description',
+}
+
+export enum AccountOverviewTranslations {
+  OPEN = 'overview.open',
+  LOGOUT = 'overview.logout',
+  APP_VERSION = 'overview.app_version',
+  ACCOUNT_DESCRIPTION = 'overview.account.description',
+  SECURITY_DESCRIPTION = 'overview.security.description',
+  PREFERENCES_DESCRIPTION = 'overview.preferences.description',
+  DANGER_DESCRIPTION = 'overview.danger.description',
 }
 
 export const NAMESPACES = {

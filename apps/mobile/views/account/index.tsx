@@ -2,30 +2,40 @@ import { Button } from '@/components/ui/Button';
 import { Link } from 'expo-router';
 import React from 'react';
 import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
+import { useTranslation } from 'react-i18next';
+import {
+  NAMESPACES,
+  AccountTranslations,
+  AccountOverviewTranslations,
+} from '@/i18n/constants';
+import { APP_CONFIG } from '@/config/env.config';
+
+interface SettingsSectionItem {
+  label: string;
+  description?: string;
+  right?: React.ReactNode;
+  isDanger?: boolean;
+}
 
 interface SettingsSection {
   title: string;
-  items: {
-    label: string;
-    description?: string;
-    onPress?: () => void;
-    right?: React.ReactNode;
-    isDanger?: boolean;
-  }[];
+  items: SettingsSectionItem[];
 }
 
 export const AccountSettingsView = () => {
+  const { t } = useTranslation(NAMESPACES.ACCOUNT);
+
   const settingsSections: SettingsSection[] = [
     {
-      title: 'Account',
+      title: t(AccountTranslations.TITLE),
       items: [
         {
-          label: 'Open Account',
-          description: 'Profile and identity settings',
+          label: t('overview.open') + ' ' + t(AccountTranslations.TITLE),
+          description: t('overview.account.description'),
           right: (
             <Link href="/(tabs)/account/account" asChild>
               <Text color="$accentColor" fontWeight="700">
-                Open
+                {t(AccountOverviewTranslations.OPEN)}
               </Text>
             </Link>
           ),
@@ -33,16 +43,15 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: 'Security',
+      title: t('security.title'),
       items: [
         {
-          label: 'Open Security',
-          description: 'Review all security settings',
-          onPress: undefined,
+          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('security.title'),
+          description: t('overview.security.description'),
           right: (
             <Link href="/(tabs)/account/security" asChild>
               <Text color="$accentColor" fontWeight="700">
-                Open
+                {t(AccountOverviewTranslations.OPEN)}
               </Text>
             </Link>
           ),
@@ -50,15 +59,15 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: 'Preferences',
+      title: t('preferences.title'),
       items: [
         {
-          label: 'Open Preferences',
-          description: 'Theme and sync options',
+          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('preferences.title'),
+          description: t('overview.preferences.description'),
           right: (
             <Link href="/(tabs)/account/preferences" asChild>
               <Text color="$accentColor" fontWeight="700">
-                Open
+                {t(AccountOverviewTranslations.OPEN)}
               </Text>
             </Link>
           ),
@@ -66,16 +75,16 @@ export const AccountSettingsView = () => {
       ],
     },
     {
-      title: 'Danger Zone',
+      title: t('danger.title'),
       items: [
         {
-          label: 'Open Danger Zone',
-          description: 'Sensitive destructive actions',
+          label: t(AccountOverviewTranslations.OPEN) + ' ' + t('danger.title'),
+          description: t('overview.danger.description'),
           isDanger: true,
           right: (
             <Link href="/(tabs)/account/danger" asChild>
               <Text color="$red10" fontWeight="700">
-                Open
+                {t(AccountOverviewTranslations.OPEN)}
               </Text>
             </Link>
           ),
@@ -120,8 +129,11 @@ export const AccountSettingsView = () => {
             </YStack>
           </YStack>
         ))}
+        <Text fontSize="$2" color="$color8">
+          {t(AccountOverviewTranslations.APP_VERSION, { version: APP_CONFIG.basics.version })}
+        </Text>
         <Separator marginVertical="$4" />
-        <Button variant="outline">Logout</Button>
+        <Button variant="outline">{t(AccountOverviewTranslations.LOGOUT)}</Button>
       </YStack>
     </ScrollView>
   );
