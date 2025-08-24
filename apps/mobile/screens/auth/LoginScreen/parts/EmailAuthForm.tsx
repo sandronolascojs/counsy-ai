@@ -135,5 +135,3 @@ export const EmailAuthForm = ({ onBack }: Props) => {
     </YStack>
   );
 };
-
-export default EmailAuthForm;

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import { authClient } from '@/lib/auth';
 import { APP_CONFIG } from '@counsy-ai/types';
 import { Link } from 'expo-router';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
 
 interface SettingsSection {
@@ -17,78 +17,81 @@ interface SettingsSection {
 }
 
 export const AccountSettingsView = () => {
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     await authClient.signOut();
-  };
+  }, []);
 
-  const settingsSections: SettingsSection[] = [
-    {
-      title: 'Account',
-      items: [
-        {
-          label: 'Open Account',
-          description: 'Profile and identity settings',
-          right: (
-            <Link href="/(private)/account/details" asChild>
-              <Text color="$accentColor" fontWeight="700">
-                Open
-              </Text>
-            </Link>
-          ),
-        },
-      ],
-    },
-    {
-      title: 'Security',
-      items: [
-        {
-          label: 'Open Security',
-          description: 'Review all security settings',
-          onPress: undefined,
-          right: (
-            <Link href="/(private)/account/security" asChild>
-              <Text color="$accentColor" fontWeight="700">
-                Open
-              </Text>
-            </Link>
-          ),
-        },
-      ],
-    },
-    {
-      title: 'Preferences',
-      items: [
-        {
-          label: 'Open Preferences',
-          description: 'Theme and sync options',
-          right: (
-            <Link href="/(private)/account/preferences" asChild>
-              <Text color="$accentColor" fontWeight="700">
-                Open
-              </Text>
-            </Link>
-          ),
-        },
-      ],
-    },
-    {
-      title: 'Danger Zone',
-      items: [
-        {
-          label: 'Open Danger Zone',
-          description: 'Sensitive destructive actions',
-          isDanger: true,
-          right: (
-            <Link href="/(private)/account/danger" asChild>
-              <Text color="$red10" fontWeight="700">
-                Open
-              </Text>
-            </Link>
-          ),
-        },
-      ],
-    },
-  ];
+  const settingsSections: SettingsSection[] = useMemo(
+    () => [
+      {
+        title: 'Account',
+        items: [
+          {
+            label: 'Open Account',
+            description: 'Profile and identity settings',
+            right: (
+              <Link href="/(private)/account/details" asChild>
+                <Text color="$accentColor" fontWeight="700">
+                  Open
+                </Text>
+              </Link>
+            ),
+          },
+        ],
+      },
+      {
+        title: 'Security',
+        items: [
+          {
+            label: 'Open Security',
+            description: 'Review all security settings',
+            onPress: undefined,
+            right: (
+              <Link href="/(private)/account/security" asChild>
+                <Text color="$accentColor" fontWeight="700">
+                  Open
+                </Text>
+              </Link>
+            ),
+          },
+        ],
+      },
+      {
+        title: 'Preferences',
+        items: [
+          {
+            label: 'Open Preferences',
+            description: 'Theme and sync options',
+            right: (
+              <Link href="/(private)/account/preferences" asChild>
+                <Text color="$accentColor" fontWeight="700">
+                  Open
+                </Text>
+              </Link>
+            ),
+          },
+        ],
+      },
+      {
+        title: 'Danger Zone',
+        items: [
+          {
+            label: 'Open Danger Zone',
+            description: 'Sensitive destructive actions',
+            isDanger: true,
+            right: (
+              <Link href="/(private)/account/danger" asChild>
+                <Text color="$red10" fontWeight="700">
+                  Open
+                </Text>
+              </Link>
+            ),
+          },
+        ],
+      },
+    ],
+    [],
+  );
 
   return (
     <ScrollView flex={1} bg="$background" p="$4">

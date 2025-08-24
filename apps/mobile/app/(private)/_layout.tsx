@@ -1,3 +1,4 @@
+import { BrandedLoader } from '@/components/BrandedLoader';
 import { ChatSheet } from '@/components/ChatSheet';
 import { MicFab } from '@/components/MicFab';
 import { TabBarBackground } from '@/components/TabBarBackground';
@@ -12,7 +13,7 @@ import {
 } from '@tamagui/lucide-icons';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useTheme, YStack, type ColorTokens } from 'tamagui';
+import { useTheme, type ColorTokens } from 'tamagui';
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -21,7 +22,7 @@ export default function TabLayout() {
   const { isBlocking } = useAuthNavigationGuard({ mode: 'private' });
 
   if (isBlocking || !session?.user) {
-    return <YStack flex={1} bg="$background" />;
+    return <BrandedLoader message="Loading your space..." />;
   }
 
   return (

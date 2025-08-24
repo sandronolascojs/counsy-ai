@@ -4,9 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, YStack } from 'tamagui';
 
-interface Props {}
-
-export const LegalFooter = ({}: Props) => {
+export const LegalFooter = () => {
   const { t } = useTranslation([NAMESPACES.AUTH]);
   return (
     <YStack gap="$2" mb="$4" items="center">
@@ -24,5 +22,3 @@ export const LegalFooter = ({}: Props) => {
     </YStack>
   );
 };
-
-export default LegalFooter;
