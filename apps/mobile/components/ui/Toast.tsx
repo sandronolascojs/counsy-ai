@@ -6,6 +6,7 @@ import {
   useToastState,
 } from '@tamagui/toast';
 import React from 'react';
+import { NativeModules, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SizableText, useTheme, useThemeName, XStack, YStack } from 'tamagui';
 
@@ -96,8 +97,12 @@ export const Toaster = () => {
 };
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
+  const hasNativeBurnt = Platform.OS !== 'web' && Boolean(NativeModules?.Burnt);
   return (
-    <TamaguiToastProvider native burntOptions={{ from: 'top' }}>
+    <TamaguiToastProvider
+      native={hasNativeBurnt}
+      burntOptions={hasNativeBurnt ? { from: 'top' } : undefined}
+    >
       {children}
       <Toaster />
       <SafeToastViewport />
