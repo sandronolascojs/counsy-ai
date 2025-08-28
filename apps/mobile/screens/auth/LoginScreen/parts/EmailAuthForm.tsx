@@ -54,7 +54,7 @@ export const EmailAuthForm = () => {
   return (
     <YStack gap="$4">
       <YStack>
-        <YStack gap="$0.5">
+        <YStack gap="$1">
           <Label htmlFor="email">{t(AuthTranslations.EMAIL_LABEL, { ns: NAMESPACES.AUTH })}</Label>
           <Controller
             control={control}
@@ -82,7 +82,7 @@ export const EmailAuthForm = () => {
           )}
         </YStack>
 
-        <YStack gap="$0.5">
+        <YStack gap="$1">
           <Label htmlFor="password">
             {t(AuthTranslations.PASSWORD_LABEL, { ns: NAMESPACES.AUTH })}
           </Label>

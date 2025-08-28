@@ -9,7 +9,7 @@ import * as Linking from 'expo-linking';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useColorScheme } from 'react-native';
-import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
+import { useTheme, YStack } from 'tamagui';
 
 interface Props {
   disabled?: boolean;
@@ -30,7 +30,6 @@ export const SocialButtons = ({ disabled = false }: Props) => {
         ? APP_CONFIG.basics.prefix
         : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
     const callbackURL = Linking.createURL('/', { scheme });
-    console.log('callbackURL', callbackURL);
     await authClient.signIn.social(
       { provider: 'google', callbackURL },
       {
