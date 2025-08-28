@@ -8,15 +8,17 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useColorScheme } from 'react-native';
 import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
 
 interface Props {
-  effectiveScheme: 'light' | 'dark';
   disabled?: boolean;
 }
 
-export const SocialButtons = ({ effectiveScheme, disabled = false }: Props) => {
+export const SocialButtons = ({ disabled = false }: Props) => {
+  const colorScheme = useColorScheme();
   const theme = useTheme();
+  const effectiveScheme = colorScheme ?? 'dark';
   const { error } = useToast();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
   const [isAuthorizing, setIsAuthorizing] = useState<boolean>(false);
@@ -28,6 +30,7 @@ export const SocialButtons = ({ effectiveScheme, disabled = false }: Props) => {
         ? APP_CONFIG.basics.prefix
         : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
     const callbackURL = Linking.createURL('/', { scheme });
+    console.log('callbackURL', callbackURL);
     await authClient.signIn.social(
       { provider: 'google', callbackURL },
       {
@@ -83,14 +86,6 @@ export const SocialButtons = ({ effectiveScheme, disabled = false }: Props) => {
       >
         {t(AuthTranslations.CONTINUE_WITH_GOOGLE)}
       </Button>
-
-      <XStack items="center" gap="$3">
-        <Separator flex={1} />
-        <Text color="$color" opacity={0.7}>
-          {t(AuthTranslations.OR)}
-        </Text>
-        <Separator flex={1} />
-      </XStack>
     </YStack>
   );
 };

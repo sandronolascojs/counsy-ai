@@ -103,6 +103,8 @@ export enum AuthTranslations {
   TERMS = 'auth.terms',
   PRIVACY = 'auth.privacy',
   SKIP = 'auth.skip',
+  DONT_HAVE_ACCOUNT = 'auth.dont_have_account',
+  SIGN_UP = 'auth.sign_up',
 }
 
 export const NAMESPACES = {

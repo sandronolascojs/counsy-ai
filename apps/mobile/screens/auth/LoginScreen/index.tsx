@@ -1,30 +1,16 @@
 import Logo from '@/components/Logo';
-import { Button } from '@/components/ui/Button';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { Link } from 'expo-router';
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform, ScrollView, useColorScheme } from 'react-native';
-import { Separator, Text, useTheme, XStack, YStack } from 'tamagui';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Text, useTheme, XStack, YStack } from 'tamagui';
 import { EmailAuthForm } from './parts/EmailAuthForm';
 import { LegalFooter } from './parts/LegalFooter';
-import { SocialButtons } from './parts/SocialButtons';
 
-export const LoginScreen = () => {
-  const colorScheme = useColorScheme();
+export const LoginScreenView = () => {
   const theme = useTheme();
-  const effectiveScheme = colorScheme ?? 'dark';
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
-
-  const [showEmailForm, setShowEmailForm] = useState<boolean>(false);
-
-  const handleShowEmailForm = useCallback(() => {
-    setShowEmailForm(true);
-  }, []);
-
-  const handleHideEmailForm = useCallback(() => {
-    setShowEmailForm(false);
-  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -37,8 +23,8 @@ export const LoginScreen = () => {
         keyboardShouldPersistTaps="handled"
         accessibilityRole="scrollbar"
       >
-        <YStack flex={1} bg="$background" p="$6" gap="$6" justify="space-between">
-          <YStack gap="$2" mt="$6" items="center">
+        <YStack flex={1} bg="$background" p="$6" justify="space-between">
+          <YStack gap="$2" items="center">
             <Logo width={96} height={96} color={theme.accent1.get()} />
             <Text fontSize="$9" fontWeight="800" mt="$3">
               {t(AuthTranslations.WELCOME_TITLE)}
@@ -48,23 +34,7 @@ export const LoginScreen = () => {
             </Text>
           </YStack>
 
-          <YStack gap="$3">
-            {showEmailForm ? (
-              <EmailAuthForm onBack={handleHideEmailForm} />
-            ) : (
-              <>
-                <SocialButtons effectiveScheme={effectiveScheme} />
-                <Button onPress={handleShowEmailForm} aria-label="Continue with email">
-                  {t(AuthTranslations.CONTINUE_WITH_EMAIL)}
-                </Button>
-                <XStack items="center" justify="center">
-                  <Link href="/(public)/sign-up">
-                    <Text textDecorationLine="underline">Sign up</Text>
-                  </Link>
-                </XStack>
-              </>
-            )}
-          </YStack>
+          <EmailAuthForm />
 
           <LegalFooter />
         </YStack>
@@ -72,5 +42,3 @@ export const LoginScreen = () => {
     </KeyboardAvoidingView>
   );
 };
-
-export default LoginScreen;
