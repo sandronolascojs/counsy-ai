@@ -16,7 +16,7 @@ import { useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Spinner, Text, XStack, YStack } from 'tamagui';
-import { SocialButtons } from './SocialButtons';
+import { SocialButtons } from '../../SocialButtons';
 
 export const EmailAuthForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -55,13 +55,15 @@ export const EmailAuthForm = () => {
     <YStack gap="$4">
       <YStack>
         <YStack gap="$1">
-          <Label htmlFor="email">{t(AuthTranslations.EMAIL_LABEL, { ns: NAMESPACES.AUTH })}</Label>
+          <Label htmlFor="signin-email">
+            {t(AuthTranslations.EMAIL_LABEL, { ns: NAMESPACES.AUTH })}
+          </Label>
           <Controller
             control={control}
             name="email"
             render={({ field: { onChange, value, ...field } }) => (
               <Input
-                id="email"
+                id="signin-email"
                 value={value}
                 onChangeText={onChange}
                 placeholder={t(AuthTranslations.EMAIL_PLACEHOLDER, {
@@ -83,7 +85,7 @@ export const EmailAuthForm = () => {
         </YStack>
 
         <YStack gap="$1">
-          <Label htmlFor="password">
+          <Label htmlFor="signin-password">
             {t(AuthTranslations.PASSWORD_LABEL, { ns: NAMESPACES.AUTH })}
           </Label>
           <Controller
@@ -91,7 +93,7 @@ export const EmailAuthForm = () => {
             name="password"
             render={({ field: { onChange, value, ...field } }) => (
               <Input
-                id="password"
+                id="signin-password"
                 value={value}
                 onChangeText={onChange}
                 placeholder={t(AuthTranslations.PASSWORD_PLACEHOLDER, {

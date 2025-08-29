@@ -82,6 +82,13 @@ export enum AccountOverviewTranslations {
 
 export enum CommonTranslations {
   ERROR_GENERIC = 'common.errors.generic',
+  ERROR_NETWORK = 'common.errors.network',
+  ERROR_TIMEOUT = 'common.errors.timeout',
+  ERROR_UNAUTHORIZED = 'common.errors.unauthorized',
+  ERROR_FORBIDDEN = 'common.errors.forbidden',
+  ERROR_NOT_FOUND = 'common.errors.not_found',
+  ERROR_RATE_LIMITED = 'common.errors.rate_limited',
+  ERROR_UNKNOWN = 'common.errors.unknown',
 }
 
 export enum AuthTranslations {
@@ -105,6 +112,31 @@ export enum AuthTranslations {
   SKIP = 'auth.skip',
   DONT_HAVE_ACCOUNT = 'auth.dont_have_account',
   SIGN_UP = 'auth.sign_up',
+  CREATE_ACCOUNT = 'auth.create_account',
+  SIGN_UP_SUBTITLE = 'auth.sign_up_subtitle',
+  FIRST_NAME_LABEL = 'auth.first_name_label',
+  FIRST_NAME_PLACEHOLDER = 'auth.first_name_placeholder',
+  LAST_NAME_LABEL = 'auth.last_name_label',
+  LAST_NAME_PLACEHOLDER = 'auth.last_name_placeholder',
+  CONFIRM_PASSWORD_LABEL = 'auth.confirm_password_label',
+  CONFIRM_PASSWORD_PLACEHOLDER = 'auth.confirm_password_placeholder',
+  CREATING_ACCOUNT = 'auth.creating_account',
+  ALREADY_HAVE_ACCOUNT = 'auth.already_have_account',
+  ACCOUNT_CREATED = 'auth.account_created',
+}
+
+export enum AuthErrorTranslations {
+  INVALID_CREDENTIALS = 'auth.errors.invalid_credentials',
+  EMAIL_NOT_VERIFIED = 'auth.errors.email_not_verified',
+  USER_ALREADY_EXISTS = 'auth.errors.user_already_exists',
+  PASSWORD_TOO_SHORT = 'auth.errors.password_too_short',
+  PASSWORD_TOO_LONG = 'auth.errors.password_too_long',
+  PROVIDER_NOT_FOUND = 'auth.errors.provider_not_found',
+  INVALID_TOKEN = 'auth.errors.invalid_token',
+  TWO_FACTOR_NOT_ENABLED = 'auth.errors.two_factor_not_enabled',
+  OTP_EXPIRED = 'auth.errors.otp_expired',
+  INVALID_CODE = 'auth.errors.invalid_code',
+  PASSWORD_COMPROMISED = 'auth.errors.password_compromised',
 }
 
 export const NAMESPACES = {

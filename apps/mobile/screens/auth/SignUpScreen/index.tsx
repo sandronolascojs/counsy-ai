@@ -1,14 +1,12 @@
-import Logo from '@/components/Logo';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
-import { Link } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Text, useTheme, XStack, YStack } from 'tamagui';
+import { Text, useTheme, YStack } from 'tamagui';
 import { LegalFooter } from '../LegalFooter';
-import { EmailAuthForm } from './parts/EmailAuthForm';
+import { SignUpForm } from './parts/SignUpForm';
 
-export const LoginScreenView = () => {
+export const SignUpScreenView = () => {
   const theme = useTheme();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
@@ -24,17 +22,13 @@ export const LoginScreenView = () => {
         accessibilityRole="scrollbar"
       >
         <YStack flex={1} bg="$background" p="$6" justify="space-between">
-          <YStack gap="$2" items="center">
-            <Logo width={80} height={80} color={theme.accent1.get()} />
-            <Text fontSize="$8" fontWeight="800" mt="$3">
-              {t(AuthTranslations.WELCOME_TITLE)}
-            </Text>
-            <Text fontSize="$5" color="$color" opacity={0.7} text="center">
-              {t(AuthTranslations.WELCOME_SUBTITLE)}
+          <YStack gap="$1">
+            <Text fontSize="$8" fontWeight="600">
+              {t(AuthTranslations.CREATE_ACCOUNT)}
             </Text>
           </YStack>
 
-          <EmailAuthForm />
+          <SignUpForm />
 
           <LegalFooter />
         </YStack>

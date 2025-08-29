@@ -7,7 +7,7 @@ export const Input = (props: TamaguiInputProps) => {
       items="center"
       borderWidth={1}
       rounded="$4"
-      background="$background"
+      bg="$background"
       borderColor="$borderColor"
       focusStyle={{
         borderColor: '$accentColor',
