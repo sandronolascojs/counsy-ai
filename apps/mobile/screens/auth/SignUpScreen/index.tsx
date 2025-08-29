@@ -2,12 +2,11 @@ import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Text, useTheme, YStack } from 'tamagui';
+import { Text, YStack } from 'tamagui';
 import { LegalFooter } from '../LegalFooter';
 import { SignUpForm } from './parts/SignUpForm';
 
 export const SignUpScreenView = () => {
-  const theme = useTheme();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
   return (

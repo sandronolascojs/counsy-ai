@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { useToast } from '@/components/ui/Toast';
-import { AuthTranslations, CommonTranslations, NAMESPACES } from '@/i18n/constants';
+import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
   signUpFormDefaultValues,
@@ -12,18 +12,16 @@ import {
 } from '@/schemas/forms/auth/signUpForm.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'expo-router';
-import { useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Spinner, Text, XStack, YStack } from 'tamagui';
 import { SocialButtons } from '../../SocialButtons';
 
 export const SignUpForm = () => {
-  const [isPending, startTransition] = useTransition();
-  const { success, error: toastError } = useToast();
+  const toast = useToast();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     control,
   } = useForm<SignUpFormSchema>({
@@ -32,24 +30,22 @@ export const SignUpForm = () => {
   });
 
   const handleEmailSignUp = async (data: SignUpFormSchema) => {
-    startTransition(async () => {
-      await authClient.signUp.email(
-        {
-          email: data.email,
-          password: data.password,
-          name: `${data.firstName.trim().charAt(0).toUpperCase()}${data.firstName.trim().slice(1)} ${data.lastName.trim().charAt(0).toUpperCase()}${data.lastName.trim().slice(1)}`.trim(),
+    await authClient.signUp.email(
+      {
+        email: data.email,
+        password: data.password,
+        name: `${data.firstName.trim().charAt(0).toUpperCase()}${data.firstName.toLowerCase().trim().slice(1)} ${data.lastName.trim().charAt(0).toUpperCase()}${data.lastName.toLowerCase().trim().slice(1)}`.trim(),
+      },
+      {
+        onSuccess: () => {
+          toast.success(t(AuthTranslations.ACCOUNT_CREATED, { ns: NAMESPACES.AUTH }));
         },
-        {
-          onSuccess: () => {
-            success(t(AuthTranslations.ACCOUNT_CREATED, { ns: NAMESPACES.AUTH }));
-          },
-          onError: (err) => {
-            const errorMessage = getAuthErrorMessage(err.error.code);
-            toastError(errorMessage);
-          },
+        onError: (err) => {
+          const errorMessage = getAuthErrorMessage(err.error.code);
+          toast.error(errorMessage);
         },
-      );
-    });
+      },
+    );
   };
 
   return (
@@ -187,23 +183,23 @@ export const SignUpForm = () => {
 
       <YStack gap="$1.5">
         <Button
-          disabled={!isValid || isPending}
-          aria-disabled={!isValid || isPending}
-          aria-busy={isPending}
+          disabled={!isValid || isSubmitting}
+          aria-disabled={!isValid || isSubmitting}
+          aria-busy={isSubmitting}
           aria-label={t(AuthTranslations.CREATE_ACCOUNT, {
             ns: NAMESPACES.AUTH,
           })}
-          iconAfter={isPending ? <Spinner size="small" /> : undefined}
+          iconAfter={isSubmitting ? <Spinner size="small" /> : undefined}
           animation="bouncy"
           pressStyle={{ scale: 0.97 }}
           onPress={handleSubmit(handleEmailSignUp)}
         >
-          {isPending
+          {isSubmitting
             ? t(AuthTranslations.CREATING_ACCOUNT, { ns: NAMESPACES.AUTH })
             : t(AuthTranslations.CREATE_ACCOUNT, { ns: NAMESPACES.AUTH })}
         </Button>
         <OrSeparator />
-        <SocialButtons disabled={isPending} />
+        <SocialButtons disabled={isSubmitting} />
       </YStack>
 
       <XStack justify="center" items="center" gap="$2" mt="$1">

@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { useToast } from '@/components/ui/Toast';
-import { AuthTranslations, CommonTranslations, NAMESPACES } from '@/i18n/constants';
-import { authClient } from '@/lib/auth';
+import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
+import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
   signInFormDefaultValues,
   signInFormSchema,
@@ -12,43 +12,36 @@ import {
 } from '@/schemas/forms/auth/signInForm.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'expo-router';
-import { useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Spinner, Text, XStack, YStack } from 'tamagui';
 import { SocialButtons } from '../../SocialButtons';
 
 export const EmailAuthForm = () => {
-  const [isPending, startTransition] = useTransition();
   const { success, error: toastError } = useToast();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     handleSubmit,
     control,
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: signInFormDefaultValues,
-    mode: 'onChange',
   });
 
   const handleEmailAuth = async (data: SignInFormSchema) => {
-    startTransition(async () => {
-      await authClient.signIn.email(
-        { email: data.email, password: data.password },
-        {
-          onSuccess: () => {
-            success('Welcome back', { message: 'Signed in successfully.' });
-          },
-          onError: (err) => {
-            toastError(
-              (err as { error?: { message?: string } })?.error?.message ||
-                t(CommonTranslations.ERROR_GENERIC, { ns: NAMESPACES.COMMON }),
-            );
-          },
+    await authClient.signIn.email(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: () => {
+          success('Signed in successfully.');
         },
-      );
-    });
+        onError: (err) => {
+          const errorMessage = getAuthErrorMessage(err.error.code);
+          toastError(errorMessage);
+        },
+      },
+    );
   };
 
   return (
@@ -73,6 +66,7 @@ export const EmailAuthForm = () => {
                 autoCapitalize="none"
                 autoComplete="email"
                 autoCorrect={false}
+                aria-invalid={!!errors.email?.message}
                 {...field}
               />
             )}
@@ -102,6 +96,7 @@ export const EmailAuthForm = () => {
                 secureTextEntry
                 autoCapitalize="none"
                 autoComplete="password"
+                aria-invalid={!!errors.password?.message}
                 {...field}
               />
             )}
@@ -116,23 +111,21 @@ export const EmailAuthForm = () => {
 
       <YStack gap="$3">
         <Button
-          disabled={!isValid || isPending}
-          aria-disabled={!isValid || isPending}
-          aria-busy={isPending}
+          disabled={!isValid || isSubmitting}
+          aria-disabled={!isValid || isSubmitting}
+          aria-busy={isSubmitting}
           aria-label={t(AuthTranslations.SIGN_IN_WITH_EMAIL, {
             ns: NAMESPACES.AUTH,
           })}
-          iconAfter={isPending ? <Spinner size="small" /> : undefined}
-          animation="bouncy"
-          pressStyle={{ scale: 0.97 }}
+          iconAfter={isSubmitting ? <Spinner size="small" /> : undefined}
           onPress={handleSubmit(handleEmailAuth)}
         >
-          {isPending
+          {isSubmitting
             ? t(AuthTranslations.SIGNING_IN, { ns: NAMESPACES.AUTH })
             : t(AuthTranslations.SIGN_IN, { ns: NAMESPACES.AUTH })}
         </Button>
         <OrSeparator />
-        <SocialButtons disabled={isPending} />
+        <SocialButtons disabled={isSubmitting} />
       </YStack>
 
       <XStack justify="center" items="center" gap="$2">

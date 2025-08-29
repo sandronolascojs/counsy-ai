@@ -1,6 +1,10 @@
 import { Input as TamaguiInput, InputProps as TamaguiInputProps } from 'tamagui';
 
-export const Input = (props: TamaguiInputProps) => {
+export interface InputProps extends TamaguiInputProps {
+  'aria-invalid'?: boolean;
+}
+
+export const Input = (props: InputProps) => {
   return (
     <TamaguiInput
       flex={1}
@@ -10,15 +14,15 @@ export const Input = (props: TamaguiInputProps) => {
       bg="$background"
       borderColor="$borderColor"
       focusStyle={{
-        borderColor: '$accentColor',
+        borderColor: props['aria-invalid'] ? '$red9' : '$accentColor',
         outlineOffset: 4,
         outlineWidth: 2,
         outlineStyle: 'solid',
-        outlineColor: '$accentColor',
+        outlineColor: props['aria-invalid'] ? '$red9' : '$accentColor',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
-        shadowColor: '$accentColor',
+        shadowColor: props['aria-invalid'] ? '$red9' : '$accentColor',
         animation: 'fast-in',
       }}
       {...props}

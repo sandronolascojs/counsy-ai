@@ -12,15 +12,19 @@ export const Button = ({
   variant = 'default',
   pressStyle: userPressStyle,
   hoverStyle: userHoverStyle,
+  disabledStyle: userDisabledStyle,
   size: userSize,
   scaleIcon: userScaleIcon,
   ...restProps
 }: ButtonProps) => {
-  let variantProps: Partial<TamaguiButtonProps> = {};
+  let variantProps: Partial<TamaguiButtonProps> = {
+    fontWeight: '600',
+  };
 
   switch (variant) {
     case 'ghost':
       variantProps = {
+        ...variantProps,
         bg: 'transparent',
         borderWidth: 0,
         color: '$color',
@@ -28,6 +32,7 @@ export const Button = ({
       break;
     case 'outline':
       variantProps = {
+        ...variantProps,
         bg: 'transparent',
         borderWidth: 1,
         borderColor: '$borderColor',
@@ -37,7 +42,7 @@ export const Button = ({
     case 'default':
     default:
       variantProps = {
-        fontWeight: '600',
+        ...variantProps,
         theme: 'accent',
         gap: '$0.25',
         animation: 'bouncy',
@@ -61,6 +66,14 @@ export const Button = ({
       }}
       size={userSize ?? '$4'}
       scaleIcon={userScaleIcon ?? 1.2}
+      disabled={restProps.disabled}
+      aria-disabled={restProps.disabled}
+      aria-busy={restProps['aria-busy']}
+      disabledStyle={{
+        opacity: 0.5,
+        ...(variantProps.disabledStyle || {}),
+        ...(userDisabledStyle || {}),
+      }}
     >
       {children}
     </TamaguiButton>
