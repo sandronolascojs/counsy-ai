@@ -112,6 +112,7 @@ export enum AuthTranslations {
   SKIP = 'auth.skip',
   DONT_HAVE_ACCOUNT = 'auth.dont_have_account',
   SIGN_UP = 'auth.sign_up',
+  FORGOT_PASSWORD = 'auth.forgot_password',
   CREATE_ACCOUNT = 'auth.create_account',
   SIGN_UP_SUBTITLE = 'auth.sign_up_subtitle',
   FIRST_NAME_LABEL = 'auth.first_name_label',
@@ -123,6 +124,17 @@ export enum AuthTranslations {
   CREATING_ACCOUNT = 'auth.creating_account',
   ALREADY_HAVE_ACCOUNT = 'auth.already_have_account',
   ACCOUNT_CREATED = 'auth.account_created',
+  RECOVER_TITLE = 'auth.recover.title',
+  RECOVER_SUBTITLE = 'auth.recover.subtitle',
+  RECOVER_EMAIL_SENT_TITLE = 'auth.recover.email_sent_title',
+  RECOVER_EMAIL_SENT_DESCRIPTION = 'auth.recover.email_sent_description',
+  RECOVER_HELPER_NOTE = 'auth.recover.helper_note',
+  RECOVER_SPAM_NOTE = 'auth.recover.spam_note',
+  RECOVER_SEND_LINK = 'auth.recover.send_link',
+  RECOVER_SENDING = 'auth.recover.sending',
+  RECOVER_OPEN_EMAIL_APP = 'auth.recover.open_email_app',
+  RECOVER_RESEND_EMAIL = 'auth.recover.resend_email',
+  RECOVER_BACK_TO_SIGN_IN = 'auth.recover.back_to_sign_in',
 }
 
 export enum AuthErrorTranslations {

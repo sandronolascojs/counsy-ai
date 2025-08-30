@@ -7,12 +7,13 @@ export default function PublicLayout() {
     <Stack
       screenOptions={{
         contentStyle: { backgroundColor: 'transparent' },
+        headerShown: false,
       }}
     >
-      <Stack.Screen name="sign-in/index" options={{ headerShown: false }} />
-      <Stack.Screen name="sign-up/index" options={{ headerShown: false }} />
-      <Stack.Screen name="recover/index" options={{ title: 'Recover Password' }} />
-      <Stack.Screen name="reset/index" options={{ title: 'Reset Password' }} />
+      <Stack.Screen name="sign-in/index" />
+      <Stack.Screen name="sign-up/index" />
+      <Stack.Screen name="recover/index" />
+      <Stack.Screen name="reset/index" />
     </Stack>
   );
 }

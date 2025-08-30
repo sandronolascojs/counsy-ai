@@ -28,6 +28,8 @@ export const Button = ({
         bg: 'transparent',
         borderWidth: 0,
         color: '$color',
+        px: 0,
+        animation: undefined,
       };
       break;
     case 'outline':
@@ -55,7 +57,9 @@ export const Button = ({
       {...variantProps}
       {...restProps}
       pressStyle={{
-        scale: 0.97,
+        // Avoid scale on ghost to keep it subtle and crisp
+        scale: variant === 'ghost' ? 1 : 0.97,
+        opacity: variant === 'ghost' ? 0.6 : undefined,
         ...(variantProps.pressStyle || {}),
         ...(userPressStyle || {}),
       }}

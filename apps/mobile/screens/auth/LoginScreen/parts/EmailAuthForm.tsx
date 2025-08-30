@@ -109,6 +109,20 @@ export const EmailAuthForm = () => {
         </YStack>
       </YStack>
 
+      <XStack justify="flex-end">
+        <Link href="/(public)/recover" asChild>
+          <Text
+            fontSize="$3"
+            color="$accentColor"
+            textDecorationLine="underline"
+            pressStyle={{ opacity: 0.7 }}
+            role="link"
+          >
+            {t(AuthTranslations.FORGOT_PASSWORD)}
+          </Text>
+        </Link>
+      </XStack>
+
       <YStack gap="$3">
         <Button
           disabled={!isValid || isSubmitting}

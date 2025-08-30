@@ -1,5 +1,5 @@
-import { Text } from 'tamagui';
+import { RecoverPasswordScreenView } from '@/screens/auth/RecoverPasswordScreen';
 
 export default function RecoverScreen() {
-  return <Text>Recover</Text>;
+  return <RecoverPasswordScreenView />;
 }
