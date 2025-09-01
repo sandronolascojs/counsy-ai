@@ -11,7 +11,7 @@ catalog:
   prettier: ^3.5.3
   eslint: ^9.15.0
   '@types/node': ^22.15.21
-  dotenv-cli: ^8.0.0
+  dotenv-cli: ^10.0.0
   winston: ^3.17.0
   '@t3-oss/env-core': ^0.13.4
   '@paralleldrive/cuid2': ^2.2.2

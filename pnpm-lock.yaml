@@ -46,8 +46,8 @@ catalogs:
       specifier: ^1.3.4
       version: 1.3.4
     dotenv-cli:
-      specifier: ^8.0.0
-      version: 8.0.0
+      specifier: ^10.0.0
+      version: 10.0.0
     drizzle-orm:
       specifier: ^0.44.4
       version: 0.44.4
@@ -489,7 +489,7 @@ importers:
         version: 2.2.2
       dotenv-cli:
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 10.0.0
       drizzle-orm:
         specifier: 'catalog:'
         version: 0.44.4(@libsql/client@0.15.9)(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(@upstash/redis@1.35.1)(kysely@0.28.2)(pg@8.16.3)(postgres@3.4.7)
@@ -541,7 +541,7 @@ importers:
         version: 2.204.0(constructs@10.4.2)
       dotenv-cli:
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 10.0.0
       sst:
         specifier: 'catalog:'
         version: 3.17.10
@@ -728,7 +728,7 @@ importers:
         version: 5.56.9
       dotenv-cli:
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 10.0.0
       fastify:
         specifier: 'catalog:'
         version: 5.4.0
@@ -822,7 +822,7 @@ importers:
         version: 1.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       dotenv-cli:
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 10.0.0
       drizzle-orm:
         specifier: 'catalog:'
         version: 0.44.4(@libsql/client@0.15.9)(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)(@upstash/redis@1.35.1)(kysely@0.28.2)(pg@8.16.3)(postgres@3.4.7)
@@ -6329,13 +6329,9 @@ packages:
   domutils@3.2.2:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
 
-  dotenv-cli@8.0.0:
-    resolution: {integrity: sha512-aLqYbK7xKOiTMIRf1lDPbI+Y+Ip/wo5k3eyp6ePysVaSqbyxjyK3dK35BTxG+rmd7djf5q2UPs4noPNH+cj0Qw==}
+  dotenv-cli@10.0.0:
+    resolution: {integrity: sha512-lnOnttzfrzkRx2echxJHQRB6vOAMSCzzZg79IxpC00tU42wZPuZkQxNNrrwVAxaQZIIh001l4PxVlCrBxngBzA==}
     hasBin: true
-
-  dotenv-expand@10.0.0:
-    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
-    engines: {node: '>=12'}
 
   dotenv-expand@11.0.7:
     resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
@@ -6347,6 +6343,10 @@ packages:
 
   dotenv@16.6.1:
     resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+    engines: {node: '>=12'}
+
+  dotenv@17.2.1:
+    resolution: {integrity: sha512-kQhDYKZecqnM0fCnzI5eIv5L4cAe/iRI+HqMbO/hbRdTAeXDG+M9FjipUxNfbARuEg4iHIbhnhs78BCHNbSxEQ==}
     engines: {node: '>=12'}
 
   drizzle-kit@0.31.4:
@@ -18257,14 +18257,12 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
-  dotenv-cli@8.0.0:
+  dotenv-cli@10.0.0:
     dependencies:
       cross-spawn: 7.0.6
-      dotenv: 16.6.1
-      dotenv-expand: 10.0.0
+      dotenv: 17.2.1
+      dotenv-expand: 11.0.7
       minimist: 1.2.8
-
-  dotenv-expand@10.0.0: {}
 
   dotenv-expand@11.0.7:
     dependencies:
@@ -18273,6 +18271,8 @@ snapshots:
   dotenv@16.4.7: {}
 
   dotenv@16.6.1: {}
+
+  dotenv@17.2.1: {}
 
   drizzle-kit@0.31.4:
     dependencies:
