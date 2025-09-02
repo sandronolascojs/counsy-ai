@@ -3,6 +3,7 @@
     "development": {
       "env": {
         "EXPO_PUBLIC_APP_ENV": "development",
+        "EXPO_PUBLIC_API_URL": "https://dev-auth.counsy.app",
         "APP_VERSION": "0.1.0"
       },
       "developmentClient": true,
