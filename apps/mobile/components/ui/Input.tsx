@@ -7,6 +7,7 @@ export interface InputProps extends TamaguiInputProps {
 export const Input = (props: InputProps) => {
   return (
     <TamaguiInput
+      id={props.id ?? undefined}
       flex={1}
       items="center"
       borderWidth={1}

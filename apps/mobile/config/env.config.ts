@@ -7,9 +7,7 @@ export const env = createEnv({
     EAS_BUILD_PROFILE: z.string(),
   },
   client: {
-    EXPO_PUBLIC_APP_ENV: z
-      .enum(['development', 'staging', 'production', 'preview'])
-      .default('development'),
+    EXPO_PUBLIC_APP_ENV: z.enum(['development', 'staging', 'production']).default('development'),
     EXPO_PUBLIC_API_URL: z.string(),
   },
   runtimeEnv: process.env,

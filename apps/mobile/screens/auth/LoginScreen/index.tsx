@@ -1,10 +1,9 @@
 import Logo from '@/components/Logo';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
-import { Link } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Text, useTheme, XStack, YStack } from 'tamagui';
+import { Text, useTheme, YStack } from 'tamagui';
 import { LegalFooter } from '../LegalFooter';
 import { EmailAuthForm } from './parts/EmailAuthForm';
 

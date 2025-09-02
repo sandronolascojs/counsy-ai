@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const env = createEnv({
   server: {
     PORT: z.coerce.number().default(8000),
-    APP_ENV: z.enum(['development', 'production', 'dev', 'staging']).default('dev'),
+    APP_ENV: z.enum(['development', 'production', 'staging']).default('development'),
     DATABASE_URL: z.string(),
     ALLOWED_ORIGINS: z.string().default('*'),
     API_BASE_URL: z.string(),
@@ -21,6 +21,13 @@ export const env = createEnv({
     // google
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+
+    // apple
+    APPLE_CLIENT_ID: z.string(),
+    APPLE_PRIVATE_KEY: z.string(),
+    APPLE_KEY_ID: z.string(),
+    APPLE_TEAM_ID: z.string(),
+    APPLE_BUNDLE_IDENTIFIER: z.string(),
   },
   runtimeEnvStrict: {
     PORT: process.env.PORT,
@@ -35,5 +42,10 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     FRONTEND_URL: process.env.FRONTEND_URL,
+    APPLE_CLIENT_ID: process.env.APPLE_CLIENT_ID,
+    APPLE_PRIVATE_KEY: process.env.APPLE_PRIVATE_KEY,
+    APPLE_KEY_ID: process.env.APPLE_KEY_ID,
+    APPLE_TEAM_ID: process.env.APPLE_TEAM_ID,
+    APPLE_BUNDLE_IDENTIFIER: process.env.APPLE_BUNDLE_IDENTIFIER,
   },
 });

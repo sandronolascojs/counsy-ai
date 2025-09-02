@@ -1,4 +1,5 @@
 import { env } from '@/config/env.config';
+import { getAppleClientSecret } from '@/utils/apple.secret.manager';
 import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
 import * as schema from '@counsy-ai/db/schema';
@@ -6,6 +7,8 @@ import { APP_CONFIG } from '@counsy-ai/types';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { haveIBeenPwned, HaveIBeenPwnedOptions, magicLink } from 'better-auth/plugins';
+
+const APPLE_CLIENT_SECRET = await getAppleClientSecret();
 
 const haveIBeenPwnedPlugin: HaveIBeenPwnedOptions = {
   customPasswordCompromisedMessage:
@@ -24,7 +27,7 @@ const mobileOrigins = [
     : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
 ];
 
-const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
+const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.0.174:8081'];
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
@@ -71,6 +74,12 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       prompt: 'select_account',
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+    apple: {
+      enabled: true,
+      clientId: env.APPLE_CLIENT_ID,
+      clientSecret: APPLE_CLIENT_SECRET,
+      appBundleIdentifier: env.APPLE_BUNDLE_IDENTIFIER,
     },
   },
   plugins: [

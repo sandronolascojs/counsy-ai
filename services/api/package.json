@@ -43,6 +43,7 @@
     "drizzle-orm": "catalog:",
     "fastify": "catalog:",
     "fastify-plugin": "^5.0.1",
+    "jose": "^6.1.0",
     "limax": "catalog:",
     "npm-run-all": "catalog:",
     "pg": "catalog:",

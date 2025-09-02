@@ -71,6 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ios: {
       bundleIdentifier: bundleId,
       supportsTablet: true,
+      usesAppleSignIn: true,
       associatedDomains: [
         ...associated.map((d) => `applinks:${d}`),
         ...associated.map((d) => `webcredentials:${d}`),
@@ -108,6 +109,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
 
     plugins: [
+      'expo-apple-authentication',
       'expo-router',
       [
         'expo-splash-screen',
