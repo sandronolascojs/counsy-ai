@@ -6,6 +6,7 @@ import { NAMESPACES } from './constants';
 
 import enAccount from './locales/en/account.json';
 import enAuth from './locales/en/auth.json';
+import enBiometrics from './locales/en/biometrics.json';
 import enCommon from './locales/en/common.json';
 import enGreetings from './locales/en/greetings.json';
 import enNavigation from './locales/en/navigation.json';
@@ -14,6 +15,7 @@ import enVoice from './locales/en/voice.json';
 
 import esAccount from './locales/es/account.json';
 import esAuth from './locales/es/auth.json';
+import esBiometrics from './locales/es/biometrics.json';
 import esCommon from './locales/es/common.json';
 import esGreetings from './locales/es/greetings.json';
 import esNavigation from './locales/es/navigation.json';
@@ -29,6 +31,7 @@ export const resources = {
     [NAMESPACES.ACCOUNT]: enAccount,
     [NAMESPACES.AUTH]: enAuth,
     [NAMESPACES.COMMON]: enCommon,
+    [NAMESPACES.BIOMETRICS]: enBiometrics,
   },
   es: {
     [NAMESPACES.NAVIGATION]: esNavigation,
@@ -38,6 +41,7 @@ export const resources = {
     [NAMESPACES.ACCOUNT]: esAccount,
     [NAMESPACES.AUTH]: esAuth,
     [NAMESPACES.COMMON]: esCommon,
+    [NAMESPACES.BIOMETRICS]: esBiometrics,
   },
 } as const;
 

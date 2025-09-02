@@ -1,0 +1,9 @@
+{
+  "locked_inactivity": "Locked due to inactivity",
+  "locked_subtitle": "Use Face ID to continue.",
+  "locked_title": "Locked",
+  "prompt_cancel_label": "Cancel",
+  "prompt_fallback_label": "Enter device passcode",
+  "prompt_message": "Unlock Counsy",
+  "unlock": "Unlock"
+}

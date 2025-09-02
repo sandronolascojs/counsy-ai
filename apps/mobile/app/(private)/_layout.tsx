@@ -1,3 +1,4 @@
+import { BiometricsGate } from '@/components/BiometricsGate';
 import { BrandedLoader } from '@/components/BrandedLoader';
 import { ChatSheet } from '@/components/ChatSheet';
 import { MicFab } from '@/components/MicFab';
@@ -26,7 +27,7 @@ export default function TabLayout() {
   }
 
   return (
-    <>
+    <BiometricsGate>
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -92,6 +93,6 @@ export default function TabLayout() {
         />
       </Tabs>
       <ChatSheet />
-    </>
+    </BiometricsGate>
   );
 }

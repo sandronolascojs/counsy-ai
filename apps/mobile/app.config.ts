@@ -77,6 +77,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         ...associated.map((d) => `webcredentials:${d}`),
       ],
       infoPlist: {
+        NSFaceIDUsageDescription: 'Use Face ID to protect your app and sensitive data.',
         NSMicrophoneUsageDescription: 'We need your microphone to talk to the assistant.',
         NSSpeechRecognitionUsageDescription: 'To transcribe your voice in real time.',
         UIBackgroundModes: ['audio', 'remote-notification'],

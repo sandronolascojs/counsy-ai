@@ -151,6 +151,16 @@ export enum AuthErrorTranslations {
   PASSWORD_COMPROMISED = 'auth.errors.password_compromised',
 }
 
+export enum BiometricsTranslations {
+  LOCKED_TITLE = 'biometrics.locked_title',
+  LOCKED_SUBTITLE = 'biometrics.locked_subtitle',
+  LOCKED_INACTIVITY = 'biometrics.locked_inactivity',
+  UNLOCK = 'biometrics.unlock',
+  PROMPT_MESSAGE = 'biometrics.prompt_message',
+  PROMPT_FALLBACK_LABEL = 'biometrics.prompt_fallback_label',
+  PROMPT_CANCEL_LABEL = 'biometrics.prompt_cancel_label',
+}
+
 export const NAMESPACES = {
   NAVIGATION: 'navigation',
   GREETINGS: 'greetings',
@@ -159,4 +169,5 @@ export const NAMESPACES = {
   ACCOUNT: 'account',
   AUTH: 'auth',
   COMMON: 'common',
+  BIOMETRICS: 'biometrics',
 } as const;

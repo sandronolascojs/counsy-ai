@@ -1,0 +1,9 @@
+{
+  "locked_inactivity": "Bloqueado por inactividad",
+  "locked_subtitle": "Usa Face ID para continuar.",
+  "locked_title": "Bloqueado",
+  "prompt_cancel_label": "Cancelar",
+  "prompt_fallback_label": "Ingresar código del dispositivo",
+  "prompt_message": "Desbloquear Counsy",
+  "unlock": "Desbloquear"
+}
