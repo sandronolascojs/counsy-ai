@@ -1,4 +1,5 @@
 import { env } from '@/config/env.config';
+import { resolveRuntimeScheme } from '@/config/scheme';
 import { i18n } from '@/i18n';
 import { AuthErrorTranslations, CommonTranslations, NAMESPACES } from '@/i18n/constants';
 import { expoClient } from '@better-auth/expo/client';
@@ -10,10 +11,7 @@ export const authClient = createAuthClient({
   baseURL: env.EXPO_PUBLIC_API_URL,
   plugins: [
     expoClient({
-      scheme:
-        env.EXPO_PUBLIC_APP_ENV === 'production'
-          ? APP_CONFIG.basics.prefix
-          : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`,
+      scheme: resolveRuntimeScheme(env.EXPO_PUBLIC_APP_ENV),
       storagePrefix: APP_CONFIG.basics.prefix,
       storage: SecureStore,
     }),

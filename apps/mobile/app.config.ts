@@ -1,28 +1,8 @@
+// Import from plain JS to ensure Node can resolve during EAS config loads
+const { getAppEnvironmentFromProcess, getSchemeForEnv } = require('./config/scheme.shared.js');
 import { type ConfigContext, type ExpoConfig } from 'expo/config';
 
 type AppEnvironment = 'development' | 'staging' | 'production';
-
-const getAppEnvironment = (): AppEnvironment => {
-  const env = (
-    process.env.EXPO_PUBLIC_APP_ENV ||
-    process.env.EAS_BUILD_PROFILE ||
-    'development'
-  ).toLowerCase();
-  if (env === 'production') return 'production';
-  if (env === 'staging' || env === 'preview') return 'staging';
-  return 'development';
-};
-
-const getSchemeForEnv = (env: AppEnvironment): string => {
-  switch (env) {
-    case 'production':
-      return 'counsy-ai';
-    case 'staging':
-      return 'counsy-ai-staging';
-    default:
-      return 'counsy-ai-dev';
-  }
-};
 
 const getBundleIdentifier = (env: AppEnvironment): string => {
   const base = 'com.counsy.app';
@@ -48,7 +28,7 @@ const getDomainsForEnv = (env: AppEnvironment) => {
 };
 
 export default ({ config }: ConfigContext): ExpoConfig => {
-  const appEnv = getAppEnvironment();
+  const appEnv = getAppEnvironmentFromProcess();
   const scheme = getSchemeForEnv(appEnv);
   const bundleId = getBundleIdentifier(appEnv);
   const androidPackage = getAndroidPackage(appEnv);

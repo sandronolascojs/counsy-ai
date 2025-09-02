@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 import { env } from '@/config/env.config';
+import { resolveRuntimeScheme } from '@/config/scheme';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
-import { authClient, BetterAuthErrorCode, getAuthErrorMessage } from '@/lib/auth';
-import { APP_CONFIG } from '@counsy-ai/types';
+import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
@@ -26,21 +26,22 @@ export const SocialButtons = ({ disabled = false }: Props) => {
 
   const signInWithGoogle = async () => {
     setIsAuthorizing(true);
-    const scheme =
-      env.EXPO_PUBLIC_APP_ENV === 'production'
-        ? APP_CONFIG.basics.prefix
-        : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
-    const callbackURL = Linking.createURL('/', { scheme });
-    await authClient.signIn.social(
-      { provider: 'google', callbackURL },
-      {
-        onError: (e) => {
-          console.error(e);
-          const errorMessage = getAuthErrorMessage(e.error?.code);
-          toast.error(errorMessage);
+    try {
+      const scheme = resolveRuntimeScheme(env.EXPO_PUBLIC_APP_ENV);
+      const callbackURL = Linking.createURL('/', { scheme });
+      await authClient.signIn.social(
+        { provider: 'google', callbackURL },
+        {
+          onError: (e) => {
+            console.error(e);
+            const errorMessage = getAuthErrorMessage(e.error?.code);
+            toast.error(errorMessage);
+          },
         },
-      },
-    );
+      );
+    } finally {
+      setIsAuthorizing(false);
+    }
   };
 
   const signInWithApple = async () => {
@@ -58,10 +59,9 @@ export const SocialButtons = ({ disabled = false }: Props) => {
           ],
         });
 
-        const identityToken = cred?.identityToken; // JWT de Apple
+        const identityToken = cred?.identityToken;
         if (!identityToken) throw new Error('No identityToken from Apple');
 
-        // 2) entregar el ID TOKEN a Better Auth (no abre navegador)
         await authClient.signIn.social(
           { provider: 'apple', idToken: { token: identityToken } },
           {
@@ -74,10 +74,7 @@ export const SocialButtons = ({ disabled = false }: Props) => {
         return;
       }
 
-      const scheme =
-        env.EXPO_PUBLIC_APP_ENV === 'production'
-          ? APP_CONFIG.basics.prefix
-          : `${APP_CONFIG.basics.prefix}-${env.EXPO_PUBLIC_APP_ENV}`;
+      const scheme = resolveRuntimeScheme(env.EXPO_PUBLIC_APP_ENV);
       const callbackURL = Linking.createURL('/', { scheme });
       await authClient.signIn.social(
         { provider: 'apple', callbackURL },
@@ -88,10 +85,6 @@ export const SocialButtons = ({ disabled = false }: Props) => {
           },
         },
       );
-    } catch (error) {
-      console.error(error);
-      const errorMessage = getAuthErrorMessage(BetterAuthErrorCode.INVALID_TOKEN);
-      toast.error(errorMessage);
     } finally {
       setIsAuthorizing(false);
     }
