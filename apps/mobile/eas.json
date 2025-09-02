@@ -24,6 +24,15 @@
       "distribution": "store",
       "channel": "production",
       "autoIncrement": true
+    },
+    "simulator": {
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Debug"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "development"
+      }
     }
   },
   "cli": {
