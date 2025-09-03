@@ -1,208 +1,298 @@
-import { IDLE_TIMEOUT_MS, THROTTLE_MS } from '@/constants/biometric';
-import { BiometricsTranslations, NAMESPACES } from '@/i18n/constants';
-import { mobileLogger } from '@/utils/logger';
+// hooks/useBiometricGate.ts
 import * as LocalAuthentication from 'expo-local-authentication';
-import * as ScreenCapture from 'expo-screen-capture';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { AppState, AppStateStatus, Platform } from 'react-native';
+import { Alert, AppState, AppStateStatus, Linking, Platform } from 'react-native';
 
-export type AuthEvent = 'attempt' | 'success' | 'cancel' | 'error' | 'fallback' | 'locked';
+type AuthEvent = 'attempt' | 'success' | 'cancel' | 'error' | 'fallback' | 'locked';
 
 export interface UseBiometricGateOptions {
-  idleTimeoutMs?: number;
-  throttleMs?: number;
-  requireBiometrics?: boolean;
+  /** Tiempo de inactividad para bloquear, en ms (ej. 5 * 60 * 1000) */
+  idleTimeoutMs: number;
+  /** Antirebote entre prompts, en ms (ej. 1500) */
+  throttleMs: number;
+  /** Si es obligatorio usar biometría para desbloquear */
+  requireBiometrics: boolean;
   onLock?: () => void;
   onUnlock?: () => void;
   onAuthEvent?: (event: AuthEvent, meta?: Record<string, unknown>) => void;
 }
 
-export interface UseBiometricGateResult {
+export interface UseBiometricGateApi {
+  /** Estado de bloqueo actual */
   isLocked: boolean;
-  authenticate: () => Promise<void>;
-  promptLabels: {
-    promptMessage: string;
-    fallbackLabel: string;
-    cancelLabel: string;
-  };
+  /** Fuerza el prompt de autenticación (si corresponde) */
+  authenticate: (force?: boolean) => Promise<void>;
+  /** Marca actividad de usuario y rearma el temporizador de inactividad */
+  markActivity: () => void;
 }
 
-export const useBiometricGate = ({
-  idleTimeoutMs = IDLE_TIMEOUT_MS,
-  throttleMs = THROTTLE_MS,
-  requireBiometrics = true,
+const promptEnableFaceIdForAppOnce = (() => {
+  let shown = false;
+  return () => {
+    if (shown) return;
+    shown = true;
+    Alert.alert(
+      'Habilitar Face ID',
+      'Para usar Face ID con esta app, activalo en Ajustes → [Tu App] → Face ID.',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        ...(Platform.OS === 'ios'
+          ? [{ text: 'Abrir Ajustes', onPress: () => Linking.openSettings() }]
+          : []),
+      ],
+    );
+  };
+})();
+
+/**
+ * Hook para puerta biométrica:
+ * - Bloquea al ir a background o por inactividad.
+ * - Lanza prompt solo cuando la app está 'active', evitando duplicados.
+ * - Face/Touch primero; si no, passcode.
+ */
+export function useBiometricGate({
+  idleTimeoutMs,
+  throttleMs,
+  requireBiometrics,
   onLock,
   onUnlock,
   onAuthEvent,
-}: UseBiometricGateOptions = {}): UseBiometricGateResult => {
-  const { t } = useTranslation(NAMESPACES.BIOMETRICS);
-  const [isLocked, setIsLocked] = useState<boolean>(true);
+}: UseBiometricGateOptions): UseBiometricGateApi {
+  const [isLocked, setIsLocked] = useState<boolean>(requireBiometrics);
 
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
-  const isAuthenticatingRef = useRef<boolean>(false);
-  const biometricsAvailableRef = useRef<boolean | null>(null);
-  const lastAuthAtRef = useRef<number>(0);
-  const lastInteractionAtRef = useRef<number>(Date.now());
-  const cancelBackoffUntilRef = useRef<number>(0);
+  const lastPromptAtRef = useRef<number>(0);
+  const promptInFlightRef = useRef<boolean>(false);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const promptOptions = useMemo(
-    () => ({
-      promptMessage: t(BiometricsTranslations.PROMPT_MESSAGE),
-      fallbackLabel: t(BiometricsTranslations.PROMPT_FALLBACK_LABEL),
-      disableDeviceFallback: requireBiometrics,
-      cancelLabel: t(BiometricsTranslations.PROMPT_CANCEL_LABEL),
-    }),
-    [requireBiometrics, t],
-  );
+  /** Limpia el timer de inactividad */
+  const clearIdleTimer = useCallback(() => {
+    if (idleTimerRef.current) {
+      clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = null;
+    }
+  }, []);
 
-  const setLocked = useCallback(
-    (locked: boolean) => {
-      setIsLocked((prev) => {
-        if (prev === locked) return prev;
-        if (locked) {
-          mobileLogger.info('locked');
-          onLock?.();
-          onAuthEvent?.('locked');
-        } else {
-          mobileLogger.info('unlocked');
-          onUnlock?.();
-          onAuthEvent?.('success');
-        }
-        return locked;
-      });
+  /** Rearma el timer de inactividad (si la biometría es requerida) */
+  const armIdleTimer = useCallback(() => {
+    clearIdleTimer();
+    if (!requireBiometrics) return;
+    idleTimerRef.current = setTimeout(() => {
+      setIsLocked(true);
+      onAuthEvent?.('locked', { reason: 'idle_timeout' });
+      onLock?.();
+    }, idleTimeoutMs);
+  }, [clearIdleTimer, idleTimeoutMs, onAuthEvent, onLock, requireBiometrics]);
+
+  /** Permite a la UI marcar actividad y resetear el idle timer */
+  const markActivity = useCallback(() => {
+    armIdleTimer();
+  }, [armIdleTimer]);
+
+  /** Chequea si podemos lanzar prompt ahora */
+  const canPromptNow = useCallback(
+    (force = false): boolean => {
+      const now = Date.now();
+      if (promptInFlightRef.current) return false;
+      if (!force && now - lastPromptAtRef.current < throttleMs) return false;
+      if (appStateRef.current !== 'active') return false;
+      return true;
     },
-    [onLock, onUnlock, onAuthEvent],
+    [throttleMs],
   );
 
-  const authenticate = useCallback(async () => {
-    if (isAuthenticatingRef.current) return;
-    const now = Date.now();
-    if (now - lastAuthAtRef.current < throttleMs) return;
-    if (now < cancelBackoffUntilRef.current) return;
-    lastAuthAtRef.current = now;
+  /** Prompt de autenticación (biometrics-first; luego passcode) */
+  const authenticate = useCallback(
+    async (force = false) => {
+      if (!canPromptNow(force)) return;
 
-    isAuthenticatingRef.current = true;
-    try {
-      onAuthEvent?.('attempt');
-      if (Platform.OS === 'web') {
-        if (isLocked) setLocked(false);
-        return;
-      }
+      promptInFlightRef.current = true;
+      lastPromptAtRef.current = Date.now();
 
-      if (biometricsAvailableRef.current == null) {
-        const [hasHardware, isEnrolled] = await Promise.all([
+      try {
+        onAuthEvent?.('attempt');
+
+        // Chequeos previos
+        const [hasHardware, isEnrolled, types] = await Promise.all([
           LocalAuthentication.hasHardwareAsync(),
           LocalAuthentication.isEnrolledAsync(),
+          LocalAuthentication.supportedAuthenticationTypesAsync(),
         ]);
-        biometricsAvailableRef.current = hasHardware && isEnrolled;
-      }
 
-      if (!biometricsAvailableRef.current) {
-        if (isLocked) setLocked(false);
-        return;
-      }
-
-      const result = await LocalAuthentication.authenticateAsync(promptOptions);
-      const nextLocked = !result.success;
-      if (!result.success) {
-        if (result.error === 'user_cancel') {
-          onAuthEvent?.('cancel');
-          mobileLogger.warn('auth cancel');
-          const nowTs = Date.now();
-          const currentDelay = Math.max(0, cancelBackoffUntilRef.current - nowTs) || 2000;
-          cancelBackoffUntilRef.current = nowTs + Math.min(30000, currentDelay * 2);
-        } else if (result.error) {
-          onAuthEvent?.('error', { error: result.error });
-          mobileLogger.error('auth error', { error: result.error });
+        if (!hasHardware) {
+          onAuthEvent?.('error', { reason: 'no_hardware' });
+          if (requireBiometrics) {
+            setIsLocked(true);
+            onLock?.();
+            return;
+          } else {
+            setIsLocked(false);
+            onUnlock?.();
+            armIdleTimer();
+            return;
+          }
         }
-      }
-      setLocked(nextLocked);
-    } finally {
-      isAuthenticatingRef.current = false;
-    }
-  }, [isLocked, onAuthEvent, promptOptions, setLocked, throttleMs]);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    (async () => {
-      if (Platform.OS === 'web') {
-        biometricsAvailableRef.current = false;
-        if (isLocked) setLocked(false);
-        return;
-      }
-
-      const [hasHardware, isEnrolled] = await Promise.all([
-        LocalAuthentication.hasHardwareAsync(),
-        LocalAuthentication.isEnrolledAsync(),
-      ]);
-      biometricsAvailableRef.current = hasHardware && isEnrolled;
-      if (!isMounted) return;
-      if (!biometricsAvailableRef.current) {
-        setLocked(false);
-        return;
-      }
-      if (isLocked) authenticate();
-    })();
-
-    (async () => {
-      try {
-        await ScreenCapture.preventScreenCaptureAsync();
-      } catch (error) {
-        mobileLogger.error('screen capture prevent error', { error });
-      }
-    })();
-
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      const prev = appStateRef.current;
-      const wasInBackground = /inactive|background/.test(prev);
-      appStateRef.current = nextAppState;
-
-      if (nextAppState === 'background') {
-        if (!isLocked) setLocked(true);
-        return;
-      }
-
-      if (wasInBackground && nextAppState === 'active') {
-        if (isLocked && biometricsAvailableRef.current !== false) {
-          authenticate();
+        if (!isEnrolled) {
+          // No hay Face ID/Touch ID configurado en el device
+          onAuthEvent?.('fallback', { reason: 'not_enrolled', types });
+          if (requireBiometrics) {
+            setIsLocked(true);
+            onLock?.();
+            return;
+          } else {
+            setIsLocked(false);
+            onUnlock?.();
+            armIdleTimer();
+            return;
+          }
         }
-      }
-    };
 
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
+        const supportsBiometric = types?.some(
+          (t) =>
+            t === LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION ||
+            t === LocalAuthentication.AuthenticationType.FINGERPRINT,
+        );
 
-    return () => {
-      isMounted = false;
-      subscription.remove();
-    };
-  }, [authenticate, isLocked, setLocked]);
+        // -------- Intento 1: solo biometría (sin passcode) --------
+        const first = await LocalAuthentication.authenticateAsync({
+          promptMessage: 'Desbloquear con Face ID/Touch ID',
+          cancelLabel: 'Cancelar',
+          requireConfirmation: false,
+          disableDeviceFallback: true,
+        });
 
-  useEffect(() => {
-    const interval = setInterval(
-      () => {
-        if (Date.now() - lastInteractionAtRef.current >= idleTimeoutMs) {
-          setLocked(true);
+        if (first.success) {
+          setIsLocked(false);
+          onAuthEvent?.('success', { via: 'biometric', result: first });
+          onUnlock?.();
+          armIdleTimer();
+          return;
         }
-      },
-      Math.min(30000, idleTimeoutMs),
-    );
-    return () => clearInterval(interval);
-  }, [idleTimeoutMs, setLocked]);
 
-  useEffect(() => {
-    if (!isLocked) lastInteractionAtRef.current = Date.now();
-  }, [isLocked]);
+        // Cancel explícito del usuario o del sistema
+        const err = (first as any).error as string | undefined;
+        const isCancel = ['user_cancel', 'system_cancel', 'app_cancel'].includes(err ?? '');
+        if (isCancel) {
+          onAuthEvent?.('cancel', first as any);
+          setIsLocked(true);
+          onLock?.();
+          return;
+        }
 
-  const promptLabels = useMemo(
-    () => ({
-      promptMessage: t(BiometricsTranslations.PROMPT_MESSAGE),
-      fallbackLabel: t(BiometricsTranslations.PROMPT_FALLBACK_LABEL),
-      cancelLabel: t(BiometricsTranslations.PROMPT_CANCEL_LABEL),
-    }),
-    [t],
+        // NO mostrar "habilitá Face ID" si es lockout (códigos varían por plataforma/versión)
+        const isLockout = [
+          'lockout',
+          'lockout_temporary',
+          'biometry_lockout',
+          'device_locked',
+        ].includes(err ?? '');
+        const isFallback = ['user_fallback'].includes(err ?? '');
+
+        // Mostrar alerta SOLO si realmente es disponibilidad/permisos
+        if (
+          supportsBiometric &&
+          (first.error === 'not_available' || first.error === 'not_enrolled')
+        ) {
+          onAuthEvent?.('error', { reason: 'biometry_unavailable_or_disabled', first });
+          promptEnableFaceIdForAppOnce();
+        }
+
+        // -------- Intento 2 (opcional): permitir passcode --------
+        // Usamos passcode si hubo lockout/otros errores, o si simplemente falló el #1.
+        const second = await LocalAuthentication.authenticateAsync({
+          promptMessage: 'Desbloquear',
+          cancelLabel: 'Cancelar',
+          requireConfirmation: false,
+          disableDeviceFallback: false,
+        });
+
+        if (second.success) {
+          setIsLocked(false);
+          onAuthEvent?.('success', {
+            via: isLockout || isFallback ? 'fallback_after_lockout' : 'fallback_passcode',
+            result: second,
+          });
+          onUnlock?.();
+          armIdleTimer();
+        } else {
+          const kind =
+            second.error === 'user_cancel' || second.error === 'system_cancel' ? 'cancel' : 'error';
+          onAuthEvent?.(kind as AuthEvent, { first, second });
+          setIsLocked(true);
+          onLock?.();
+        }
+      } catch (err: any) {
+        onAuthEvent?.('error', { message: err?.message ?? String(err) });
+        setIsLocked(true);
+        onLock?.();
+      } finally {
+        promptInFlightRef.current = false;
+      }
+    },
+    [armIdleTimer, canPromptNow, onAuthEvent, onLock, onUnlock, requireBiometrics],
   );
 
-  return { isLocked, authenticate, promptLabels };
-};
+  /** Control del AppState para bloquear al ir a background y autoprompt al volver */
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (next) => {
+      const prev = appStateRef.current;
+      appStateRef.current = next;
+
+      if (prev.match(/active|inactive/) && next === 'background') {
+        if (requireBiometrics) {
+          setIsLocked(true);
+          onAuthEvent?.('locked', { reason: 'background' });
+          onLock?.();
+        }
+        clearIdleTimer();
+      }
+
+      if (next === 'active') {
+        // Rearma idle y autoprompt FORZADO si está bloqueado
+        armIdleTimer();
+        if (requireBiometrics && isLocked) {
+          // ignoramos throttle cuando el usuario vuelve desde Settings o multitarea
+          setTimeout(() => authenticate(true), 150);
+        }
+      }
+    });
+
+    return () => sub.remove();
+  }, [
+    armIdleTimer,
+    clearIdleTimer,
+    onAuthEvent,
+    onLock,
+    requireBiometrics,
+    isLocked,
+    authenticate,
+  ]);
+
+  /** Armar idle al montar; limpiar al desmontar */
+  useEffect(() => {
+    if (requireBiometrics) setIsLocked(true);
+    armIdleTimer();
+    return clearIdleTimer;
+  }, [armIdleTimer, clearIdleTimer, requireBiometrics]);
+
+  /** Auto-prompt inicial (forzado) cuando está bloqueado y la app ya está activa */
+  useEffect(() => {
+    if (!isLocked) return;
+    if (appStateRef.current !== 'active') return;
+    // pequeño delay para evitar condiciones de carrera en el primer render
+    const id = setTimeout(() => authenticate(true), 100);
+    return () => clearTimeout(id);
+  }, [isLocked, authenticate]);
+
+  const api = useMemo<UseBiometricGateApi>(
+    () => ({
+      isLocked,
+      authenticate,
+      markActivity,
+    }),
+    [isLocked, authenticate, markActivity],
+  );
+
+  return api;
+}

@@ -27,7 +27,7 @@ const mobileOrigins = [
     : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
 ];
 
-const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.0.174:8081'];
+const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.0.103:8081'];
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {

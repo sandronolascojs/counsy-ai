@@ -1,6 +1,6 @@
 import { BLUR_INTENSITY, IDLE_TIMEOUT_MS, THROTTLE_MS } from '@/constants/biometric';
 import { useBiometricGate } from '@/hooks/useBiometricGate';
-import { BiometricsTranslations } from '@/i18n/constants';
+import { BiometricsTranslations, NAMESPACES } from '@/i18n/constants';
 import { BlurView } from 'expo-blur';
 import { useTranslation } from 'react-i18next';
 import { Button, SizableText, XStack, YStack } from 'tamagui';
@@ -23,13 +23,13 @@ export const BiometricsGate = ({
   children,
   idleTimeoutMs = IDLE_TIMEOUT_MS,
   throttleMs = THROTTLE_MS,
-  requireBiometrics = true,
+  requireBiometrics = false,
   blurIntensity = BLUR_INTENSITY,
   onLock,
   onUnlock,
   onAuthEvent,
 }: BiometricsGateProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(NAMESPACES.BIOMETRICS);
   const { isLocked, authenticate } = useBiometricGate({
     idleTimeoutMs,
     throttleMs,
@@ -42,7 +42,7 @@ export const BiometricsGate = ({
   if (!isLocked) return <>{children}</>;
 
   return (
-    <YStack flex={1}>
+    <YStack flex={1} bg="$background">
       <BlurView
         intensity={blurIntensity}
         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
@@ -55,7 +55,7 @@ export const BiometricsGate = ({
           {t(BiometricsTranslations.LOCKED_SUBTITLE)}
         </SizableText>
         <XStack gap="$3" mt="$3">
-          <Button size="$4" onPress={authenticate}>
+          <Button size="$4" onPress={() => authenticate()}>
             {t(BiometricsTranslations.UNLOCK)}
           </Button>
         </XStack>

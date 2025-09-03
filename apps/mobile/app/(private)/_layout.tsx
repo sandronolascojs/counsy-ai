@@ -27,7 +27,7 @@ export default function TabLayout() {
   }
 
   return (
-    <BiometricsGate>
+    <BiometricsGate requireBiometrics>
       <Tabs
         screenOptions={{
           headerShown: false,
