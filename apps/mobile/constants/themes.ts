@@ -154,6 +154,8 @@ const builtThemes = createThemes({
   },
 });
 
+export const FALLBACK_BRAND_COLOR_HEX = '#6E56CF'; // Fallback brand color if theme is unavailable
+
 export type Themes = typeof builtThemes;
 export type ThemeName = keyof Themes;
 

@@ -1,9 +1,9 @@
+import Logo from '@/components/Logo';
 import { BLUR_INTENSITY, IDLE_TIMEOUT_MS, THROTTLE_MS } from '@/constants/biometric';
+import { FALLBACK_BRAND_COLOR_HEX } from '@/constants/themes';
 import { useBiometricGate } from '@/hooks/useBiometricGate';
-import { BiometricsTranslations, NAMESPACES } from '@/i18n/constants';
 import { BlurView } from 'expo-blur';
-import { useTranslation } from 'react-i18next';
-import { Button, SizableText, XStack, YStack } from 'tamagui';
+import { useTheme, YStack } from 'tamagui';
 
 interface BiometricsGateProps {
   children: React.ReactNode;
@@ -29,8 +29,8 @@ export const BiometricsGate = ({
   onUnlock,
   onAuthEvent,
 }: BiometricsGateProps) => {
-  const { t } = useTranslation(NAMESPACES.BIOMETRICS);
-  const { isLocked, authenticate } = useBiometricGate({
+  const theme = useTheme();
+  const { isLocked } = useBiometricGate({
     idleTimeoutMs,
     throttleMs,
     requireBiometrics,
@@ -47,18 +47,16 @@ export const BiometricsGate = ({
         intensity={blurIntensity}
         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
       />
-      <YStack flex={1} justify="center" items="center" p="$6" gap="$4" bg="transparent">
-        <SizableText size="$7" fontWeight="700">
-          {t(BiometricsTranslations.LOCKED_TITLE)}
-        </SizableText>
-        <SizableText size="$4" text="center" color="$color8">
-          {t(BiometricsTranslations.LOCKED_SUBTITLE)}
-        </SizableText>
-        <XStack gap="$3" mt="$3">
-          <Button size="$4" onPress={() => authenticate()}>
-            {t(BiometricsTranslations.UNLOCK)}
-          </Button>
-        </XStack>
+      <YStack flex={1} justify="center" items="center" bg="transparent">
+        <Logo
+          width={96}
+          height={96}
+          color={
+            (theme.accentColor?.get?.() as string | undefined) ||
+            (theme.accent1?.get?.() as string | undefined) ||
+            FALLBACK_BRAND_COLOR_HEX
+          }
+        />
       </YStack>
     </YStack>
   );

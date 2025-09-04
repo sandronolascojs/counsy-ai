@@ -1,4 +1,5 @@
 import Logo from '@/components/Logo';
+import { FALLBACK_BRAND_COLOR_HEX } from '@/constants/themes';
 import React, { useEffect } from 'react';
 import Animated, {
   Easing,
@@ -19,7 +20,6 @@ const BREATHING_SCALE_FACTOR = 0.04; // Subtle scaling for breathing effect
 
 // UI constants
 const LOGO_SIZE_PX = 80; // Branded logo size
-const FALLBACK_BRAND_COLOR_HEX = '#6E56CF'; // Fallback brand color if theme is unavailable
 
 interface BrandedLoaderProps {
   message?: string;
