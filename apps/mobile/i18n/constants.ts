@@ -152,13 +152,16 @@ export enum AuthErrorTranslations {
 }
 
 export enum BiometricsTranslations {
-  LOCKED_TITLE = 'biometrics.locked_title',
-  LOCKED_SUBTITLE = 'biometrics.locked_subtitle',
-  LOCKED_INACTIVITY = 'biometrics.locked_inactivity',
-  UNLOCK = 'biometrics.unlock',
-  PROMPT_MESSAGE = 'biometrics.prompt_message',
-  PROMPT_FALLBACK_LABEL = 'biometrics.prompt_fallback_label',
-  PROMPT_CANCEL_LABEL = 'biometrics.prompt_cancel_label',
+  LOCKED_TITLE = 'locked_title',
+  LOCKED_SUBTITLE = 'locked_subtitle',
+  LOCKED_INACTIVITY = 'locked_inactivity',
+  UNLOCK = 'unlock',
+  PROMPT_MESSAGE = 'prompt_message',
+  PROMPT_FALLBACK_LABEL = 'prompt_fallback_label',
+  PROMPT_CANCEL_LABEL = 'prompt_cancel_label',
+  ENABLE_FACEID_TITLE = 'enable_faceid_title',
+  ENABLE_FACEID_DESCRIPTION = 'enable_faceid_description',
+  OPEN_SETTINGS = 'open_settings',
 }
 
 export const NAMESPACES = {
