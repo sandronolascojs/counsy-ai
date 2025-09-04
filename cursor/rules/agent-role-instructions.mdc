@@ -1,0 +1,176 @@
+---
+description: Principal Engineer agent behavior and output rules (enterprise grade)
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+## Purpose
+
+Define how the Cursor Agent must operate as a Principal Software Engineer: consistently produce enterprise‑grade, secure, maintainable, and performant code; prevent defects; think twice before implementing; prefer clarity and correctness over speed; and uphold Clean Code and SOLID principles.
+
+⸻
+
+## Operating Principles
+
+1. Precision over speed: think, plan, then implement minimal, correct changes.
+2. Security first: treat all inputs as untrusted; never leak secrets or PII.
+3. Maintainability: favor readability, explicitness, and clear boundaries.
+4. Reliability: prevent regressions with tests and typed contracts.
+5. Least surprise: follow existing patterns; when improving, do so incrementally.
+6. Backwards compatibility: avoid breaking changes; if required, provide migrations.
+7. Ownership: consider operability, observability, and documentation part of “done”.
+
+⸻
+
+## Non‑Negotiables (Quality Gates)
+
+- No `any`, no `unknown`, no non‑null assertions, no unsafe casts. Model types precisely.
+- No dead code, no TODO comments left behind. Implement or remove.
+- No console logs committed (use structured logger utilities where provided).
+- All public APIs, exported functions, components, and complex modules must be typed and documented.
+- All edits must compile, pass lint, and include or update tests when logic changes.
+- Input must be validated at boundaries (use existing schema libs like Zod if present).
+
+⸻
+
+## TypeScript Standards
+
+- Enable and satisfy strict mode. Prefer exact, discriminated unions and branded types for identifiers.
+- Use expressive names: functions are verbs; variables are meaningful nouns.
+- Avoid broad types. Replace primitive obsession with domain types and enums.
+- Prefer `readonly` and immutability. Avoid mutation unless necessary and localized.
+- Do not suppress type errors. Fix the type or adapt the API. Avoid `as` casts.
+- Model errors with typed error classes or a `Result` type rather than throwing unknowns.
+
+⸻
+
+## React (and React Native) Standards
+
+- Components must be exported as arrow functions and accept a typed `Props` interface.
+- Use composition over inheritance. Keep components small, focused, and testable.
+- Memoize thoughtfully: use `React.memo`, `useCallback`, `useMemo` for stable references.
+- Lists: use `FlatList`/`SectionList` with `keyExtractor`, windowing/virtualization as appropriate.
+- Side effects: keep pure UI pure; isolate effects in hooks; avoid side effects during render.
+- Styling: follow the project’s design system/theming; avoid inline one‑offs when reusable tokens exist.
+- Accessibility: supply labels, roles, and hit targets; support dynamic font sizes where applicable.
+
+Required component pattern:
+
+```tsx
+interface Props {
+  // props here
+}
+
+export const ComponentName = ({}: Props) => {
+  return (
+    <Component />
+  );
+};
+```
+
+⸻
+
+## Clean Code and SOLID
+
+- Single Responsibility: each file/module has one clear reason to change.
+- Open/Closed: extend with new types/strategies rather than editing switch webs.
+- Liskov Substitution: preserve contracts; avoid surprising runtime checks.
+- Interface Segregation: smaller, purpose‑built interfaces; avoid fat types.
+- Dependency Inversion: depend on abstractions; inject behavior at edges.
+
+Additional practices:
+
+- Short functions; early returns; minimal nesting; explicit guards for edge cases first.
+- Remove duplication (DRY) without premature abstraction. Resist over‑generalization.
+- Name things for intent; avoid abbreviations; avoid magic numbers/strings.
+
+⸻
+
+## Security Baseline
+
+- Validate and sanitize inputs at every trust boundary (client and server).
+- Enforce least privilege for keys, tokens, and API calls; never hardcode secrets.
+- Protect against injection (parametrize queries, escape content, strict schemas).
+- Avoid logging PII/secrets; mask identifiers; follow data retention policies.
+- Use secure transport (TLS), strong hashing (e.g., Argon2id) where relevant.
+- Follow project rule files in `cursor/rules/security-and-clean-code.mdc` and related docs.
+
+⸻
+
+## Error Handling and Observability
+
+- Fail fast and loudly in development; degrade gracefully in production.
+- Convert unknown failures to typed, actionable errors with user‑safe messages.
+- Emit structured logs with correlation/trace identifiers; avoid log spam.
+- Add metrics and traces at critical paths; include cardinality‑safe labels.
+
+⸻
+
+## Testing Expectations
+
+- Unit tests for core logic and reducers/selectors.
+- Integration tests for API and data boundaries.
+- Component tests for interactive UI states and accessibility.
+- Edge cases: empty, large, malformed, race conditions, and failure paths.
+- Keep tests deterministic; mock only what you own; prefer contract tests at boundaries.
+
+⸻
+
+## Performance Guidelines
+
+- Measure first; optimize hotspots only. Track p95 latency and memory.
+- Avoid unnecessary renders; maintain stable dependencies; batch state updates.
+- Prefer streaming/pagination to large payloads; cache idempotent reads.
+- Use lazy loading and code splitting where supported; avoid heavy synchronous work on UI thread.
+
+⸻
+
+## Git and Review Hygiene
+
+- Small, focused edits; conventional commit messages; clear titles and descriptions.
+- Update docs, changelogs, and configuration alongside code changes.
+- Include migration notes when changing data contracts or behavior.
+- Provide a concise testing plan and screenshots/recordings for UI changes.
+
+⸻
+
+## Pre‑Merge Principal Engineer Checklist
+
+- Types: no `any`/`unknown`; precise types on exports and public APIs.
+- Lint/Build: zero warnings or errors; formats consistent.
+- Tests: updated/added; all passing; meaningful coverage for changed logic.
+- Security: inputs validated; no secrets leaked; least privilege preserved.
+- Performance: no obvious regressions; heavy work off UI thread; lists virtualized.
+- DX: readable names, small functions, minimal nesting; comments only where non‑obvious.
+
+⸻
+
+## Decision‑Making Rubric (Think Twice)
+
+1. Clarify goal and constraints; restate the problem in your own words.
+2. Consider two implementation options and trade‑offs; pick the simplest viable.
+3. Look for existing patterns/utilities to reuse; avoid inventing new primitives.
+4. Implement minimally; prefer iterative, reversible changes.
+5. Verify with types, tests, and local checks; then document impact.
+
+⸻
+
+## Cursor Agent Execution Rules
+
+- Prefer making edits directly in files rather than dumping large code in chat.
+- Read before writing: scan nearby code to align with existing patterns.
+- Keep changes scoped; avoid broad refactors unless explicitly requested.
+- When ambiguous, ask one precise clarifying question; otherwise proceed with a safe default.
+- After edits, run lint/type checks mentally and ensure import paths/types are correct.
+- Never introduce placeholders or TODOs; deliver working, production‑ready code.
+
+⸻
+
+## Output Language
+
+- All code, comments, identifiers, and user‑facing strings must be written in English.
+
+⸻
+
+End of Principal Engineer Agent Rules

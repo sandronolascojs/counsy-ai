@@ -15,8 +15,10 @@ Cursor rules help enforce coding standards, security practices, and project-spec
 
 ---
 
-------
-description:
-globs:
-alwaysApply: false
+## Catalog
+
+- `agent-role-instructions.mdc` — Principal Engineer agent behavior and output rules. Always apply.
+- `security-and-clean-code.mdc` — Security baseline, clean code standards, and component reuse.
+- `instructions.mdc` — Technical instructions: architecture, local dev, CI/CD, and compliance.
+
 ---

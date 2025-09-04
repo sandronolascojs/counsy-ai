@@ -11,9 +11,10 @@ Last updated: 27 Jul 2025
 0 · Quick‑start TL;DR
 
 # 👇 Local dev in 90 s
-pnpm i          # 1. Install root deps
-pnpm sst dev    # 2. Spin up SST (Fastify λ + ts-rest + local Dynamo)
-expo start      # 3. React‑Native client (Expo 50)
+pnpm i                           # 1. Install root deps
+pnpm -w run db:up || true        # 2. (optional) start local DB if used
+pnpm sst dev                     # 3. Spin up SST (Fastify λ + ts-rest)
+pnpm --filter mobile expo start  # 4. React‑Native client (Expo 50)
 
 All secrets live in infra/.env.*. Use infra/.env.example as template and grab dev creds via 1Password.
 
@@ -39,7 +40,7 @@ Hexagonal, serverless‑first.
  │  Drizzle ORM              │    │  ElevenLabs TTS           │
  └───────────┬───────────────┘    └───────────────────────────┘
              │ S3 (AES-256-GCM)    ┌───────────────────────────┐
-             │ KMS (data keys)     │  OpenAI GPT‑4o mini       │
+             │ KMS (data keys)     │  OpenAI GPT               │
              │                     └───────────────────────────┘
 
 Deployed via SST CDK. One stack ≈ 20 resources: API Gateway, Lambda@Edge, RDS Proxy, S3, CloudFront, WAF, EventBridge, CloudWatch, IAM, KMS.
@@ -49,23 +50,29 @@ Deployed via SST CDK. One stack ≈ 20 resources: API Gateway, Lambda@Edge, RDS 
 2 · Repo Layout (pnpm workspaces)
 
 Path	Purpose
-apps/mobile	Expo 50 RN client
-apps/server	Fastify λ + ts-rest router (TypeScript)
-packages/db	Drizzle schema + migrations
-packages/types	Shared Zod validators & API types
-packages/auth	Better‑Auth adapter + guards
-infra/	SST stacks + IaC
+apps/landing-page	Next.js marketing site
+apps/mobile		Expo 50 RN client
+packages/ai		Mastra AI integrations/utilities
+packages/config	Shared ESLint + TS configs
+packages/db		Drizzle schema + migrations
+packages/infra		SST app (infra) [services/infra in this repo]
+packages/shared	Shared utils/telemetry/core
+packages/ts-rest	ts-rest contract package
+packages/types	Shared types, constants, enums, schemas
+services/api		Fastify λ + ts-rest router (TypeScript)
+services/ai-background-service	Background workers/queues
+infra/			SST stacks + IaC (actual path: packages/infra or services/infra)
 .github/workflows	CI + CD pipelines
 
 
 ⸻
 
 3 · Local Development Setup
-	1.	Prereqs: Node ^20, pnpm ^9, Docker Desktop, AWS CLI aws-vault, Xcode 15 / Android Studio, aws-sam-cli (for Lambda debug).
+	1.	Prereqs: Node ^20, pnpm ^9, Docker Desktop, AWS CLI + aws-vault, Xcode 15 / Android Studio.
 	2.	pnpm i – installs root + workspace deps.
-	3.	pnpm db:migrate – spins an ephemeral Postgres via Docker and runs Drizzle migrations.
-	4.	sst dev – hot‑reload Lambda + localstack mocks (S3, SSM).
-	5.	expo start – QR‑scan to device.
+	3.	pnpm -w run db:migrate – run Drizzle migrations against local/remote DB.
+	4.	pnpm sst dev – hot‑reload Lambda + local mocks as configured.
+	5.	pnpm --filter mobile expo start – QR‑scan to device.
 
 Tip: Use the VS Code Cursor extension for AI‑assisted inline code review (pre‑configured .cursor/config.toml).
 
@@ -264,7 +271,7 @@ Last updated: 27 Jul 2025
 
 # 👇 Local dev in 90 s
 pnpm i          # 1. Install root deps
-pnpm sst dev    # 2. Spin up SST (Fastify λ + ts-rest + local Dynamo)
+pnpm sst dev    # 2. Spin up SST (Fastify λ + ts-rest + local Postgres)
 expo start      # 3. React‑Native client (Expo 50)
 
 All secrets live in infra/.env.*. Use infra/.env.example as template and grab dev creds via 1Password.
@@ -291,7 +298,7 @@ Hexagonal, serverless‑first.
  │  Drizzle ORM              │    │  ElevenLabs TTS           │
  └───────────┬───────────────┘    └───────────────────────────┘
              │ S3 (AES-256-GCM)    ┌───────────────────────────┐
-             │ KMS (data keys)     │  OpenAI GPT‑4o mini       │
+             │ KMS (data keys)     │  OpenAI GPT               │
              │                     └───────────────────────────┘
 
 Deployed via SST CDK. One stack ≈ 20 resources: API Gateway, Lambda@Edge, RDS Proxy, S3, CloudFront, WAF, EventBridge, CloudWatch, IAM, KMS.
