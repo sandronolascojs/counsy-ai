@@ -10,7 +10,7 @@ const colors = {
     backgroundPress: 'hsla(0, 0%, 88%, 1)',
     text: 'hsla(0, 0%, 10%, 1)',
     textSecondary: 'hsla(0, 0%, 30%, 1)',
-    border: 'hsla(0, 0%, 85%, 1)',
+    border: 'hsla(0, 0%, 56%, 1)',
   },
   dark: {
     background: 'hsla(0, 0%, 6%, 1)',
@@ -87,6 +87,9 @@ const builtThemes = createThemes({
         ...Colors.yellow,
         ...lightShadows,
         borderColor: colors.light.border,
+        borderColorHover: 'hsla(0, 0%, 54%, 1)',
+        borderColorPress: 'hsla(0, 0%, 52%, 1)',
+        borderColorFocus: 'hsla(0, 0%, 50%, 1)',
         shadowColor: lightShadows.shadow1,
       },
       dark: {

@@ -33,7 +33,7 @@ export default function AccountPreferencesScreen() {
           <YStack rounded="$4" overflow="hidden" bg="$color2">
             {preferenceItems.map((item, idx, arr) => (
               <XStack
-                key={item.label}
+                key={item.key}
                 items="center"
                 justify="space-between"
                 py="$3"
