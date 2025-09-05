@@ -51,7 +51,7 @@
     "@tamagui/lucide-icons": "1.132.17",
     "@tamagui/theme-builder": "1.132.17",
     "@tamagui/toast": "1.132.17",
-    "@tanstack/react-query": "^5.84.2",
+    "@tanstack/react-query": "^5.87.1",
     "@ts-rest/react-query": "^3.52.1",
     "better-auth": "catalog:",
     "burnt": "^0.13.0",
