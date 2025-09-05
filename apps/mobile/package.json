@@ -49,7 +49,7 @@
     "@tamagui/config": "1.132.17",
     "@tamagui/font-inter": "1.132.17",
     "@tamagui/lucide-icons": "1.132.17",
-    "@tamagui/theme-builder": "1.132.17",
+    "@tamagui/theme-builder": "1.132.23",
     "@tamagui/toast": "1.132.17",
     "@tanstack/react-query": "^5.84.2",
     "@ts-rest/react-query": "^3.52.1",
