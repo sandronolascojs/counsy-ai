@@ -114,7 +114,7 @@ jobs:
 
       - name: Create notification PR
         if: steps.metadata.outputs.update-type == 'version-update:semver-major'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore(dependabot): notify breaking update for #${{ github.event.pull_request.number }}'
