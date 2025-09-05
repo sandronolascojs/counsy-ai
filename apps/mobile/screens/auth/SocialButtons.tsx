@@ -92,19 +92,21 @@ export const SocialButtons = ({ disabled = false }: Props) => {
 
   return (
     <YStack gap="$3">
-      <Button
-        onPress={() => signInWithApple()}
-        disabled={disabled || isAuthorizing}
-        icon={
-          <Ionicons
-            name="logo-apple"
-            size={20}
-            color={effectiveScheme === 'dark' ? theme.color.get() : theme.color1.get()}
-          />
-        }
-      >
-        {t(AuthTranslations.CONTINUE_WITH_APPLE)}
-      </Button>
+      {Platform.OS !== 'android' && (
+        <Button
+          onPress={() => signInWithApple()}
+          disabled={disabled || isAuthorizing}
+          icon={
+            <Ionicons
+              name="logo-apple"
+              size={20}
+              color={effectiveScheme === 'dark' ? theme.color.get() : theme.color1.get()}
+            />
+          }
+        >
+          {t(AuthTranslations.CONTINUE_WITH_APPLE)}
+        </Button>
+      )}
       <Button
         onPress={() => signInWithGoogle()}
         disabled={disabled || isAuthorizing}
