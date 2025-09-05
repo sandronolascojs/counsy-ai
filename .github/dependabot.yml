@@ -7,7 +7,7 @@ updates:
     open-pull-requests-limit: 10
     target-branch: 'development'
 
-  - package-ecosystem: 'pnpm'
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'monthly'
