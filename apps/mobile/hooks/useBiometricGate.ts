@@ -9,11 +9,11 @@ import { Alert, AppState, AppStateStatus, Linking, Platform } from 'react-native
 type AuthEvent = 'attempt' | 'success' | 'cancel' | 'error' | 'fallback' | 'locked';
 
 export interface UseBiometricGateOptions {
-  /** Tiempo de inactividad para bloquear, en ms (ej. 5 * 60 * 1000) */
+  /** Idle timeout to lock, in ms (e.g., 5 * 60 * 1000) */
   idleTimeoutMs: number;
-  /** Antirebote entre prompts, en ms (ej. 1500) */
+  /** Debounce between prompts, in ms (e.g., 1500) */
   throttleMs: number;
-  /** Si es obligatorio usar biometría para desbloquear */
+  /** Whether biometrics are required to unlock */
   requireBiometrics: boolean;
   onLock?: () => void;
   onUnlock?: () => void;
@@ -21,11 +21,11 @@ export interface UseBiometricGateOptions {
 }
 
 export interface UseBiometricGateApi {
-  /** Estado de bloqueo actual */
+  /** Current lock state */
   isLocked: boolean;
-  /** Fuerza el prompt de autenticación (si corresponde) */
+  /** Forces the authentication prompt (when applicable) */
   authenticate: (force?: boolean) => Promise<void>;
-  /** Marca actividad de usuario y rearma el temporizador de inactividad */
+  /** Marks user activity and resets the idle timer */
   markActivity: () => void;
 }
 
@@ -49,10 +49,10 @@ const promptEnableFaceIdForAppOnce = (() => {
 })();
 
 /**
- * Hook para puerta biométrica:
- * - Bloquea al ir a background o por inactividad.
- * - Lanza prompt solo cuando la app está 'active', evitando duplicados.
- * - Face/Touch primero; si no, passcode.
+ * Biometric gate hook:
+ * - Locks on background or inactivity.
+ * - Triggers prompt only when the app is 'active', avoiding duplicates.
+ * - Face/Touch first; otherwise, passcode.
  */
 export function useBiometricGate({
   idleTimeoutMs,
@@ -71,7 +71,7 @@ export function useBiometricGate({
   const promptInFlightRef = useRef<boolean>(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /** Limpia el timer de inactividad */
+  /** Clears the idle timeout */
   const clearIdleTimer = useCallback(() => {
     if (idleTimerRef.current) {
       clearTimeout(idleTimerRef.current);
@@ -79,7 +79,7 @@ export function useBiometricGate({
     }
   }, []);
 
-  /** Rearma el timer de inactividad (si la biometría es requerida) */
+  /** Arms the idle timer (when biometrics are required) */
   const armIdleTimer = useCallback(() => {
     clearIdleTimer();
     if (!requireBiometrics || isExpoGo) return;
@@ -90,12 +90,12 @@ export function useBiometricGate({
     }, idleTimeoutMs);
   }, [clearIdleTimer, idleTimeoutMs, isExpoGo, onAuthEvent, onLock, requireBiometrics]);
 
-  /** Permite a la UI marcar actividad y resetear el idle timer */
+  /** Allows the UI to mark activity and reset the idle timer */
   const markActivity = useCallback(() => {
     armIdleTimer();
   }, [armIdleTimer]);
 
-  /** Chequea si podemos lanzar prompt ahora */
+  /** Checks if we can trigger the prompt now */
   const canPromptNow = useCallback(
     (force = false): boolean => {
       const now = Date.now();
@@ -107,7 +107,7 @@ export function useBiometricGate({
     [throttleMs],
   );
 
-  /** Prompt de autenticación (biometrics-first; luego passcode) */
+  /** Authentication prompt (biometrics first; then passcode) */
   const authenticate = useCallback(
     async (force = false) => {
       if (!canPromptNow(force)) return;
@@ -126,7 +126,7 @@ export function useBiometricGate({
           return;
         }
 
-        // Chequeos previos
+        // Pre-checks
         const [hasHardware, isEnrolled, types] = await Promise.all([
           LocalAuthentication.hasHardwareAsync(),
           LocalAuthentication.isEnrolledAsync(),
@@ -148,7 +148,7 @@ export function useBiometricGate({
         }
 
         if (!isEnrolled) {
-          // No hay Face ID/Touch ID configurado en el device
+          // No Face ID/Touch ID enrolled on the device
           onAuthEvent?.('fallback', { reason: 'not_enrolled', types });
           if (requireBiometrics) {
             setIsLocked(true);
@@ -168,7 +168,7 @@ export function useBiometricGate({
             t === LocalAuthentication.AuthenticationType.FINGERPRINT,
         );
 
-        // -------- Intento 1: solo biometría (sin passcode) --------
+        // -------- Attempt 1: biometrics only (no passcode) --------
         const first = await LocalAuthentication.authenticateAsync({
           promptMessage: t(BiometricsTranslations.PROMPT_MESSAGE),
           cancelLabel: t(BiometricsTranslations.PROMPT_CANCEL_LABEL),
@@ -184,7 +184,7 @@ export function useBiometricGate({
           return;
         }
 
-        // Cancel explícito del usuario o del sistema
+        // Explicit cancel by the user or the system
         const err = (first as any).error as string | undefined;
         const isCancel = ['user_cancel', 'system_cancel', 'app_cancel'].includes(err ?? '');
         if (isCancel) {
@@ -194,7 +194,7 @@ export function useBiometricGate({
           return;
         }
 
-        // NO mostrar "habilitá Face ID" si es lockout (códigos varían por plataforma/versión)
+        // Do NOT show "enable Face ID" if it's a lockout (codes vary by platform/version)
         const isLockout = [
           'lockout',
           'lockout_temporary',
@@ -203,7 +203,7 @@ export function useBiometricGate({
         ].includes(err ?? '');
         const isFallback = ['user_fallback'].includes(err ?? '');
 
-        // Mostrar alerta SOLO si realmente es disponibilidad/permisos
+        // Show alert ONLY if it is actually an availability/permission issue
         if (
           supportsBiometric &&
           (first.error === 'not_available' || first.error === 'not_enrolled')
@@ -217,8 +217,8 @@ export function useBiometricGate({
           });
         }
 
-        // -------- Intento 2 (opcional): permitir passcode --------
-        // Usamos passcode si hubo lockout/otros errores, o si simplemente falló el #1.
+        // -------- Attempt 2 (optional): allow passcode --------
+        // Use passcode if there was a lockout/other errors, or if #1 simply failed.
         const second = await LocalAuthentication.authenticateAsync({
           promptMessage: t(BiometricsTranslations.PROMPT_MESSAGE),
           cancelLabel: t(BiometricsTranslations.PROMPT_CANCEL_LABEL),
@@ -252,7 +252,7 @@ export function useBiometricGate({
     [armIdleTimer, canPromptNow, isExpoGo, onAuthEvent, onLock, onUnlock, requireBiometrics, t],
   );
 
-  /** Control del AppState para bloquear al ir a background y autoprompt al volver */
+  /** AppState control to lock when going to background and auto-prompt on return */
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
       const prev = appStateRef.current;
@@ -268,10 +268,10 @@ export function useBiometricGate({
       }
 
       if (next === 'active') {
-        // Rearma idle y autoprompt FORZADO si está bloqueado
+        // Re-arm idle and FORCE auto-prompt if locked
         armIdleTimer();
         if (requireBiometrics && !isExpoGo && isLocked) {
-          // ignoramos throttle cuando el usuario vuelve desde Settings o multitarea
+          // Ignore throttle when the user returns from Settings or multitasking
           setTimeout(() => authenticate(true), 150);
         }
       }
@@ -289,19 +289,19 @@ export function useBiometricGate({
     authenticate,
   ]);
 
-  /** Armar idle al montar; limpiar al desmontar */
+  /** Arm idle on mount; clear on unmount */
   useEffect(() => {
     if (requireBiometrics && !isExpoGo) setIsLocked(true);
     armIdleTimer();
     return clearIdleTimer;
   }, [armIdleTimer, clearIdleTimer, isExpoGo, requireBiometrics]);
 
-  /** Auto-prompt inicial (forzado) cuando está bloqueado y la app ya está activa */
+  /** Initial auto-prompt (forced) when locked and the app is already active */
   useEffect(() => {
     if (!isLocked) return;
     if (appStateRef.current !== 'active') return;
     if (isExpoGo) return;
-    // pequeño delay para evitar condiciones de carrera en el primer render
+    // Small delay to avoid race conditions on the first render
     const id = setTimeout(() => authenticate(true), 100);
     return () => clearTimeout(id);
   }, [isExpoGo, isLocked, authenticate]);
