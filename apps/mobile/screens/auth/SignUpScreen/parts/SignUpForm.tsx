@@ -27,6 +27,8 @@ export const SignUpForm = () => {
   } = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: signUpFormDefaultValues,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const handleEmailSignUp = async (data: SignUpFormSchema) => {
@@ -43,6 +45,7 @@ export const SignUpForm = () => {
         onError: (err) => {
           const errorMessage = getAuthErrorMessage(err.error.code);
           toast.error(errorMessage);
+          throw new Error(errorMessage);
         },
       },
     );

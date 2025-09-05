@@ -18,7 +18,6 @@ export const SignUpScreenView = () => {
         contentContainerStyle={{ flexGrow: 1 }}
         bounces={false}
         keyboardShouldPersistTaps="handled"
-        accessibilityRole="scrollbar"
       >
         <YStack flex={1} bg="$background" p="$6" justify="space-between">
           <YStack gap="$1">

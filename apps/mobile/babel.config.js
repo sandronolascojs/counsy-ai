@@ -9,7 +9,12 @@ module.exports = function (api) {
           config: './tamagui.config.ts',
           components: ['tamagui'],
           logTimings: true,
-          disableExtraction: true,
+          // Disable Tamagui extraction during development or when explicitly opted out.
+          // Boolean: true disables extraction, false enables it (production default).
+          // To force-disable extraction, set TAMAGUI_DISABLE_EXTRACTION='true'.
+          disableExtraction:
+            process.env.TAMAGUI_DISABLE_EXTRACTION === 'true' ||
+            process.env.NODE_ENV !== 'production',
         },
       ],
       'react-native-reanimated/plugin',

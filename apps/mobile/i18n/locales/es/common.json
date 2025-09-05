@@ -8,7 +8,8 @@
       "forbidden": "No tienes permiso para realizar esta acción.",
       "not_found": "Recurso no encontrado.",
       "rate_limited": "Demasiadas solicitudes. Espera e inténtalo nuevamente.",
-      "unknown": "Algo salió mal. Por favor, intenta de nuevo."
+      "unknown": "Algo salió mal. Por favor, intenta de nuevo.",
+      "logout_failed": "No se pudo cerrar sesión. Inténtalo nuevamente."
     }
   }
 }

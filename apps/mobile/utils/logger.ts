@@ -11,6 +11,33 @@ export interface MobileLoggerOptions {
   level?: MobileLogLevel;
 }
 
+const safeStringify = (value: unknown): string => {
+  try {
+    const seen = new WeakSet<object>();
+    return JSON.stringify(value, (_key, val) => {
+      if (val instanceof Error) {
+        return {
+          name: val.name,
+          message: val.message,
+          stack: val.stack,
+        };
+      }
+      if (typeof val === 'object' && val !== null) {
+        const objectVal = val as object;
+        if (seen.has(objectVal)) return '[Circular]';
+        seen.add(objectVal);
+      }
+      return val;
+    });
+  } catch {
+    try {
+      return String(value);
+    } catch {
+      return '[Unserializable]';
+    }
+  }
+};
+
 export const createMobileLogger = ({
   serviceName = 'mobile',
   level = 'info',
@@ -30,8 +57,24 @@ export const createMobileLogger = ({
       ...context,
     };
     // For now, console-based structured logs; can be wired to Sentry/Datadog later
+    let output = '';
+    try {
+      output = JSON.stringify(payload);
+    } catch {
+      output = safeStringify(payload);
+    }
+    const method: 'error' | 'warn' | 'info' | 'debug' | 'log' =
+      lvl === 'error'
+        ? 'error'
+        : lvl === 'warn'
+          ? 'warn'
+          : lvl === 'info'
+            ? 'info'
+            : lvl === 'debug'
+              ? 'debug'
+              : 'log';
     // eslint-disable-next-line no-console
-    console.log(JSON.stringify(payload));
+    console[method](output);
   };
 
   return {

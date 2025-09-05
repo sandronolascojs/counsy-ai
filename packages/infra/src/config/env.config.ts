@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const _envSchema = z
   .object({
-    SST_STAGE: z.enum(['dev', 'staging', 'production']).default('dev'),
+    SST_STAGE: z.enum(['development', 'staging', 'production']).default('development'),
     FRONTEND_URL: z.string(),
 
     // slack

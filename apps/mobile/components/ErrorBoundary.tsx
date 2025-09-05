@@ -1,7 +1,8 @@
 import Logo from '@/components/Logo';
+import { Button } from '@/components/ui/Button';
 import React from 'react';
 import { Linking } from 'react-native';
-import { Button, Text, XStack, YStack } from 'tamagui';
+import { Text, XStack, YStack } from 'tamagui';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -58,7 +59,7 @@ class ErrorBoundaryImpl extends React.Component<ErrorBoundaryProps, ErrorBoundar
                 Try again
               </Button>
               <Button
-                variant="outlined"
+                variant="outline"
                 onPress={() => Linking.openURL('mailto:support@counsy.ai?subject=App%20Error')}
                 testID="btn-contact-support"
                 aria-label="Contact support"

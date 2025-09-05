@@ -4,9 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Form, Input, Label, Text, YStack } from 'tamagui';
 
-interface Props {}
-
-export const ResetPasswordScreen = ({}: Props) => {
+export const ResetPasswordScreen = () => {
   const params = useLocalSearchParams<{ token?: string; email?: string }>();
   const tokenFromUrl = typeof params.token === 'string' ? params.token : '';
   const [token, setToken] = React.useState(tokenFromUrl);

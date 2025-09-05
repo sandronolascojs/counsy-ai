@@ -174,8 +174,6 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ToastProvider;
-
 export const SafeToastViewport = () => {
   const { left, top, right } = useSafeAreaInsets();
   return <ToastViewport flexDirection="column-reverse" top={top} left={left} right={right} />;

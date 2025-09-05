@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import ToastProvider from '@/components/ui/Toast';
+import { ToastProvider } from '@/components/ui/Toast';
 import config from '@/tamagui.config';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';

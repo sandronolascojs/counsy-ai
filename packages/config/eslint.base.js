@@ -27,7 +27,7 @@ export default tseslint.config(
        */
       '@typescript-eslint/consistent-type-definitions': 'off',
       'unused-imports/no-unused-imports': 'warn',
-      '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
       '@typescript-eslint/no-misused-spread': 'off',
       '@typescript-eslint/restrict-template-expressions': [
         'warn',

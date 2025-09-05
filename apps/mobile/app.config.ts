@@ -62,6 +62,14 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         NSSpeechRecognitionUsageDescription: 'To transcribe your voice in real time.',
         UIBackgroundModes: ['audio', 'remote-notification'],
         ITSAppUsesNonExemptEncryption: false,
+        LSApplicationQueriesSchemes: [
+          'readdle-spark',
+          'airmail',
+          'ms-outlook',
+          'gmail',
+          'googlegmail',
+          'ymail',
+        ],
       },
     },
 

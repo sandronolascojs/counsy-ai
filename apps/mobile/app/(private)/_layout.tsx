@@ -41,7 +41,6 @@ export default function TabLayout() {
             justifyContent: 'center',
             height: 80,
             borderTopWidth: 0.2,
-            borderTopColor: theme.borderColor?.get(),
             backgroundColor: 'transparent',
             bottom: 0,
             elevation: 0,

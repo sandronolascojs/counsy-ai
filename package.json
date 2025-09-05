@@ -33,10 +33,5 @@
       "pnpm format"
     ]
   },
-  "packageManager": "pnpm@10.11.0",
-  "pnpm": {
-    "protocols": {
-      "catalog": "path:packages/catalog"
-    }
-  }
+  "packageManager": "pnpm@10.11.0"
 }

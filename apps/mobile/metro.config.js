@@ -8,6 +8,15 @@ const workspaceRoot = path.resolve(projectRoot, '../..');
 
 const config = getDefaultConfig(projectRoot);
 
+config.transformer = {
+  ...config.transformer,
+  // Keep Expo's default asset plugins to avoid missing asset registry path
+  assetPlugins: config.transformer?.assetPlugins ?? ['expo-asset/tools/hashAssetFiles'],
+  babelTransformerPath: require.resolve('react-native-svg-transformer'),
+};
+config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
+
 // Ensure a single copy of React/React Native is resolved across the monorepo
 config.watchFolders = [workspaceRoot];
 config.resolver.nodeModulesPaths = [

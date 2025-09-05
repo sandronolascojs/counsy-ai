@@ -1,25 +1,17 @@
 import { env } from '@/config/env.config';
+import { assertValidPkcs8 } from '@/utils/pem';
 import { SignJWT, importPKCS8 } from 'jose';
 
 const TTL_SEC = 60 * 60 * 12; // 12 h
 const RENEW_MARGIN_SEC = 60 * 30; // renew if less than 30 min
 
 let cached: { value: string; exp: number } | null = null;
+let cachedPromise: Promise<{ value: string; exp: number }> | null = null;
 
 export function loadAppleP8(): string {
-  let key = env.APPLE_PRIVATE_KEY;
+  const key = env.APPLE_PRIVATE_KEY;
 
-  key = key.replace(/\\n/g, '\n').replace(/\r/g, '');
-
-  key = key.trim().replace(/^\uFEFF/, '');
-
-  if (key.startsWith('"') && key.endsWith('"')) key = key.slice(1, -1).trim();
-  if (key.startsWith("'") && key.endsWith("'")) key = key.slice(1, -1).trim();
-
-  if (!key.startsWith('-----BEGIN PRIVATE KEY-----') || !key.includes('-----END PRIVATE KEY-----'))
-    throw new Error('APPLE_PRIVATE_KEY invalid: missing headers/footers PKCS#8');
-
-  return key;
+  return assertValidPkcs8(key);
 }
 
 async function buildAppleClientSecret(): Promise<{ value: string; exp: number }> {
@@ -42,8 +34,34 @@ async function buildAppleClientSecret(): Promise<{ value: string; exp: number }>
 
 export async function getAppleClientSecret(): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
-  if (!cached || cached.exp - now < RENEW_MARGIN_SEC) {
-    cached = await buildAppleClientSecret();
+  const needsRefresh = !cached || cached.exp - now < RENEW_MARGIN_SEC;
+
+  if (needsRefresh) {
+    if (!cachedPromise) {
+      cachedPromise = buildAppleClientSecret();
+    }
+    try {
+      const result = await cachedPromise;
+      cached = result;
+      return result.value;
+    } finally {
+      // Clear promise regardless of success/failure to allow retries
+      cachedPromise = null;
+    }
+  }
+
+  if (!cached) {
+    // Fallback: build if cache unexpectedly missing
+    if (!cachedPromise) {
+      cachedPromise = buildAppleClientSecret();
+    }
+    try {
+      const result = await cachedPromise;
+      cached = result;
+      return result.value;
+    } finally {
+      cachedPromise = null;
+    }
   }
   return cached.value;
 }

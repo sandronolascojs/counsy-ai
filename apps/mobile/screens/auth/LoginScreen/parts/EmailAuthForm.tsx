@@ -27,6 +27,8 @@ export const EmailAuthForm = () => {
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: signInFormDefaultValues,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const handleEmailAuth = async (data: SignInFormSchema) => {
@@ -34,11 +36,14 @@ export const EmailAuthForm = () => {
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          success('Signed in successfully.');
+          const message =
+            t(AuthTranslations.SIGNED_IN, { ns: NAMESPACES.AUTH }) || 'Signed in successfully.';
+          success(message);
         },
         onError: (err) => {
-          const errorMessage = getAuthErrorMessage(err.error.code);
+          const errorMessage = getAuthErrorMessage(err?.error?.code ?? '');
           toastError(errorMessage);
+          throw new Error(errorMessage);
         },
       },
     );

@@ -1,8 +1,12 @@
 import { Button } from '@/components/ui/Button';
+import { useToast } from '@/components/ui/Toast';
+import { AccountOverviewTranslations, CommonTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient } from '@/lib/auth';
+import { mobileLogger } from '@/utils/logger';
 import { APP_CONFIG } from '@counsy-ai/types';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Separator, Text, XStack, YStack } from 'tamagui';
 
 interface SettingsSection {
@@ -17,22 +21,36 @@ interface SettingsSection {
 }
 
 export const AccountSettingsView = () => {
+  const router = useRouter();
+  const toast = useToast();
+  const { t } = useTranslation([NAMESPACES.COMMON, NAMESPACES.ACCOUNT]);
+
   const handleLogout = useCallback(async () => {
-    await authClient.signOut();
-  }, []);
+    try {
+      await authClient.signOut();
+      router.replace('/(public)/sign-in');
+    } catch (error) {
+      mobileLogger.error('Failed to sign out', {
+        screen: 'AccountSettings',
+        event: 'logout',
+        error,
+      });
+      toast.error(t(CommonTranslations.ERROR_LOGOUT_FAILED));
+    }
+  }, [router, toast, t]);
 
   const settingsSections: SettingsSection[] = useMemo(
     () => [
       {
-        title: 'Account',
+        title: t('account.title', { ns: NAMESPACES.ACCOUNT }),
         items: [
           {
-            label: 'Open Account',
-            description: 'Profile and identity settings',
+            label: t('overview.open', { ns: NAMESPACES.ACCOUNT }),
+            description: t('overview.account.description', { ns: NAMESPACES.ACCOUNT }),
             right: (
               <Link href="/(private)/account/details" asChild>
                 <Text color="$accentColor" fontWeight="700">
-                  Open
+                  {t(AccountOverviewTranslations.OPEN, { ns: NAMESPACES.ACCOUNT })}
                 </Text>
               </Link>
             ),
@@ -40,16 +58,16 @@ export const AccountSettingsView = () => {
         ],
       },
       {
-        title: 'Security',
+        title: t('security.title', { ns: NAMESPACES.ACCOUNT }),
         items: [
           {
-            label: 'Open Security',
-            description: 'Review all security settings',
+            label: t('overview.open', { ns: NAMESPACES.ACCOUNT }),
+            description: t('overview.security.description', { ns: NAMESPACES.ACCOUNT }),
             onPress: undefined,
             right: (
               <Link href="/(private)/account/security" asChild>
                 <Text color="$accentColor" fontWeight="700">
-                  Open
+                  {t(AccountOverviewTranslations.OPEN, { ns: NAMESPACES.ACCOUNT })}
                 </Text>
               </Link>
             ),
@@ -57,15 +75,15 @@ export const AccountSettingsView = () => {
         ],
       },
       {
-        title: 'Preferences',
+        title: t('preferences.title', { ns: NAMESPACES.ACCOUNT }),
         items: [
           {
-            label: 'Open Preferences',
-            description: 'Theme and sync options',
+            label: t('overview.open', { ns: NAMESPACES.ACCOUNT }),
+            description: t('overview.preferences.description', { ns: NAMESPACES.ACCOUNT }),
             right: (
               <Link href="/(private)/account/preferences" asChild>
                 <Text color="$accentColor" fontWeight="700">
-                  Open
+                  {t(AccountOverviewTranslations.OPEN, { ns: NAMESPACES.ACCOUNT })}
                 </Text>
               </Link>
             ),
@@ -73,16 +91,16 @@ export const AccountSettingsView = () => {
         ],
       },
       {
-        title: 'Danger Zone',
+        title: t('danger.title', { ns: NAMESPACES.ACCOUNT }),
         items: [
           {
-            label: 'Open Danger Zone',
-            description: 'Sensitive destructive actions',
+            label: t('overview.open', { ns: NAMESPACES.ACCOUNT }),
+            description: t('overview.danger.description', { ns: NAMESPACES.ACCOUNT }),
             isDanger: true,
             right: (
               <Link href="/(private)/account/danger" asChild>
                 <Text color="$red10" fontWeight="700">
-                  Open
+                  {t(AccountOverviewTranslations.OPEN, { ns: NAMESPACES.ACCOUNT })}
                 </Text>
               </Link>
             ),
@@ -90,7 +108,7 @@ export const AccountSettingsView = () => {
         ],
       },
     ],
-    [],
+    [t],
   );
 
   return (
@@ -131,10 +149,15 @@ export const AccountSettingsView = () => {
         ))}
         {/* app version */}
         <Text fontSize="$2" color="$color8">
-          App version {APP_CONFIG.basics.version}
+          {t(AccountOverviewTranslations.APP_VERSION, {
+            ns: NAMESPACES.ACCOUNT,
+            version: APP_CONFIG.basics.version,
+          })}
         </Text>
         <Separator my="$4" />
-        <Button onPress={handleLogout}>Logout</Button>
+        <Button onPress={handleLogout}>
+          {t(AccountOverviewTranslations.LOGOUT, { ns: NAMESPACES.ACCOUNT })}
+        </Button>
       </YStack>
     </ScrollView>
   );

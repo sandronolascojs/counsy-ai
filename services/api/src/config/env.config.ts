@@ -1,3 +1,4 @@
+import { normalizePem } from '@/utils/pem';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
@@ -24,7 +25,10 @@ export const env = createEnv({
 
     // apple
     APPLE_CLIENT_ID: z.string(),
-    APPLE_PRIVATE_KEY: z.string(),
+    APPLE_PRIVATE_KEY: z.preprocess(
+      (val) => (typeof val === 'string' ? normalizePem(val) : val),
+      z.string(),
+    ),
     APPLE_KEY_ID: z.string(),
     APPLE_TEAM_ID: z.string(),
     APPLE_BUNDLE_IDENTIFIER: z.string(),

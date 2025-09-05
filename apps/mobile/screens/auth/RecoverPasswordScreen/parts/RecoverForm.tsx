@@ -9,7 +9,7 @@ import {
   recoverFormSchema,
   type RecoverFormSchema,
 } from '@/schemas/forms/auth/recoverForm.schema';
-import openEmailInbox from '@/utils/openEmailInbox';
+import { openEmailInbox } from '@/utils/openEmailInbox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'expo-router';
 import React from 'react';
@@ -27,6 +27,8 @@ export const RecoverForm = () => {
   } = useForm<RecoverFormSchema>({
     resolver: zodResolver(recoverFormSchema),
     defaultValues: recoverFormDefaultValues,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data: RecoverFormSchema) => {
@@ -38,6 +40,7 @@ export const RecoverForm = () => {
         onError: (error) => {
           const errorMessage = getAuthErrorMessage(error.error.code);
           toast.error(errorMessage);
+          throw new Error(errorMessage);
         },
       },
     );

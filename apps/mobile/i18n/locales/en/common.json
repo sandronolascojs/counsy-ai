@@ -8,7 +8,8 @@
       "forbidden": "You don’t have permission to perform this action.",
       "not_found": "Resource not found.",
       "rate_limited": "Too many requests. Please wait and try again.",
-      "unknown": "Something went wrong. Please try again."
+      "unknown": "Something went wrong. Please try again.",
+      "logout_failed": "Could not log out. Please try again."
     }
   }
 }

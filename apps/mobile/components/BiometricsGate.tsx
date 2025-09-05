@@ -42,7 +42,7 @@ export const BiometricsGate = ({
   if (!isLocked) return <>{children}</>;
 
   return (
-    <YStack flex={1} bg="$background">
+    <YStack flex={1}>
       <BlurView
         intensity={blurIntensity}
         style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}

@@ -29,6 +29,32 @@ const mobileOrigins = [
 
 const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
 
+const normalizeOrigin = (origin: string): string => origin.trim().replace(/\/+$/, '');
+
+const buildTrustedOrigins = (): string[] => {
+  const isProduction = process.env.NODE_ENV === 'production' || env.APP_ENV === 'production';
+
+  const frontend = normalizeOrigin(env.FRONTEND_URL);
+  const allowedFromEnv = env.ALLOWED_ORIGINS.split(',')
+    .map(normalizeOrigin)
+    .filter((o) => o.length > 0);
+
+  const combined = [...mobileOrigins, ...devExpoOrigins, ...allowedFromEnv, frontend].map(
+    normalizeOrigin,
+  );
+
+  const filtered = combined.filter((origin) => {
+    if (!origin) return false;
+    if (isProduction) {
+      if (origin === '*' || origin.includes('*')) return false;
+      if (origin.startsWith('exp://')) return false;
+    }
+    return true;
+  });
+
+  return Array.from(new Set(filtered));
+};
+
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
     cookieCache: {
@@ -49,13 +75,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     },
     usePlural: true,
   }),
-  trustedOrigins: [
-    ...mobileOrigins,
-    ...devExpoOrigins,
-    ...env.ALLOWED_ORIGINS.split(',')
-      .map((origin) => origin.trim())
-      .filter((origin) => origin.length > 0),
-  ],
+  trustedOrigins: buildTrustedOrigins(),
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async () => {
