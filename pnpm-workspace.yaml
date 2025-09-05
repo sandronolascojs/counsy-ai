@@ -36,7 +36,7 @@ catalog:
   '@typescript-eslint/parser': ^8.35.1
   '@vercel/style-guide': ^6.0.0
   'eslint-config-next': ^15.3.2
-  'eslint-config-prettier': ^10.1.5
+  'eslint-config-prettier': ^10.1.8
   'eslint-plugin-only-warn': ^1.1.0
   'eslint-plugin-react': ^7.37.5
   'eslint-plugin-react-hooks': ^5.2.0
