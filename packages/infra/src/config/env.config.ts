@@ -2,51 +2,29 @@ import { z } from 'zod';
 
 const _envSchema = z
   .object({
-    SST_STAGE: z.enum(['dev', 'production']).default('dev'),
+    SST_STAGE: z.enum(['development', 'staging', 'production']).default('development'),
     FRONTEND_URL: z.string(),
 
     // slack
-    SLACK_CLIENT_ID: z.string({
-      required_error: 'SLACK_CLIENT_ID is required',
-    }),
-    SLACK_CLIENT_SECRET: z.string({
-      required_error: 'SLACK_CLIENT_SECRET is required',
-    }),
-    OAUTH_SCOPES: z.string({
-      required_error: 'OAUTH_SCOPES is required',
-    }),
+    SLACK_CLIENT_ID: z.string().min(1),
+    SLACK_CLIENT_SECRET: z.string().min(1),
+    OAUTH_SCOPES: z.string().min(1),
 
     // auth
-    BETTER_AUTH_SECRET: z.string({
-      required_error: 'BETTER_AUTH_SECRET is required',
-    }),
-    BETTER_AUTH_URL: z.string({
-      required_error: 'BETTER_AUTH_URL is required',
-    }),
+    BETTER_AUTH_SECRET: z.string().min(1),
+    BETTER_AUTH_URL: z.string().min(1),
 
     // email
-    RESEND_API_KEY: z.string({
-      required_error: 'RESEND_API_KEY is required',
-    }),
-    FROM_EMAIL: z.string({
-      required_error: 'FROM_EMAIL is required',
-    }),
+    RESEND_API_KEY: z.string().min(1),
+    FROM_EMAIL: z.string().min(1),
 
     // google credentials
-    GOOGLE_CLIENT_ID: z.string({
-      required_error: 'GOOGLE_CLIENT_ID is required',
-    }),
-    GOOGLE_CLIENT_SECRET: z.string({
-      required_error: 'GOOGLE_CLIENT_SECRET is required',
-    }),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
 
     // cloudflare
-    CLOUDFLARE_API_TOKEN: z.string({
-      required_error: 'CLOUDFLARE_API_TOKEN is required',
-    }),
-    CLOUDFLARE_DEFAULT_ACCOUNT_ID: z.string({
-      required_error: 'CLOUDFLARE_DEFAULT_ACCOUNT_ID is required',
-    }),
+    CLOUDFLARE_API_TOKEN: z.string().min(1),
+    CLOUDFLARE_DEFAULT_ACCOUNT_ID: z.string().min(1),
   })
   .safeParse(process.env);
 

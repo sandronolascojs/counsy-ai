@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button as TamaguiButton, ButtonProps as TamaguiButtonProps } from 'tamagui';
 
 export type ButtonVariant = 'default' | 'ghost' | 'outline';
@@ -11,23 +12,30 @@ export const Button = ({
   variant = 'default',
   pressStyle: userPressStyle,
   hoverStyle: userHoverStyle,
+  disabledStyle: userDisabledStyle,
   size: userSize,
   scaleIcon: userScaleIcon,
   ...restProps
 }: ButtonProps) => {
-  let variantProps: Partial<TamaguiButtonProps> = {};
+  let variantProps: Partial<TamaguiButtonProps> = {
+    fontWeight: '600',
+  };
 
   switch (variant) {
     case 'ghost':
       variantProps = {
-        backgroundColor: 'transparent',
-        borderWidth: '$0',
+        ...variantProps,
+        bg: 'transparent',
+        borderWidth: 0,
         color: '$color',
+        px: 0,
+        animation: undefined,
       };
       break;
     case 'outline':
       variantProps = {
-        backgroundColor: 'transparent',
+        ...variantProps,
+        bg: 'transparent',
         borderWidth: 1,
         borderColor: '$borderColor',
         color: '$color',
@@ -36,7 +44,7 @@ export const Button = ({
     case 'default':
     default:
       variantProps = {
-        fontWeight: '600',
+        ...variantProps,
         theme: 'accent',
         gap: '$0.25',
         animation: 'bouncy',
@@ -49,7 +57,9 @@ export const Button = ({
       {...variantProps}
       {...restProps}
       pressStyle={{
-        scale: 0.97,
+        // Avoid scale on ghost to keep it subtle and crisp
+        scale: variant === 'ghost' ? 1 : 0.97,
+        opacity: variant === 'ghost' ? 0.6 : undefined,
         ...(variantProps.pressStyle || {}),
         ...(userPressStyle || {}),
       }}
@@ -60,6 +70,14 @@ export const Button = ({
       }}
       size={userSize ?? '$4'}
       scaleIcon={userScaleIcon ?? 1.2}
+      disabled={restProps.disabled}
+      aria-disabled={restProps.disabled}
+      aria-busy={restProps['aria-busy']}
+      disabledStyle={{
+        opacity: 0.5,
+        ...(variantProps.disabledStyle || {}),
+        ...(userDisabledStyle || {}),
+      }}
     >
       {children}
     </TamaguiButton>

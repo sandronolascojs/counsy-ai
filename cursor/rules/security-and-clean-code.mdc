@@ -68,7 +68,7 @@ Follow these guidelines as your security and code-quality checklist to maintain 
 
 ✅ Compliance & Certifications
 
-To ensure CalmPulse meets enterprise and regulatory requirements, adhere to the following certification frameworks and controls:
+To ensure Counsy AI meets enterprise and regulatory requirements, adhere to the following certification frameworks and controls:
 
 ISO/IEC 27001:2013
 	•	Information Security Management System (ISMS): Implement and maintain an ISMS covering all operational processes.
@@ -100,4 +100,4 @@ Continuous Compliance Practices
 	•	Training & Awareness: Conduct quarterly security training for all employees.
 	•	Third-Party Assessments: Engage external auditors annually for certifications and vulnerability assessments.
 
-By following these frameworks and embedding controls into your development lifecycle, CalmPulse will align with industry best practices and regulatory requirements, minimizing risk and fostering customer trust.
+By following these frameworks and embedding controls into your development lifecycle, Counsy AI will align with industry best practices and regulatory requirements, minimizing risk and fostering customer trust.

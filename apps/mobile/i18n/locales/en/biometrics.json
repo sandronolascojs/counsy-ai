@@ -1,0 +1,12 @@
+{
+  "enable_faceid_description": "To use Face ID with this app, enable it in Settings → [Your App] → Face ID.",
+  "enable_faceid_title": "Enable Face ID",
+  "locked_inactivity": "Locked due to inactivity",
+  "locked_subtitle": "Use Face ID to continue.",
+  "locked_title": "Locked",
+  "open_settings": "Open Settings",
+  "prompt_cancel_label": "Cancel",
+  "prompt_fallback_label": "Enter device passcode",
+  "prompt_message": "Unlock Counsy",
+  "unlock": "Unlock"
+}

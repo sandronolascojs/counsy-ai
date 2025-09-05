@@ -1,0 +1,12 @@
+{
+  "enable_faceid_description": "Para usar Face ID con esta app, actívalo en Ajustes → [Tu App] → Face ID.",
+  "enable_faceid_title": "Habilitar Face ID",
+  "locked_inactivity": "Bloqueado por inactividad",
+  "locked_subtitle": "Usa Face ID para continuar.",
+  "locked_title": "Bloqueado",
+  "open_settings": "Abrir Ajustes",
+  "prompt_cancel_label": "Cancelar",
+  "prompt_fallback_label": "Ingresar código del dispositivo",
+  "prompt_message": "Desbloquear Counsy",
+  "unlock": "Desbloquear"
+}

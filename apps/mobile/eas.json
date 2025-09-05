@@ -1,0 +1,42 @@
+{
+  "build": {
+    "development": {
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "development",
+        "EXPO_PUBLIC_API_URL": "https://dev-auth.counsy.app",
+        "APP_VERSION": "0.1.0"
+      },
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "staging": {
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "staging",
+        "APP_VERSION": "0.9.0"
+      },
+      "distribution": "internal",
+      "channel": "staging"
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "APP_VERSION": "1.0.0"
+      },
+      "distribution": "store",
+      "channel": "production",
+      "autoIncrement": true
+    },
+    "simulator": {
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Debug"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_ENV": "development"
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote"
+  }
+}

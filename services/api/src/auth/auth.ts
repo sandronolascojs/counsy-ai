@@ -1,14 +1,61 @@
 import { env } from '@/config/env.config';
+import { getAppleClientSecret } from '@/utils/apple.secret.manager';
+import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
 import * as schema from '@counsy-ai/db/schema';
+import { APP_CONFIG } from '@counsy-ai/types';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { haveIBeenPwned, magicLink } from 'better-auth/plugins';
+import { haveIBeenPwned, HaveIBeenPwnedOptions, magicLink } from 'better-auth/plugins';
+
+const APPLE_CLIENT_SECRET = await getAppleClientSecret();
+
+const haveIBeenPwnedPlugin: HaveIBeenPwnedOptions = {
+  customPasswordCompromisedMessage:
+    'This password has been compromised in a data breach. Please choose a different password.',
+};
 
 const cacheTTL = 5 * 60 * 1000; // 5 minutes
 const TTL = 60 * 60 * 1000; // 1 hour
 
-export const auth = betterAuth({
+const mobileOrigins = [
+  env.APP_ENV === 'production'
+    ? `${APP_CONFIG.basics.prefix}://`
+    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://`,
+  env.APP_ENV === 'production'
+    ? `${APP_CONFIG.basics.prefix}://*`
+    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
+];
+
+const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
+
+const normalizeOrigin = (origin: string): string => origin.trim().replace(/\/+$/, '');
+
+const buildTrustedOrigins = (): string[] => {
+  const isProduction = process.env.NODE_ENV === 'production' || env.APP_ENV === 'production';
+
+  const frontend = normalizeOrigin(env.FRONTEND_URL);
+  const allowedFromEnv = env.ALLOWED_ORIGINS.split(',')
+    .map(normalizeOrigin)
+    .filter((o) => o.length > 0);
+
+  const combined = [...mobileOrigins, ...devExpoOrigins, ...allowedFromEnv, frontend].map(
+    normalizeOrigin,
+  );
+
+  const filtered = combined.filter((origin) => {
+    if (!origin) return false;
+    if (isProduction) {
+      if (origin === '*' || origin.includes('*')) return false;
+      if (origin.startsWith('exp://')) return false;
+    }
+    return true;
+  });
+
+  return Array.from(new Set(filtered));
+};
+
+export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
@@ -18,9 +65,8 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   rateLimit: {
     enabled: true,
-    trustProxy: true,
     max: 100,
-    ttl: TTL,
+    window: TTL,
   },
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -29,9 +75,7 @@ export const auth = betterAuth({
     },
     usePlural: true,
   }),
-  trustedOrigins: env.ALLOWED_ORIGINS.split(',')
-    .map((origin) => origin.trim())
-    .filter((origin) => origin.length > 0),
+  trustedOrigins: buildTrustedOrigins(),
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async () => {
@@ -51,8 +95,16 @@ export const auth = betterAuth({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     },
+    apple: {
+      enabled: true,
+      clientId: env.APPLE_CLIENT_ID,
+      clientSecret: APPLE_CLIENT_SECRET,
+      appBundleIdentifier: env.APPLE_BUNDLE_IDENTIFIER,
+    },
   },
   plugins: [
+    expo(),
+    haveIBeenPwned(haveIBeenPwnedPlugin),
     magicLink({
       sendMagicLink: async () => {
         /* const magicLinkUrl = `${url}?token=${token}`;
@@ -63,10 +115,6 @@ export const auth = betterAuth({
         }); */
       },
       disableSignUp: true,
-    }),
-    haveIBeenPwned({
-      customPasswordCompromisedMessage:
-        'This password has been compromised in a data breach. Please choose a different password.',
     }),
   ],
 });

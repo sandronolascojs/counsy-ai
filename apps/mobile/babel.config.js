@@ -1,6 +1,3 @@
-// Default to 'native' if not provided; allow CI/CLI overrides (e.g., web builds)
-process.env.TAMAGUI_TARGET = process.env.TAMAGUI_TARGET || 'native';
-
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -12,10 +9,14 @@ module.exports = function (api) {
           config: './tamagui.config.ts',
           components: ['tamagui'],
           logTimings: true,
-          disableExtraction: process.env.NODE_ENV === 'development',
+          // Disable Tamagui extraction during development or when explicitly opted out.
+          // Boolean: true disables extraction, false enables it (production default).
+          // To force-disable extraction, set TAMAGUI_DISABLE_EXTRACTION='true'.
+          disableExtraction:
+            process.env.TAMAGUI_DISABLE_EXTRACTION === 'true' ||
+            process.env.NODE_ENV !== 'production',
         },
       ],
-      ['transform-inline-environment-variables', { include: ['TAMAGUI_TARGET'] }],
       'react-native-reanimated/plugin',
     ],
   };

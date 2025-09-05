@@ -6,9 +6,13 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": [
+        "*"
+      ]
     }
   },
   "extends": "@counsy-ai/config/typescript-config/library.json",
-  "include": ["src"]
+  "include": [
+    "src/**/*"
+  ]
 }

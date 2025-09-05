@@ -33,6 +33,23 @@
       "description": "Permanently delete your account"
     }
   },
+  "overview": {
+    "open": "Open",
+    "logout": "Logout",
+    "app_version": "App version {{version}}",
+    "account": {
+      "description": "Profile and identity settings"
+    },
+    "security": {
+      "description": "Review all security settings"
+    },
+    "preferences": {
+      "description": "Theme and sync options"
+    },
+    "danger": {
+      "description": "Sensitive destructive actions"
+    }
+  },
   "preferences": {
     "title": "Preferences",
     "dark_mode": {

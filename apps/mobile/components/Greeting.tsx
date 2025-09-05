@@ -8,7 +8,7 @@ export const Greeting = () => {
       <Text fontSize="$8" fontWeight="700">
         {greeting},
       </Text>
-      <Text fontSize="$7" theme="alt2">
+      <Text fontSize="$7" theme="accent">
         Matias.
       </Text>
     </YStack>

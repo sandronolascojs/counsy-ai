@@ -1,55 +1,65 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { ToastProvider } from '@/components/ui/Toast';
 import config from '@/tamagui.config';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, useColorScheme } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
+import { BrandedLoader } from '../components/BrandedLoader';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { i18n, initializeI18n, useCurrentLanguage } from '../i18n';
 
-const FONTS = {
-  SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-} as const;
-
-export default function RootLayout() {
+const RootLayout = () => {
   const colorScheme = useColorScheme();
   const effectiveScheme = colorScheme ?? 'dark';
   const language = useCurrentLanguage();
-  const prevLanguageRef = useRef(language);
 
-  // Update language only when it actually changes
+  // Ensure i18n reflects the current device-preferred language on mount and when it changes
   useEffect(() => {
-    if (prevLanguageRef.current !== language) {
-      initializeI18n(language);
-      prevLanguageRef.current = language;
-    }
+    initializeI18n(language);
   }, [language]);
 
-  const [fontsLoaded] = useFonts(FONTS);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const [fontsLoaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
 
   return (
     <I18nextProvider i18n={i18n}>
-      <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
-        <Theme name={effectiveScheme}>
-          <YStack flex={1} backgroundColor="$background">
-            <SafeAreaView style={{ flex: 1 }}>
-              <ThemeProvider value={effectiveScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                </Stack>
-              </ThemeProvider>
-            </SafeAreaView>
-          </YStack>
-        </Theme>
-      </TamaguiProvider>
+      <SafeAreaProvider>
+        <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
+          <Theme name={effectiveScheme}>
+            {fontsLoaded ? (
+              <ErrorBoundary>
+                <ToastProvider>
+                  <YStack flex={1} bg="$background">
+                    <SafeAreaView style={{ flex: 1 }}>
+                      <Stack
+                        screenOptions={{
+                          animation: 'none',
+                          contentStyle: { backgroundColor: 'transparent' },
+                        }}
+                      >
+                        <Stack.Screen name="index" options={{ headerShown: false }} />
+                        <Stack.Screen name="(public)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(private)" options={{ headerShown: false }} />
+                      </Stack>
+                    </SafeAreaView>
+                  </YStack>
+                </ToastProvider>
+              </ErrorBoundary>
+            ) : (
+              <BrandedLoader message="Preparing your experience..." />
+            )}
+          </Theme>
+        </TamaguiProvider>
+      </SafeAreaProvider>
     </I18nextProvider>
   );
-}
+};
+
+export default RootLayout;

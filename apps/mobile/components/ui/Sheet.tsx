@@ -38,25 +38,25 @@ export const Sheet = ({
         opacity={OVERLAY_OPACITY}
         enterStyle={{ opacity: 0 }}
         exitStyle={{ opacity: 0 }}
-        backgroundColor="$color"
+        bg="$color"
       />
       <TamaguiSheet.Frame
-        padding="$4"
+        p="$4"
         gap="$5"
-        backgroundColor="$background"
+        bg="$background"
         borderTopLeftRadius="$8"
         borderTopRightRadius="$8"
-        paddingBottom={insets.bottom}
+        pb={insets.bottom}
       >
-        <YStack backgroundColor="$background">
+        <YStack bg="$background">
           <TamaguiSheet.Handle
             width="15%"
             height={5}
             borderRadius="$10"
-            backgroundColor="$borderColor"
+            bg="$borderColor"
             alignSelf="center"
           />
-          <XStack alignItems="center" justifyContent="space-between">
+          <XStack items="center" justify="space-between">
             <Text fontSize="$6" fontWeight="700">
               {title}
             </Text>

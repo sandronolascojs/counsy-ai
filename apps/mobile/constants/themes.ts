@@ -10,7 +10,7 @@ const colors = {
     backgroundPress: 'hsla(0, 0%, 88%, 1)',
     text: 'hsla(0, 0%, 10%, 1)',
     textSecondary: 'hsla(0, 0%, 30%, 1)',
-    border: 'hsla(0, 0%, 85%, 1)',
+    border: 'hsla(0, 0%, 56%, 1)',
   },
   dark: {
     background: 'hsla(0, 0%, 6%, 1)',
@@ -86,6 +86,10 @@ const builtThemes = createThemes({
         ...Colors.red,
         ...Colors.yellow,
         ...lightShadows,
+        borderColor: colors.light.border,
+        borderColorHover: 'hsla(0, 0%, 54%, 1)',
+        borderColorPress: 'hsla(0, 0%, 52%, 1)',
+        borderColorFocus: 'hsla(0, 0%, 50%, 1)',
         shadowColor: lightShadows.shadow1,
       },
       dark: {
@@ -93,6 +97,7 @@ const builtThemes = createThemes({
         ...Colors.redDark,
         ...Colors.yellowDark,
         ...darkShadows,
+        borderColor: colors.dark.border,
         shadowColor: darkShadows.shadow1,
       },
     },
@@ -152,9 +157,10 @@ const builtThemes = createThemes({
   },
 });
 
-export type Themes = typeof builtThemes;
+export const FALLBACK_BRAND_COLOR_HEX = '#6E56CF'; // Fallback brand color if theme is unavailable
 
-export const themes: Themes =
-  process.env.TAMAGUI_ENVIRONMENT === 'client' && process.env.NODE_ENV === 'production'
-    ? ({} as any)
-    : (builtThemes as any);
+export type Themes = typeof builtThemes;
+export type ThemeName = keyof Themes;
+
+// Always export full themes so tokens/theme variables are available in all environments
+export const themes: Themes = builtThemes;

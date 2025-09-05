@@ -51,6 +51,8 @@
     "eslint": "catalog:",
     "npm-run-all": "catalog:",
     "prettier": "catalog:",
+    "prettier-package-json": "catalog:",
+    "prettier-plugin-organize-imports": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"

@@ -1,0 +1,15 @@
+{
+  "common": {
+    "errors": {
+      "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+      "network": "Error de red. Verifica tu conexión e inténtalo nuevamente.",
+      "timeout": "La solicitud tardó demasiado. Inténtalo otra vez.",
+      "unauthorized": "No estás autorizado. Inicia sesión nuevamente.",
+      "forbidden": "No tienes permiso para realizar esta acción.",
+      "not_found": "Recurso no encontrado.",
+      "rate_limited": "Demasiadas solicitudes. Espera e inténtalo nuevamente.",
+      "unknown": "Algo salió mal. Por favor, intenta de nuevo.",
+      "logout_failed": "No se pudo cerrar sesión. Inténtalo nuevamente."
+    }
+  }
+}

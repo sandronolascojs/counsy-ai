@@ -1,0 +1,15 @@
+{
+  "common": {
+    "errors": {
+      "generic": "An error occurred. Please try again.",
+      "network": "Network error. Check your connection and try again.",
+      "timeout": "Request timed out. Please try again.",
+      "unauthorized": "You are not authorized. Please sign in again.",
+      "forbidden": "You don’t have permission to perform this action.",
+      "not_found": "Resource not found.",
+      "rate_limited": "Too many requests. Please wait and try again.",
+      "unknown": "Something went wrong. Please try again.",
+      "logout_failed": "Could not log out. Please try again."
+    }
+  }
+}

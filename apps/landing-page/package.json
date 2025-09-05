@@ -1,12 +1,12 @@
 {
+  "private": true,
   "name": "landing-page",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "next dev",
+    "lint": "eslint",
+    "start": "next start"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
@@ -19,8 +19,8 @@
     "lucide-react": "^0.542.0",
     "next": "15.5.2",
     "next-themes": "^0.4.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

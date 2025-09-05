@@ -23,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@better-auth/expo": "^1.3.5",
     "@counsy-ai/ai": "workspace:*",
     "@counsy-ai/config": "workspace:*",
     "@counsy-ai/db": "workspace:*",
@@ -42,6 +43,7 @@
     "drizzle-orm": "catalog:",
     "fastify": "catalog:",
     "fastify-plugin": "^5.0.1",
+    "jose": "^6.1.0",
     "limax": "catalog:",
     "npm-run-all": "catalog:",
     "pg": "catalog:",
@@ -54,6 +56,8 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "prettier-package-json": "catalog:",
+    "prettier-plugin-organize-imports": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"
