@@ -7,8 +7,8 @@ import { ToastProvider } from '@/components/ui/Toast';
 import config from '@/tamagui.config';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { SafeAreaView, useColorScheme } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Platform, useColorScheme } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { TamaguiProvider, Theme, YStack } from 'tamagui';
 import { BrandedLoader } from '../components/BrandedLoader';
 import { ErrorBoundary } from '../components/ErrorBoundary';
@@ -37,7 +37,10 @@ const RootLayout = () => {
               <ErrorBoundary>
                 <ToastProvider>
                   <YStack flex={1} bg="$background">
-                    <SafeAreaView style={{ flex: 1 }}>
+                    <SafeAreaView
+                      style={{ flex: 1 }}
+                      edges={Platform.OS === 'android' ? ['bottom'] : ['bottom', 'top']}
+                    >
                       <Stack
                         screenOptions={{
                           animation: 'none',
