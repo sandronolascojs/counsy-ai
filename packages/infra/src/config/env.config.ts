@@ -15,8 +15,9 @@ const _envSchema = z
     BETTER_AUTH_URL: z.string().min(1),
 
     // email
-    RESEND_API_KEY: z.string().min(1),
     FROM_EMAIL: z.string().min(1),
+    AWS_REGION: z.string().min(1),
+    SES_CONFIGURATION_SET: z.string().optional(),
 
     // google credentials
     GOOGLE_CLIENT_ID: z.string().min(1),

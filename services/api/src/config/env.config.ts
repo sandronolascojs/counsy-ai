@@ -16,8 +16,9 @@ export const env = createEnv({
     BETTER_AUTH_SECRET: z.string(),
 
     // email
-    RESEND_API_KEY: z.string(),
     FROM_EMAIL: z.string(),
+    AWS_REGION: z.string(),
+    SES_CONFIGURATION_SET: z.string().optional(),
 
     // google
     GOOGLE_CLIENT_ID: z.string(),
@@ -41,8 +42,9 @@ export const env = createEnv({
     ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
     FROM_EMAIL: process.env.FROM_EMAIL,
+    AWS_REGION: process.env.AWS_REGION,
+    SES_CONFIGURATION_SET: process.env.SES_CONFIGURATION_SET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     FRONTEND_URL: process.env.FRONTEND_URL,

@@ -23,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.883.0",
     "@better-auth/expo": "^1.3.5",
     "@counsy-ai/ai": "workspace:*",
     "@counsy-ai/config": "workspace:*",
