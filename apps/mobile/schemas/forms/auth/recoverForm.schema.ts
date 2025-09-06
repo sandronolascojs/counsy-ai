@@ -1,20 +1,21 @@
-import { i18n } from '@/i18n';
 import { AuthErrorTranslations } from '@/i18n/constants';
 import { EMAIL_REGEX } from '@counsy-ai/types';
+import type { TFunction } from 'i18next';
 import { z } from 'zod';
 
-export const recoverFormSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: i18n.t(AuthErrorTranslations.EMAIL_REQUIRED),
-    })
-    .regex(EMAIL_REGEX, {
-      message: i18n.t(AuthErrorTranslations.EMAIL_INVALID),
-    }),
-});
+export const createRecoverFormSchema = (t: TFunction) =>
+  z.object({
+    email: z
+      .string()
+      .min(1, {
+        message: t(AuthErrorTranslations.EMAIL_REQUIRED),
+      })
+      .regex(EMAIL_REGEX, {
+        message: t(AuthErrorTranslations.EMAIL_INVALID),
+      }),
+  });
 
-export type RecoverFormSchema = z.infer<typeof recoverFormSchema>;
+export type RecoverFormSchema = z.infer<ReturnType<typeof createRecoverFormSchema>>;
 
 export const recoverFormDefaultValues: RecoverFormSchema = {
   email: '',
