@@ -28,7 +28,7 @@ export const Button = ({
         bg: 'transparent',
         borderWidth: 0,
         color: '$color',
-        px: 0,
+        px: '$2',
         animation: undefined,
       };
       break;
@@ -69,7 +69,7 @@ export const Button = ({
         ...(userHoverStyle || {}),
       }}
       size={userSize ?? '$4'}
-      scaleIcon={userScaleIcon ?? 1.2}
+      scaleIcon={userScaleIcon ?? 1}
       disabled={restProps.disabled}
       aria-disabled={restProps.disabled}
       aria-busy={restProps['aria-busy']}

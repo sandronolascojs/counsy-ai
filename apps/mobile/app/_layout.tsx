@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
+import { SafeAreaWrapper } from '@/components/SafeAreaWrapper';
 import { ToastProvider } from '@/components/ui/Toast';
 import config from '@/tamagui.config';
 import { useEffect } from 'react';
@@ -30,37 +31,30 @@ const RootLayout = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <SafeAreaProvider>
-        <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
-          <Theme name={effectiveScheme}>
+      <TamaguiProvider config={config} defaultTheme={effectiveScheme}>
+        <Theme name={effectiveScheme}>
+          <SafeAreaWrapper>
             {fontsLoaded ? (
               <ErrorBoundary>
                 <ToastProvider>
-                  <YStack flex={1} bg="$background">
-                    <SafeAreaView
-                      style={{ flex: 1 }}
-                      edges={Platform.OS === 'android' ? ['bottom'] : ['bottom', 'top']}
-                    >
-                      <Stack
-                        screenOptions={{
-                          animation: 'none',
-                          contentStyle: { backgroundColor: 'transparent' },
-                        }}
-                      >
-                        <Stack.Screen name="index" options={{ headerShown: false }} />
-                        <Stack.Screen name="(public)" options={{ headerShown: false }} />
-                        <Stack.Screen name="(private)" options={{ headerShown: false }} />
-                      </Stack>
-                    </SafeAreaView>
-                  </YStack>
+                  <Stack
+                    screenOptions={{
+                      animation: 'none',
+                      contentStyle: { backgroundColor: 'transparent' },
+                    }}
+                  >
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(public)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(private)" options={{ headerShown: false }} />
+                  </Stack>
                 </ToastProvider>
               </ErrorBoundary>
             ) : (
               <BrandedLoader message="Preparing your experience..." />
             )}
-          </Theme>
-        </TamaguiProvider>
-      </SafeAreaProvider>
+          </SafeAreaWrapper>
+        </Theme>
+      </TamaguiProvider>
     </I18nextProvider>
   );
 };

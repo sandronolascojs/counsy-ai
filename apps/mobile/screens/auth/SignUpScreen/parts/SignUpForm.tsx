@@ -6,8 +6,8 @@ import { useToast } from '@/components/ui/Toast';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
+  createSignUpFormSchema,
   signUpFormDefaultValues,
-  signUpFormSchema,
   type SignUpFormSchema,
 } from '@/schemas/forms/auth/signUpForm.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +25,7 @@ export const SignUpForm = () => {
     handleSubmit,
     control,
   } = useForm<SignUpFormSchema>({
-    resolver: zodResolver(signUpFormSchema),
+    resolver: zodResolver(createSignUpFormSchema(t)),
     defaultValues: signUpFormDefaultValues,
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -170,7 +170,6 @@ export const SignUpForm = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder="••••••••"
-                secureTextEntry
                 autoCapitalize="none"
                 autoComplete="password"
               />

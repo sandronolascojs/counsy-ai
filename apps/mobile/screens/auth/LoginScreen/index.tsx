@@ -1,3 +1,4 @@
+import KeyboardAvoidingWrapper from '@/components/KeyboardAvoidingWrapper';
 import Logo from '@/components/Logo';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import React from 'react';
@@ -12,15 +13,11 @@ export const LoginScreenView = () => {
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding', android: 'height' })}
-      style={{ flex: 1 }}
-    >
+    <KeyboardAvoidingWrapper>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         bounces={false}
         keyboardShouldPersistTaps="handled"
-        accessibilityRole="scrollbar"
       >
         <YStack flex={1} bg="$background" p="$6" justify="space-between">
           <YStack gap="$2" items="center">
@@ -38,6 +35,6 @@ export const LoginScreenView = () => {
           <LegalFooter />
         </YStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 };
