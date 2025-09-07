@@ -26,7 +26,7 @@ export const ResetForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<ResetPasswordFormSchema>({
     resolver: zodResolver(createResetPasswordFormSchema(t)),
     defaultValues: resetPasswordFormDefaultValues,
@@ -110,8 +110,8 @@ export const ResetForm = () => {
 
       <XStack>
         <Button
-          disabled={isSubmitting}
-          aria-disabled={isSubmitting}
+          disabled={isSubmitting || !isValid}
+          aria-disabled={isSubmitting || !isValid}
           aria-busy={isSubmitting}
           iconAfter={isSubmitting ? <Spinner size="small" /> : undefined}
           onPress={handleSubmit(onSubmit)}
