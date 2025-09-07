@@ -170,6 +170,7 @@ export const SignUpForm = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder="••••••••"
+                secureTextEntry
                 autoCapitalize="none"
                 autoComplete="password"
               />
