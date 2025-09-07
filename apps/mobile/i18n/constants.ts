@@ -137,6 +137,11 @@ export enum AuthTranslations {
   RECOVER_OPEN_EMAIL_APP = 'auth.recover.open_email_app',
   RECOVER_RESEND_EMAIL = 'auth.recover.resend_email',
   RECOVER_BACK_TO_SIGN_IN = 'auth.recover.back_to_sign_in',
+  RESET_TITLE = 'auth.reset.title',
+  RESET_SUBTITLE = 'auth.reset.subtitle',
+  RESET_UPDATE_PASSWORD = 'auth.reset.update_password',
+  RESET_UPDATING = 'auth.reset.updating',
+  RESET_UPDATED_SUCCESS = 'auth.reset.updated_success',
 }
 
 export enum AuthErrorTranslations {

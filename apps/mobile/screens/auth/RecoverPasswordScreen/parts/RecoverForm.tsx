@@ -5,8 +5,8 @@ import { useToast } from '@/components/ui/Toast';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
+  createRecoverFormSchema,
   recoverFormDefaultValues,
-  recoverFormSchema,
   type RecoverFormSchema,
 } from '@/schemas/forms/auth/recoverForm.schema';
 import { openEmailInbox } from '@/utils/openEmailInbox';
@@ -25,7 +25,7 @@ export const RecoverForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<RecoverFormSchema>({
-    resolver: zodResolver(recoverFormSchema),
+    resolver: zodResolver(createRecoverFormSchema(t)),
     defaultValues: recoverFormDefaultValues,
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -144,5 +144,3 @@ export const RecoverForm = () => {
     </YStack>
   );
 };
-
-export default RecoverForm;

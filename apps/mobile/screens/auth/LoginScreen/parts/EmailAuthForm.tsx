@@ -6,8 +6,8 @@ import { useToast } from '@/components/ui/Toast';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
+  createSignInFormSchema,
   signInFormDefaultValues,
-  signInFormSchema,
   type SignInFormSchema,
 } from '@/schemas/forms/auth/signInForm.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +25,7 @@ export const EmailAuthForm = () => {
     handleSubmit,
     control,
   } = useForm<SignInFormSchema>({
-    resolver: zodResolver(signInFormSchema),
+    resolver: zodResolver(createSignInFormSchema(t)),
     defaultValues: signInFormDefaultValues,
     mode: 'onChange',
     reValidateMode: 'onChange',

@@ -7,9 +7,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { Text, useTheme, XStack, YStack } from 'tamagui';
-import { RecoverForm } from './parts/RecoverForm';
+import { ResetForm } from './parts/ResetForm';
 
-export const RecoverPasswordScreenView = () => {
+export const ResetPasswordScreenView = () => {
   const theme = useTheme();
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
@@ -25,7 +25,6 @@ export const RecoverPasswordScreenView = () => {
             <Link href="/(public)/sign-in" asChild>
               <Button
                 variant="ghost"
-                size="$2"
                 role="link"
                 aria-label="Go back"
                 icon={<Feather name="chevron-left" size={20} color={theme.color.get()} />}
@@ -38,7 +37,7 @@ export const RecoverPasswordScreenView = () => {
           </XStack>
 
           <YStack flex={1} justify="center">
-            <RecoverForm />
+            <ResetForm />
           </YStack>
         </YStack>
       </ScrollView>

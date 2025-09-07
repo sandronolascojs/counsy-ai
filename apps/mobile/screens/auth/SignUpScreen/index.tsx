@@ -1,3 +1,4 @@
+import KeyboardAvoidingWrapper from '@/components/KeyboardAvoidingWrapper';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,10 +11,7 @@ export const SignUpScreenView = () => {
   const { t } = useTranslation([NAMESPACES.AUTH, NAMESPACES.COMMON]);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding', android: 'height' })}
-      style={{ flex: 1 }}
-    >
+    <KeyboardAvoidingWrapper>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         bounces={false}
@@ -31,6 +29,6 @@ export const SignUpScreenView = () => {
           <LegalFooter />
         </YStack>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 };

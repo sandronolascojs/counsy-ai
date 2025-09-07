@@ -98,6 +98,12 @@ export default $config({
       vpc,
       link: [db],
       runtime: 'nodejs22.x',
+      permissions: [
+        {
+          actions: ['ses:SendEmail', 'ses:SendRawEmail'],
+          resources: ['*'],
+        },
+      ],
       environment: {
         APP_ENV: $app.stage,
         DATABASE_URL: $interpolate`postgresql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}`,
@@ -114,9 +120,12 @@ export default $config({
         BETTER_AUTH_SECRET: env.BETTER_AUTH_SECRET,
         BETTER_AUTH_URL: $interpolate`https://${API_DOMAIN}`,
 
-        // email
-        RESEND_API_KEY: env.RESEND_API_KEY,
-        FROM_EMAIL: env.FROM_EMAIL,
+        // email / ses: compute per-environment
+        FROM_EMAIL: isProduction
+          ? $interpolate`no-reply@${ROOT}`
+          : $interpolate`no-reply-${$app.stage}@${ROOT}`,
+        AWS_REGION: 'us-east-1',
+        SES_CONFIGURATION_SET: isProduction ? 'prod-default' : undefined,
 
         // google credentials
         GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,

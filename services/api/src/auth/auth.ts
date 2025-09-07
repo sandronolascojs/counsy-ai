@@ -1,5 +1,6 @@
 import { env } from '@/config/env.config';
 import { getAppleClientSecret } from '@/utils/apple.secret.manager';
+import { SesEmailService } from '@/utils/sesEmail.service';
 import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
 import * as schema from '@counsy-ai/db/schema';
@@ -18,14 +19,14 @@ const haveIBeenPwnedPlugin: HaveIBeenPwnedOptions = {
 const cacheTTL = 5 * 60 * 1000; // 5 minutes
 const TTL = 60 * 60 * 1000; // 1 hour
 
-const mobileOrigins = [
+// Align mobile schemes with apps/mobile/config/scheme.shared.js
+const schemeForEnv =
   env.APP_ENV === 'production'
-    ? `${APP_CONFIG.basics.prefix}://`
-    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://`,
-  env.APP_ENV === 'production'
-    ? `${APP_CONFIG.basics.prefix}://*`
-    : `${APP_CONFIG.basics.prefix}-${env.APP_ENV}://*`,
-];
+    ? 'counsy-ai'
+    : env.APP_ENV === 'staging'
+      ? 'counsy-ai-staging'
+      : 'counsy-ai-dev';
+const mobileOrigins = [`${schemeForEnv}://`, `${schemeForEnv}://*`];
 
 const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
 
@@ -78,14 +79,25 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   trustedOrigins: buildTrustedOrigins(),
   emailAndPassword: {
     enabled: true,
-    sendResetPassword: async () => {
-      /* const { email } = user;
-      const resetPasswordUrl = `${url}?token=${token}`;
+    sendResetPassword: async ({ user, url, token }) => {
+      const emailService = new SesEmailService();
+      const schemeName =
+        env.APP_ENV === 'production'
+          ? 'counsy-ai'
+          : env.APP_ENV === 'staging'
+            ? 'counsy-ai-staging'
+            : 'counsy-ai-dev';
+      const scheme = `${schemeName}://`;
+      const callbackDeepLink = `${scheme}reset?token=${encodeURIComponent(token)}`;
+      const resetUrl = new URL(url);
+      resetUrl.searchParams.set('callbackURL', callbackDeepLink);
+      const resetPasswordUrl = resetUrl.toString();
       await emailService.sendEmail({
-        to: email,
+        to: user.email,
         subject: `${APP_CONFIG.basics.name} - Reset your password`,
         html: `Click <a href="${resetPasswordUrl}">here</a> to reset your password`,
-      }); */
+        text: `Open the following link to reset your password: ${resetPasswordUrl}`,
+      });
     },
   },
   socialProviders: {
@@ -106,13 +118,25 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     expo(),
     haveIBeenPwned(haveIBeenPwnedPlugin),
     magicLink({
-      sendMagicLink: async () => {
-        /* const magicLinkUrl = `${url}?token=${token}`;
+      sendMagicLink: async ({ email, url, token }) => {
+        const emailService = new SesEmailService();
+        const schemeName =
+          env.APP_ENV === 'production'
+            ? 'counsy-ai'
+            : env.APP_ENV === 'staging'
+              ? 'counsy-ai-staging'
+              : 'counsy-ai-dev';
+        const scheme = `${schemeName}://`;
+        const callbackDeepLink = `${scheme}auth/magic-link?token=${encodeURIComponent(token)}`;
+        const magicUrl = new URL(url);
+        magicUrl.searchParams.set('callbackURL', callbackDeepLink);
+        const magicLinkUrl = magicUrl.toString();
         await emailService.sendEmail({
           to: email,
           subject: `${APP_CONFIG.basics.name} - Magic link`,
           html: `Click <a href="${magicLinkUrl}">here</a> to login`,
-        }); */
+          text: `Open the following link to login: ${magicLinkUrl}`,
+        });
       },
       disableSignUp: true,
     }),
