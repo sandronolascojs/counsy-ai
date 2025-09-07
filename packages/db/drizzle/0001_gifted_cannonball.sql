@@ -1,0 +1,2 @@
+CREATE TYPE "public"."subscription_period_type" AS ENUM('Trial', 'Normal');--> statement-breakpoint
+ALTER TABLE "subscriptions" ADD COLUMN "period_type" "subscription_period_type" DEFAULT 'Normal' NOT NULL;

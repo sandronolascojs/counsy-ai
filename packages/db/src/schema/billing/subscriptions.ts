@@ -1,4 +1,4 @@
-import { SubscriptionStatus } from '@counsy-ai/types';
+import { SubscriptionPeriodType, SubscriptionStatus } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
 import { pgEnum, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 import { users } from '../user';
@@ -16,6 +16,11 @@ export const subscriptionStatus = pgEnum('subscription_status', [
   SubscriptionStatus.CANCELLED,
 ]);
 
+export const subscriptionPeriodType = pgEnum('subscription_period_type', [
+  SubscriptionPeriodType.TRIAL,
+  SubscriptionPeriodType.NORMAL,
+]);
+
 export const subscriptions = pgTable(
   'subscriptions',
   {
@@ -29,6 +34,9 @@ export const subscriptions = pgTable(
     channel: subscriptionChannel('channel').notNull(),
     externalId: text('external_id'),
     status: subscriptionStatus('status').notNull(),
+    periodType: subscriptionPeriodType('period_type')
+      .notNull()
+      .default(SubscriptionPeriodType.NORMAL),
     startedAt: timestamp('started_at').notNull(),
     currentPeriodEnd: timestamp('current_period_end').notNull(),
     cancelledAt: timestamp('cancelled_at'),
