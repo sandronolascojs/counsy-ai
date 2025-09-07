@@ -15,6 +15,7 @@ export const createSignUpFormSchema = (t: TFunction) =>
     .object({
       firstName: z
         .string()
+        .trim()
         .min(1, { message: t(AuthErrorTranslations.FIRST_NAME_REQUIRED) })
         .max(MAX_NAME_LENGTH, {
           message: t(AuthErrorTranslations.FIRST_NAME_TOO_LONG),
@@ -24,6 +25,7 @@ export const createSignUpFormSchema = (t: TFunction) =>
         }),
       lastName: z
         .string()
+        .trim()
         .min(1, { message: t(AuthErrorTranslations.LAST_NAME_REQUIRED) })
         .max(MAX_NAME_LENGTH, {
           message: t(AuthErrorTranslations.LAST_NAME_TOO_LONG),
@@ -32,12 +34,11 @@ export const createSignUpFormSchema = (t: TFunction) =>
           message: t(AuthErrorTranslations.LAST_NAME_INVALID),
         }),
       email: z
-        .string()
+        .email({
+          message: t(AuthErrorTranslations.EMAIL_INVALID),
+        })
         .min(1, {
           message: t(AuthErrorTranslations.EMAIL_REQUIRED),
-        })
-        .regex(EMAIL_REGEX, {
-          message: t(AuthErrorTranslations.EMAIL_INVALID),
         }),
       password: z
         .string()
@@ -54,7 +55,6 @@ export const createSignUpFormSchema = (t: TFunction) =>
         .regex(PASSWORD_REGEX, {
           message: t(AuthErrorTranslations.PASSWORD_COMPLEXITY),
         }),
-
       confirmPassword: z
         .string()
         .min(PASSWORD_MIN_LENGTH, {

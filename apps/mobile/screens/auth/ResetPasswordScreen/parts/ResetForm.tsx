@@ -3,7 +3,8 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { useToast } from '@/components/ui/Toast';
 import { env } from '@/config/env.config';
-import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
+import { AuthErrorTranslations, AuthTranslations, NAMESPACES } from '@/i18n/constants';
+import { authClient, getAuthErrorMessage } from '@/lib/auth';
 import {
   createResetPasswordFormSchema,
   resetPasswordFormDefaultValues,
@@ -35,14 +36,27 @@ export const ResetForm = () => {
   });
 
   const onSubmit = async (data: ResetPasswordFormSchema) => {
-    await fetch(`${env.EXPO_PUBLIC_API_URL}/api/auth/password/reset/confirm`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, password: data.password }),
-    });
-
-    toast.success(t(AuthTranslations.RESET_UPDATED_SUCCESS));
-    router.replace('/(public)/sign-in');
+    if (!token) {
+      toast.error(t(AuthErrorTranslations.INVALID_TOKEN));
+      return;
+    }
+    await authClient.resetPassword(
+      {
+        newPassword: data.password,
+        token,
+      },
+      {
+        onSuccess: () => {
+          toast.success(t(AuthTranslations.RESET_UPDATED_SUCCESS));
+          router.replace('/(public)/sign-in');
+        },
+        onError: (error) => {
+          const errorMessage = getAuthErrorMessage(error.error.code);
+          toast.error(errorMessage);
+          throw new Error(errorMessage);
+        },
+      },
+    );
   };
 
   return (
@@ -110,8 +124,8 @@ export const ResetForm = () => {
 
       <XStack>
         <Button
-          disabled={isSubmitting || !isValid}
-          aria-disabled={isSubmitting || !isValid}
+          disabled={isSubmitting || !isValid || !token}
+          aria-disabled={isSubmitting || !isValid || !token}
           aria-busy={isSubmitting}
           iconAfter={isSubmitting ? <Spinner size="small" /> : undefined}
           onPress={handleSubmit(onSubmit)}

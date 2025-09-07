@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // create name validation for zod schema validating all valid names
 export const MAX_NAME_LENGTH = 50;
-export const NAME_REGEX = new RegExp('^[a-zA-Z0-9\\s]+$');
+export const NAME_REGEX = new RegExp("^[\\p{L}][\\p{L}'’\\-\\s.]*$", 'u');
 export const EMAIL_REGEX = new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$');
 export const PASSWORD_REGEX = new RegExp(
   '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$',
