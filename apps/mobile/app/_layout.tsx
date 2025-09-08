@@ -3,14 +3,14 @@ import { Stack } from 'expo-router';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
+import { QueryClientProviderWrapper } from '@/components/QueryClientProviderWrapper';
 import { SafeAreaWrapper } from '@/components/SafeAreaWrapper';
 import { ToastProvider } from '@/components/ui/Toast';
 import config from '@/tamagui.config';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { Platform, useColorScheme } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { TamaguiProvider, Theme, YStack } from 'tamagui';
+import { useColorScheme } from 'react-native';
+import { TamaguiProvider, Theme } from 'tamagui';
 import { BrandedLoader } from '../components/BrandedLoader';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { i18n, initializeI18n, useCurrentLanguage } from '../i18n';
@@ -37,16 +37,18 @@ const RootLayout = () => {
             {fontsLoaded ? (
               <ErrorBoundary>
                 <ToastProvider>
-                  <Stack
-                    screenOptions={{
-                      animation: 'none',
-                      contentStyle: { backgroundColor: 'transparent' },
-                    }}
-                  >
-                    <Stack.Screen name="index" options={{ headerShown: false }} />
-                    <Stack.Screen name="(public)" options={{ headerShown: false }} />
-                    <Stack.Screen name="(private)" options={{ headerShown: false }} />
-                  </Stack>
+                  <QueryClientProviderWrapper>
+                    <Stack
+                      screenOptions={{
+                        animation: 'none',
+                        contentStyle: { backgroundColor: 'transparent' },
+                      }}
+                    >
+                      <Stack.Screen name="index" options={{ headerShown: false }} />
+                      <Stack.Screen name="(public)" options={{ headerShown: false }} />
+                      <Stack.Screen name="(private)" options={{ headerShown: false }} />
+                    </Stack>
+                  </QueryClientProviderWrapper>
                 </ToastProvider>
               </ErrorBoundary>
             ) : (
