@@ -3,10 +3,12 @@ import cors from '@fastify/cors';
 import rateLimit from '@fastify/rate-limit';
 import fastify from 'fastify';
 
+import { initServer } from '@ts-rest/fastify';
 import { corsConfig } from './config/cors.config';
 import { env } from './config/env.config';
 import { rateLimitConfig } from './config/rateLimit.config';
 import { registerAuthController } from './controllers/auth.controller';
+import { billingController } from './controllers/billing.controller';
 import { authPlugin } from './plugins/auth.plugin';
 import { errorHandlerPlugin } from './plugins/errorHandler.plugin';
 import { requestHandlerPlugin } from './plugins/requestHandler.plugin';
@@ -14,7 +16,7 @@ import { logger } from './utils/logger.instance';
 
 export function buildServer() {
   const app = fastify({ logger: true });
-  // const tsRest = initServer();
+  const tsRest = initServer();
 
   app.register(cors, corsConfig);
   app.register(rateLimit, rateLimitConfig);
@@ -29,10 +31,10 @@ export function buildServer() {
   app.register(async (fastify) => {
     await fastify.register(authPlugin);
 
-    /*  fastify.register(tsRest.plugin(slackController), {
+    fastify.register(tsRest.plugin(billingController), {
       hooks: { preHandler: fastify.authenticate },
     });
-    fastify.register(tsRest.plugin(workspaceController), {
+    /* fastify.register(tsRest.plugin(workspaceController), {
       hooks: { preHandler: fastify.authenticate },
     }); */
   });

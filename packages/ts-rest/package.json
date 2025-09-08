@@ -1,7 +1,7 @@
 {
   "name": "@counsy-ai/ts-rest",
   "version": "1.0.0",
-  "description": "TS-REST for the Calm Pulse project",
+  "description": "ts-rest contracts for the Counsy AI project",
   "license": "MIT",
   "type": "module",
   "exports": {

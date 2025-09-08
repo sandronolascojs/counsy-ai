@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const envSchema = z
   .object({
-    DATABASE_URL: z.url(),
+    DATABASE_URL: z.string().url(),
     APP_ENV: z.enum(['development', 'production', 'dev', 'staging']).default('dev'),
   })
   .safeParse(process.env);
