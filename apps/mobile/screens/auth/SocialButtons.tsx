@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
-import { env } from '@/config/env.config';
-import { resolveRuntimeScheme } from '@/config/scheme';
 import { AuthTranslations, NAMESPACES } from '@/i18n/constants';
 import { authClient, getAuthErrorMessage } from '@/lib/auth';
+import { APP_CONFIG } from '@counsy-ai/types';
 import { Ionicons } from '@expo/vector-icons';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
@@ -27,7 +26,7 @@ export const SocialButtons = ({ disabled = false }: Props) => {
   const signInWithGoogle = async () => {
     setIsAuthorizing(true);
     try {
-      const scheme = resolveRuntimeScheme(env.EXPO_PUBLIC_APP_ENV);
+      const scheme = APP_CONFIG.basics.prefix;
       const callbackURL = Linking.createURL('/', { scheme });
       await authClient.signIn.social(
         { provider: 'google', callbackURL },
@@ -74,7 +73,7 @@ export const SocialButtons = ({ disabled = false }: Props) => {
         return;
       }
 
-      const scheme = resolveRuntimeScheme(env.EXPO_PUBLIC_APP_ENV);
+      const scheme = APP_CONFIG.basics.prefix;
       const callbackURL = Linking.createURL('/', { scheme });
       await authClient.signIn.social(
         { provider: 'apple', callbackURL },
