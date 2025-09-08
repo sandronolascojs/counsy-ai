@@ -1,17 +1,17 @@
-// Import from plain JS to ensure Node can resolve during EAS config loads
-const { getAppEnvironmentFromProcess, getSchemeForEnv } = require('./config/scheme.shared.js');
 import { type ConfigContext, type ExpoConfig } from 'expo/config';
 
 type AppEnvironment = 'development' | 'staging' | 'production';
 
-const getBundleIdentifier = (env: AppEnvironment): string => {
-  const base = 'com.counsy.app';
-  if (env === 'production') return base;
-  if (env === 'staging') return `${base}.staging`;
-  return `${base}.dev`;
-};
-
-const getAndroidPackage = getBundleIdentifier;
+function getAppEnvironmentFromProcess() {
+  const env = (
+    process.env.EXPO_PUBLIC_APP_ENV ||
+    process.env.EAS_BUILD_PROFILE ||
+    'development'
+  ).toLowerCase();
+  if (env === 'production') return 'production';
+  if (env === 'staging' || env === 'preview') return 'staging';
+  return 'development';
+}
 
 const getDomainsForEnv = (env: AppEnvironment) => {
   const PROD = process.env.EXPO_PUBLIC_HOST_PROD || 'counsy.app';
@@ -29,9 +29,9 @@ const getDomainsForEnv = (env: AppEnvironment) => {
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   const appEnv = getAppEnvironmentFromProcess();
-  const scheme = getSchemeForEnv(appEnv);
-  const bundleId = getBundleIdentifier(appEnv);
-  const androidPackage = getAndroidPackage(appEnv);
+  const scheme = 'counsy-ai';
+  const bundleId = 'com.counsy.app';
+  const androidPackage = 'com.counsy.app';
   const { host, associated } = getDomainsForEnv(appEnv);
 
   const RC_API_KEY_IOS = process.env.EXPO_PUBLIC_RC_API_KEY_IOS;
@@ -91,13 +91,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ],
       permissions: ['INTERNET', 'RECORD_AUDIO', 'POST_NOTIFICATIONS', 'FOREGROUND_SERVICE'],
     },
-
     web: {
       bundler: 'metro',
       output: 'static',
       favicon: './assets/images/favicon.png',
     },
-
     plugins: [
       'expo-apple-authentication',
       'expo-router',

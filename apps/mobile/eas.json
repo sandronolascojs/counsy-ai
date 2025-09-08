@@ -3,8 +3,11 @@
     "development": {
       "env": {
         "EXPO_PUBLIC_APP_ENV": "development",
-        "EXPO_PUBLIC_API_URL": "https://dev-auth.counsy.app",
-        "APP_VERSION": "0.1.0"
+        "APP_VERSION": "0.1.0",
+        "EXPO_PUBLIC_HOST_DEV": "dev.counsy.app",
+        "EXPO_PUBLIC_API_URL": "https://api.dev.counsy.app",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_UlRsEnKRYyHoOzgQzKoxgORLzSG",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_hICCnUfvysEUtkfVlaiqBDJGoYh"
       },
       "developmentClient": true,
       "distribution": "internal"
@@ -12,7 +15,11 @@
     "staging": {
       "env": {
         "EXPO_PUBLIC_APP_ENV": "staging",
-        "APP_VERSION": "0.9.0"
+        "APP_VERSION": "0.9.0",
+        "EXPO_PUBLIC_HOST_STG": "staging.counsy.app",
+        "EXPO_PUBLIC_API_URL": "https://api.staging.counsy.app",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_UlRsEnKRYyHoOzgQzKoxgORLzSG",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_hICCnUfvysEUtkfVlaiqBDJGoYh"
       },
       "distribution": "internal",
       "channel": "staging"
@@ -20,20 +27,15 @@
     "production": {
       "env": {
         "EXPO_PUBLIC_APP_ENV": "production",
-        "APP_VERSION": "1.0.0"
+        "APP_VERSION": "1.0.0",
+        "EXPO_PUBLIC_HOST_PROD": "counsy.app",
+        "EXPO_PUBLIC_API_URL": "https://api.counsy.app",
+        "EXPO_PUBLIC_RC_API_KEY_IOS": "appl_UlRsEnKRYyHoOzgQzKoxgORLzSG",
+        "EXPO_PUBLIC_RC_API_KEY_ANDROID": "goog_hICCnUfvysEUtkfVlaiqBDJGoYh"
       },
       "distribution": "store",
       "channel": "production",
       "autoIncrement": true
-    },
-    "simulator": {
-      "ios": {
-        "simulator": true,
-        "buildConfiguration": "Debug"
-      },
-      "env": {
-        "EXPO_PUBLIC_APP_ENV": "development"
-      }
     }
   },
   "cli": {
