@@ -9,6 +9,8 @@ export const env = createEnv({
   client: {
     EXPO_PUBLIC_APP_ENV: z.enum(['development', 'staging', 'production']).default('development'),
     EXPO_PUBLIC_API_URL: z.string(),
+    EXPO_PUBLIC_RC_API_KEY_IOS: z.string(),
+    EXPO_PUBLIC_RC_API_KEY_ANDROID: z.string(),
   },
   runtimeEnv: process.env,
 });

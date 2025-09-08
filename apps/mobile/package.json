@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@better-auth/expo": "^1.3.5",
+    "@counsy-ai/db": "workspace:*",
     "@counsy-ai/ts-rest": "workspace:*",
     "@counsy-ai/types": "workspace:*",
     "@expo/vector-icons": "^14.1.0",
