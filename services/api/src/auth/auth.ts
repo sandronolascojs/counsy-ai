@@ -25,16 +25,9 @@ const haveIBeenPwnedPlugin: HaveIBeenPwnedOptions = {
 const cacheTTL = 5 * 60 * 1000; // 5 minutes
 const TTL = 60 * 60 * 1000; // 1 hour
 
-// Align mobile schemes with apps/mobile/config/scheme.shared.js
-const schemeForEnv =
-  env.APP_ENV === 'production'
-    ? 'counsy-ai'
-    : env.APP_ENV === 'staging'
-      ? 'counsy-ai-staging'
-      : 'counsy-ai-dev';
-const mobileOrigins = [`${schemeForEnv}://`, `${schemeForEnv}://*`];
+const mobileOrigins = [`${APP_CONFIG.basics.prefix}://`];
 
-const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://192.168.100.30:8081'];
+const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://*'];
 
 const normalizeOrigin = (origin: string): string => origin.trim().replace(/\/+$/, '');
 
@@ -111,13 +104,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     enabled: true,
     sendResetPassword: async ({ user, url, token }) => {
       const emailService = emailServiceSingleton;
-      const schemeName =
-        env.APP_ENV === 'production'
-          ? 'counsy-ai'
-          : env.APP_ENV === 'staging'
-            ? 'counsy-ai-staging'
-            : 'counsy-ai-dev';
-      const scheme = `${schemeName}://`;
+      const scheme = `${APP_CONFIG.basics.prefix}://`;
       const callbackDeepLink = `${scheme}reset?token=${encodeURIComponent(token)}`;
       const resetUrl = new URL(url);
       resetUrl.searchParams.set('callbackURL', callbackDeepLink);
@@ -150,13 +137,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url, token }) => {
         const emailService = emailServiceSingleton;
-        const schemeName =
-          env.APP_ENV === 'production'
-            ? 'counsy-ai'
-            : env.APP_ENV === 'staging'
-              ? 'counsy-ai-staging'
-              : 'counsy-ai-dev';
-        const scheme = `${schemeName}://`;
+        const scheme = `${APP_CONFIG.basics.prefix}://`;
         const callbackDeepLink = `${scheme}auth/magic-link?token=${encodeURIComponent(token)}`;
         const magicUrl = new URL(url);
         magicUrl.searchParams.set('callbackURL', callbackDeepLink);
