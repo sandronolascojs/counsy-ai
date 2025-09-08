@@ -1,6 +1,8 @@
 CREATE TYPE "public"."currency" AS ENUM('USD', 'EUR', 'GBP', 'AUD', 'NZD', 'CHF', 'JPY', 'CNY');--> statement-breakpoint
+CREATE TYPE "public"."billing_cycle" AS ENUM('Weekly', 'Monthly', 'Annual');--> statement-breakpoint
 CREATE TYPE "public"."plan_name" AS ENUM('Standard', 'Max');--> statement-breakpoint
 CREATE TYPE "public"."subscription_channel" AS ENUM('APPLE_IAP', 'GOOGLE_PLAY', 'STRIPE');--> statement-breakpoint
+CREATE TYPE "public"."subscription_period_type" AS ENUM('Trial', 'Normal');--> statement-breakpoint
 CREATE TYPE "public"."subscription_status" AS ENUM('Active', 'Past Due', 'Pending Payment', 'Pending Cancel', 'Cancelled');--> statement-breakpoint
 CREATE TYPE "public"."device_type" AS ENUM('Android', 'iOS');--> statement-breakpoint
 CREATE TYPE "public"."platform" AS ENUM('EXPO');--> statement-breakpoint
@@ -74,6 +76,7 @@ CREATE TABLE "plan_channel_products" (
 	"channel" "subscription_channel" NOT NULL,
 	"external_product_id" text NOT NULL,
 	"currency" "currency" DEFAULT 'USD' NOT NULL,
+	"billing_cycle" "billing_cycle" DEFAULT 'Monthly' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "plan_channel_products_plan_channel_product_id_unique" UNIQUE("plan_channel_product_id")
@@ -96,6 +99,7 @@ CREATE TABLE "subscriptions" (
 	"channel" "subscription_channel" NOT NULL,
 	"external_id" text,
 	"status" "subscription_status" NOT NULL,
+	"period_type" "subscription_period_type" DEFAULT 'Normal' NOT NULL,
 	"started_at" timestamp NOT NULL,
 	"current_period_end" timestamp NOT NULL,
 	"cancelled_at" timestamp,
@@ -270,7 +274,7 @@ CREATE UNIQUE INDEX "idx_minute_pack_products_external_product_id_unique" ON "mi
 CREATE UNIQUE INDEX "idx_minute_pack_purchases_subscription_id_minute_pack_id_external_id_unique" ON "minute_pack_purchases" USING btree ("subscription_id","minute_pack_id","external_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_minute_packs_plan_id_minutes_unique" ON "minute_packs" USING btree ("plan_id","minutes");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_plan_channel_prices_plan_channel_product_id_unique" ON "plan_channel_prices" USING btree ("plan_channel_product_id");--> statement-breakpoint
-CREATE UNIQUE INDEX "idx_plan_channel_products_plan_id_channel_unique" ON "plan_channel_products" USING btree ("plan_id","channel");--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_plan_channel_products_plan_id_channel_external_unique" ON "plan_channel_products" USING btree ("plan_id","channel","external_product_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_plan_channel_products_external_product_id_unique" ON "plan_channel_products" USING btree ("external_product_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_plans_name_unique" ON "plans" USING btree ("name");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_subscriptions_user_external_unique" ON "subscriptions" USING btree ("user_id","external_id");--> statement-breakpoint

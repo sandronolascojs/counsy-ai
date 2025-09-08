@@ -21,6 +21,15 @@
         "CNY"
       ]
     },
+    "public.billing_cycle": {
+      "name": "billing_cycle",
+      "schema": "public",
+      "values": [
+        "Weekly",
+        "Monthly",
+        "Annual"
+      ]
+    },
     "public.plan_name": {
       "name": "plan_name",
       "schema": "public",
@@ -36,6 +45,14 @@
         "APPLE_IAP",
         "GOOGLE_PLAY",
         "STRIPE"
+      ]
+    },
+    "public.subscription_period_type": {
+      "name": "subscription_period_type",
+      "schema": "public",
+      "values": [
+        "Trial",
+        "Normal"
       ]
     },
     "public.subscription_status": {
@@ -65,7 +82,7 @@
       ]
     }
   },
-  "id": "fc51700a-dda4-4801-a72b-a56fdabb6bf4",
+  "id": "c3d191dc-a604-47e0-8bd6-d008b6db3a28",
   "policies": {},
   "prevId": "00000000-0000-0000-0000-000000000000",
   "roles": {},
@@ -702,6 +719,14 @@
           "notNull": true,
           "default": "'USD'"
         },
+        "billing_cycle": {
+          "name": "billing_cycle",
+          "type": "billing_cycle",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Monthly'"
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -718,8 +743,8 @@
         }
       },
       "indexes": {
-        "idx_plan_channel_products_plan_id_channel_unique": {
-          "name": "idx_plan_channel_products_plan_id_channel_unique",
+        "idx_plan_channel_products_plan_id_channel_external_unique": {
+          "name": "idx_plan_channel_products_plan_id_channel_external_unique",
           "columns": [
             {
               "expression": "plan_id",
@@ -729,6 +754,12 @@
             },
             {
               "expression": "channel",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "external_product_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -901,6 +932,14 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
+        },
+        "period_type": {
+          "name": "period_type",
+          "type": "subscription_period_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Normal'"
         },
         "started_at": {
           "name": "started_at",
