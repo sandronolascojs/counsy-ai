@@ -48,3 +48,5 @@ export class SesEmailService {
     await this.client.send(new SendEmailCommand(input));
   }
 }
+
+export const emailServiceSingleton = new SesEmailService();

@@ -1,10 +1,16 @@
 import { env } from '@/config/env.config';
+import { SubscriptionRepository } from '@/repositories/subscription.repository';
+import { UserRepository } from '@/repositories/user.repository';
+import { emailServiceSingleton } from '@/services/sesEmail.service';
+import { SubscriptionsService } from '@/services/subscription.service';
 import { getAppleClientSecret } from '@/utils/apple.secret.manager';
-import { SesEmailService } from '@/utils/sesEmail.service';
+import { logger } from '@/utils/logger.instance';
 import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
+import type { SelectSubscription } from '@counsy-ai/db/schema';
 import * as schema from '@counsy-ai/db/schema';
 import { APP_CONFIG } from '@counsy-ai/types';
+import type { Session, User } from 'better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { haveIBeenPwned, HaveIBeenPwnedOptions, magicLink } from 'better-auth/plugins';
@@ -56,11 +62,35 @@ const buildTrustedOrigins = (): string[] => {
   return Array.from(new Set(filtered));
 };
 
+const userRepository = new UserRepository(db, logger);
+const subscriptionRepository = new SubscriptionRepository(db, logger);
+const subscriptionsService = new SubscriptionsService(
+  userRepository,
+  subscriptionRepository,
+  logger,
+  db,
+);
+
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
     cookieCache: {
       enabled: true,
       maxAge: cacheTTL,
+    },
+  },
+  callbacks: {
+    async session({ session, user }: { session?: Session; user?: User }) {
+      let subscription: SelectSubscription | undefined = undefined;
+      if (user?.id) {
+        subscription = await subscriptionsService.getSubscriptionByUserId({ userId: user.id });
+      }
+      return {
+        ...session,
+        user: {
+          ...user,
+          subscription,
+        },
+      };
     },
   },
   secret: env.BETTER_AUTH_SECRET,
@@ -80,7 +110,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }) => {
-      const emailService = new SesEmailService();
+      const emailService = emailServiceSingleton;
       const schemeName =
         env.APP_ENV === 'production'
           ? 'counsy-ai'
@@ -119,7 +149,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     haveIBeenPwned(haveIBeenPwnedPlugin),
     magicLink({
       sendMagicLink: async ({ email, url, token }) => {
-        const emailService = new SesEmailService();
+        const emailService = emailServiceSingleton;
         const schemeName =
           env.APP_ENV === 'production'
             ? 'counsy-ai'

@@ -16,6 +16,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
+    "better-auth.d.ts",
     "expo-env.d.ts"
   ]
 }
