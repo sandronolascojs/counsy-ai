@@ -5,6 +5,7 @@ import { MicFab } from '@/components/MicFab';
 import { RevenueCatWrapper } from '@/components/RevenueCatWrapper';
 import { TabBarBackground } from '@/components/TabBarBackground';
 import { useAuthNavigationGuard } from '@/hooks/useAuthNavigationGuard';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { NAMESPACES, NavigationTranslations } from '@/i18n/constants';
 import { authClient } from '@/lib/auth';
 import {
@@ -20,11 +21,16 @@ import { useTheme, type ColorTokens } from 'tamagui';
 export default function TabLayout() {
   const theme = useTheme();
   const { data: session } = authClient.useSession();
+  const { hasActiveSubscription } = useRevenueCat();
   const { t } = useTranslation(NAMESPACES.NAVIGATION);
   const { isBlocking } = useAuthNavigationGuard({ mode: 'private' });
 
   if (isBlocking || !session?.user) {
     return <BrandedLoader message="Loading your space..." />;
+  }
+
+  if (!hasActiveSubscription()) {
+    return <BrandedLoader message="You need to subscribe to use this app." />;
   }
 
   return (
