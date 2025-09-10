@@ -5,11 +5,14 @@ import { z } from 'zod';
 export const createRecoverFormSchema = (t: TFunction) =>
   z.object({
     email: z
-      .email({
+      .string({
         message: t(AuthErrorTranslations.EMAIL_INVALID),
       })
       .min(1, {
         message: t(AuthErrorTranslations.EMAIL_REQUIRED),
+      })
+      .email({
+        message: t(AuthErrorTranslations.EMAIL_INVALID),
       }),
   });
 

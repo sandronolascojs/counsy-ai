@@ -16,7 +16,7 @@ export const minutePacks = pgTable(
     minutes: integer('minutes').notNull(),
     name: text('name').notNull(), // 'Extra 60 min'
     description: text('description'),
-    deletedAt: timestamp('deleted_at'),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

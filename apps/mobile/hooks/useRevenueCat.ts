@@ -16,7 +16,7 @@ export function useRevenueCat() {
     const dict = new Map<string, string>();
     catalogData?.forEach((row) => {
       row.products.forEach((p) => {
-        dict.set(`${row.planId}:${toCycleKey(p.billingCycle)}`, p.externalProductId);
+        dict.set(`${row.name}:${toCycleKey(p.billingCycle)}`, p.externalProductId);
       });
     });
     return (plan: SubscriptionTier, cycle: BillingCycle) =>
@@ -27,18 +27,24 @@ export function useRevenueCat() {
   const findPackage = (plan: SubscriptionTier, cycle: BillingCycle) => {
     // 1) Try backend catalog first
     const pid = productIdFromCatalog(plan, cycle);
-    const pkgFromCatalog = revenueCatStore.findPackageByProductId(pid);
-    if (pkgFromCatalog) return pkgFromCatalog;
+    if (pid) {
+      const pkgFromCatalog = revenueCatStore.findPackageByProductId(pid);
+      if (pkgFromCatalog) return pkgFromCatalog;
+    }
 
     // 2) Fallback to local IDs
     const key = toCycleKey(cycle);
     const fallbackId = PRODUCT_IDS_FALLBACK[plan]?.[key];
-    return revenueCatStore.findPackageByProductId(fallbackId ?? null);
+    if (fallbackId) {
+      return revenueCatStore.findPackageByProductId(fallbackId);
+    }
+
+    return undefined;
   };
 
   return {
     ...revenueCatStore,
     loading: revenueCatStore.isLoading || catLoading,
-    findPackage, // Enhanced findPackage with catalog support
+    findPackage,
   };
 }

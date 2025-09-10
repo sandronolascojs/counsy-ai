@@ -1,3 +1,9 @@
+/**
+ * Authentication configuration with security improvements:
+ * - Replaced broad wildcard 'exp://*' with explicit whitelist from APP_DEV_EXPO_ORIGINS
+ * - Added proper origin validation to prevent security vulnerabilities
+ * - Defaults to empty array when no whitelist is provided for maximum security
+ */
 import { env } from '@/config/env.config';
 import { SubscriptionRepository } from '@/repositories/subscription.repository';
 import { UserRepository } from '@/repositories/user.repository';
@@ -27,7 +33,31 @@ const TTL = 60 * 60 * 1000; // 1 hour
 
 const mobileOrigins = [`${APP_CONFIG.basics.prefix}://`];
 
-const devExpoOrigins = env.APP_ENV === 'production' ? [] : ['exp://*'];
+const getDevExpoOrigins = (): string[] => {
+  // In production, never allow any Expo origins for security
+  if (env.APP_ENV === 'production') {
+    return [];
+  }
+
+  // If no whitelist is provided, default to empty array for security
+  // This prevents the previous security risk of allowing any Expo dev client
+  if (!env.APP_DEV_EXPO_ORIGINS) {
+    return [];
+  }
+
+  // Parse comma-separated list of allowed Expo origins
+  return env.APP_DEV_EXPO_ORIGINS.split(',')
+    .map(normalizeOrigin)
+    .filter((origin) => {
+      // Only allow exp:// origins in development with proper validation
+      return (
+        origin.startsWith('exp://') &&
+        origin.length > 6 &&
+        !origin.includes('*') && // No wildcards allowed
+        origin.match(/^exp:\/\/[a-zA-Z0-9.-]+$/) // Basic format validation
+      );
+    });
+};
 
 const normalizeOrigin = (origin: string): string => origin.trim().replace(/\/+$/, '');
 
@@ -39,6 +69,7 @@ const buildTrustedOrigins = (): string[] => {
     .map(normalizeOrigin)
     .filter((o) => o.length > 0);
 
+  const devExpoOrigins = getDevExpoOrigins();
   const combined = [...mobileOrigins, ...devExpoOrigins, ...allowedFromEnv, frontend].map(
     normalizeOrigin,
   );
@@ -75,7 +106,15 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     async session({ session, user }: { session?: Session; user?: User }) {
       let subscription: SelectSubscription | undefined = undefined;
       if (user?.id) {
-        subscription = await subscriptionsService.getSubscriptionByUserId({ userId: user.id });
+        try {
+          subscription = await subscriptionsService.getSubscriptionByUserId({ userId: user.id });
+        } catch (error) {
+          logger.error('Failed to fetch subscription for user', {
+            userId: user.id,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          });
+          subscription = undefined;
+        }
       }
       return {
         ...session,

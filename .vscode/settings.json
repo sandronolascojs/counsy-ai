@@ -1,0 +1,40 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "errorLens.enabled": true,
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "warning",
+    "info",
+    "hint"
+  ],
+  "errorLens.statusBarMessageEnabled": true,
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.useFlatConfig": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "directory": "apps/**/*",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "packages/**/*",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "services/**/*",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "infra/**/*",
+      "changeProcessCWD": true
+    }
+  ]
+}

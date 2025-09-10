@@ -12,10 +12,9 @@ export const planChannelPrices = pgTable(
       .references(() => planChannelProducts.planChannelProductId, { onDelete: 'cascade' })
       .notNull(),
     unitAmount: integer('unit_amount').notNull(), // 2499
-    storePriceTier: text('store_price_tier'), // '25' → Apple Tier 25
-    effectiveFrom: timestamp('effective_from').notNull(),
-    effectiveTo: timestamp('effective_to'),
-    deletedAt: timestamp('deleted_at'),
+    effectiveFrom: timestamp('effective_from', { withTimezone: true }).notNull(),
+    effectiveTo: timestamp('effective_to', { withTimezone: true }),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

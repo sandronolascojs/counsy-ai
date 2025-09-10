@@ -1,4 +1,5 @@
 import { env } from '@/config/env.config';
+import { logger } from '@/utils/logger.instance';
 import { SESv2Client, SendEmailCommand, SendEmailCommandInput } from '@aws-sdk/client-sesv2';
 import { APP_CONFIG } from '@counsy-ai/types';
 
@@ -45,7 +46,30 @@ export class SesEmailService {
       ConfigurationSetName: this.configurationSetName,
     };
 
-    await this.client.send(new SendEmailCommand(input));
+    try {
+      await this.client.send(new SendEmailCommand(input));
+    } catch (error) {
+      logger.error('Failed to send email via SES', {
+        to: params.to,
+        subject: params.subject,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      // Rethrow with additional context while preserving original error
+      const contextualError = new Error(
+        `Failed to send email to ${params.to} with subject "${params.subject}": ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+
+      // Preserve original stack trace
+      if (error instanceof Error && error.stack) {
+        contextualError.stack = error.stack;
+      }
+
+      throw contextualError;
+    }
   }
 }
 

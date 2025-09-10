@@ -34,11 +34,14 @@ export const createSignUpFormSchema = (t: TFunction) =>
           message: t(AuthErrorTranslations.LAST_NAME_INVALID),
         }),
       email: z
-        .email({
+        .string({
           message: t(AuthErrorTranslations.EMAIL_INVALID),
         })
         .min(1, {
           message: t(AuthErrorTranslations.EMAIL_REQUIRED),
+        })
+        .email({
+          message: t(AuthErrorTranslations.EMAIL_INVALID),
         }),
       password: z
         .string()

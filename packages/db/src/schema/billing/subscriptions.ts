@@ -37,9 +37,9 @@ export const subscriptions = pgTable(
     periodType: subscriptionPeriodType('period_type')
       .notNull()
       .default(SubscriptionPeriodType.NORMAL),
-    startedAt: timestamp('started_at').notNull(),
-    currentPeriodEnd: timestamp('current_period_end').notNull(),
-    cancelledAt: timestamp('cancelled_at'),
+    startedAt: timestamp('started_at', { withTimezone: true }).notNull(),
+    currentPeriodEnd: timestamp('current_period_end', { withTimezone: true }).notNull(),
+    cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

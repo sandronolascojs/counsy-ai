@@ -10,12 +10,11 @@ CREATE TABLE "minute_pack_prices" (
 	"minute_pack_price_id" text PRIMARY KEY NOT NULL,
 	"minute_pack_product_id" text NOT NULL,
 	"unit_amount" integer NOT NULL,
-	"store_price_tier" text,
-	"effective_from" timestamp NOT NULL,
-	"effective_to" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"deleted_at" timestamp,
+	"effective_from" timestamp with time zone NOT NULL,
+	"effective_to" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"deleted_at" timestamp with time zone,
 	CONSTRAINT "minute_pack_prices_minute_pack_price_id_unique" UNIQUE("minute_pack_price_id")
 );
 --> statement-breakpoint
@@ -25,8 +24,8 @@ CREATE TABLE "minute_pack_products" (
 	"channel" "subscription_channel" NOT NULL,
 	"external_product_id" text NOT NULL,
 	"currency" "currency" DEFAULT 'USD' NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "minute_pack_products_minute_pack_product_id_unique" UNIQUE("minute_pack_product_id")
 );
 --> statement-breakpoint
@@ -38,10 +37,10 @@ CREATE TABLE "minute_pack_purchases" (
 	"channel" "subscription_channel" NOT NULL,
 	"minutes_granted" integer NOT NULL,
 	"minutes_used" integer DEFAULT 0,
-	"purchased_at" timestamp NOT NULL,
-	"refunded_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"purchased_at" timestamp with time zone NOT NULL,
+	"refunded_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "minute_pack_purchases_minute_pack_purchase_id_unique" UNIQUE("minute_pack_purchase_id")
 );
 --> statement-breakpoint
@@ -51,9 +50,9 @@ CREATE TABLE "minute_packs" (
 	"minutes" integer NOT NULL,
 	"name" text NOT NULL,
 	"description" text,
-	"deleted_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"deleted_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "minute_packs_minute_pack_id_unique" UNIQUE("minute_pack_id")
 );
 --> statement-breakpoint
@@ -61,12 +60,11 @@ CREATE TABLE "plan_channel_prices" (
 	"plan_channel_price_id" text PRIMARY KEY NOT NULL,
 	"plan_channel_product_id" text NOT NULL,
 	"unit_amount" integer NOT NULL,
-	"store_price_tier" text,
-	"effective_from" timestamp NOT NULL,
-	"effective_to" timestamp,
-	"deleted_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"effective_from" timestamp with time zone NOT NULL,
+	"effective_to" timestamp with time zone,
+	"deleted_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "plan_channel_prices_plan_channel_price_id_unique" UNIQUE("plan_channel_price_id")
 );
 --> statement-breakpoint
@@ -77,8 +75,8 @@ CREATE TABLE "plan_channel_products" (
 	"external_product_id" text NOT NULL,
 	"currency" "currency" DEFAULT 'USD' NOT NULL,
 	"billing_cycle" "billing_cycle" DEFAULT 'Monthly' NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "plan_channel_products_plan_channel_product_id_unique" UNIQUE("plan_channel_product_id")
 );
 --> statement-breakpoint
@@ -87,8 +85,8 @@ CREATE TABLE "plans" (
 	"name" "plan_name" NOT NULL,
 	"minutes_included" integer NOT NULL,
 	"features" jsonb,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "plans_plan_id_unique" UNIQUE("plan_id")
 );
 --> statement-breakpoint
@@ -100,11 +98,11 @@ CREATE TABLE "subscriptions" (
 	"external_id" text,
 	"status" "subscription_status" NOT NULL,
 	"period_type" "subscription_period_type" DEFAULT 'Normal' NOT NULL,
-	"started_at" timestamp NOT NULL,
-	"current_period_end" timestamp NOT NULL,
-	"cancelled_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"started_at" timestamp with time zone NOT NULL,
+	"current_period_end" timestamp with time zone NOT NULL,
+	"cancelled_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "subscriptions_subscription_id_unique" UNIQUE("subscription_id")
 );
 --> statement-breakpoint
@@ -114,8 +112,8 @@ CREATE TABLE "cloud_conversation_meta" (
 	"object_key" text NOT NULL,
 	"size_bytes" integer NOT NULL,
 	"sha256" text NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "cloud_conversation_meta_cloud_conversation_meta_id_unique" UNIQUE("cloud_conversation_meta_id")
 );
 --> statement-breakpoint
@@ -128,8 +126,8 @@ CREATE TABLE "encryption_keys" (
 	"kdf_iterations" integer NOT NULL,
 	"kdf_parallelism" smallint NOT NULL,
 	"checksum" text NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "encryption_keys_encryption_key_id_unique" UNIQUE("encryption_key_id")
 );
 --> statement-breakpoint
@@ -139,11 +137,11 @@ CREATE TABLE "referral_codes" (
 	"code" text NOT NULL,
 	"referral_code_slug" text NOT NULL,
 	"disabled" boolean DEFAULT false,
-	"disabled_at" timestamp,
+	"disabled_at" timestamp with time zone,
 	"max_redemptions" integer,
-	"expires_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"expires_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "referral_codes_referral_code_id_unique" UNIQUE("referral_code_id")
 );
 --> statement-breakpoint
@@ -152,8 +150,8 @@ CREATE TABLE "referral_minute_grants" (
 	"referral_redemption_id" text NOT NULL,
 	"user_id" text NOT NULL,
 	"minutes_granted" integer DEFAULT 10 NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "referral_minute_grants_referral_minute_grant_id_unique" UNIQUE("referral_minute_grant_id")
 );
 --> statement-breakpoint
@@ -161,20 +159,20 @@ CREATE TABLE "referral_redemptions" (
 	"referral_redemption_id" text PRIMARY KEY NOT NULL,
 	"referral_code_id" text NOT NULL,
 	"referred_user_id" text NOT NULL,
-	"redeemed_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"redeemed_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "referral_redemptions_referral_redemption_id_unique" UNIQUE("referral_redemption_id")
 );
 --> statement-breakpoint
 CREATE TABLE "voice_sessions" (
 	"voice_session_id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
-	"started_at" timestamp DEFAULT now() NOT NULL,
-	"ended_at" timestamp,
+	"started_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"ended_at" timestamp with time zone,
 	"duration_sec" integer,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "voice_sessions_voice_session_id_unique" UNIQUE("voice_session_id")
 );
 --> statement-breakpoint
@@ -186,12 +184,12 @@ CREATE TABLE "accounts" (
 	"access_token" text,
 	"refresh_token" text,
 	"id_token" text,
-	"access_token_expires_at" timestamp,
-	"refresh_token_expires_at" timestamp,
+	"access_token_expires_at" timestamp with time zone,
+	"refresh_token_expires_at" timestamp with time zone,
 	"scope" text,
 	"password" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "accounts_id_unique" UNIQUE("id")
 );
 --> statement-breakpoint
@@ -207,21 +205,21 @@ CREATE TABLE "push_tokens" (
 	"os_version" text,
 	"app_version" text,
 	"is_enabled" boolean DEFAULT true NOT NULL,
-	"last_used_at" timestamp,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"last_used_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "push_tokens_push_token_id_unique" UNIQUE("push_token_id")
 );
 --> statement-breakpoint
 CREATE TABLE "sessions" (
 	"id" text PRIMARY KEY NOT NULL,
-	"expires_at" timestamp NOT NULL,
+	"expires_at" timestamp with time zone NOT NULL,
 	"token" text NOT NULL,
 	"ip_address" text,
 	"user_agent" text,
 	"user_id" text NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "sessions_id_unique" UNIQUE("id"),
 	CONSTRAINT "sessions_token_unique" UNIQUE("token")
 );
@@ -232,8 +230,8 @@ CREATE TABLE "users" (
 	"email" text NOT NULL,
 	"email_verified" boolean NOT NULL,
 	"image" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "users_id_unique" UNIQUE("id"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
@@ -242,9 +240,9 @@ CREATE TABLE "verifications" (
 	"id" text PRIMARY KEY NOT NULL,
 	"identifier" text NOT NULL,
 	"value" text NOT NULL,
-	"expires_at" timestamp NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"expires_at" timestamp with time zone NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "verifications_id_unique" UNIQUE("id")
 );
 --> statement-breakpoint

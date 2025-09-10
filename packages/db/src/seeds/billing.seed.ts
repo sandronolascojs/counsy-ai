@@ -7,7 +7,7 @@ import {
   SubscriptionTier,
   SubscriptionVendor,
 } from '@counsy-ai/types';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '../index';
 import type {
   SelectPlan,
@@ -81,10 +81,8 @@ const PLAN_META: Record<
 
 async function upsertPlan(name: PlanName): Promise<SelectPlan> {
   const existing = await db.select().from(plans).where(eq(plans.name, name)).limit(1);
-  if (existing.length) {
-    const found = existing[0];
-    if (!found) throw new Error(`Plan ${name} not found after select`);
-    return found;
+  if (existing.length && existing[0]) {
+    return existing[0];
   }
 
   const metaArray = PLAN_META[name];
@@ -118,13 +116,16 @@ async function upsertPlanChannelProduct({
   const byExternal = await db
     .select()
     .from(planChannelProducts)
-    .where(eq(planChannelProducts.externalProductId, externalId))
+    .where(
+      and(
+        eq(planChannelProducts.externalProductId, externalId),
+        eq(planChannelProducts.channel, channel),
+      ),
+    )
     .limit(1);
 
-  if (byExternal.length) {
-    const found = byExternal[0];
-    if (!found) throw new Error(`Product ${externalId} not found after select`);
-    return found;
+  if (byExternal.length && byExternal[0]) {
+    return byExternal[0];
   }
 
   const inserted = await db
@@ -144,14 +145,10 @@ async function upsertPlanChannelProduct({
 async function upsertPlanChannelPrice({
   productId,
   unitAmountCents,
-  storePriceTier,
 }: {
   productId: string;
   unitAmountCents: number;
-  storePriceTier?: string | null;
 }): Promise<SelectPlanChannelPrice> {
-  // Tu esquema tiene unique(plan_channel_product_id), por lo que dejamos un solo precio vigente.
-  // Si quisieras históricos, cambia el índice como en minute packs.
   const existing = await db
     .select()
     .from(planChannelPrices)
@@ -159,13 +156,11 @@ async function upsertPlanChannelPrice({
     .limit(1);
 
   if (existing.length) {
-    // Update in-place al precio vigente (sólo si querés “reemplazar”)
     const updated = await db
       .update(planChannelPrices)
       .set({
         unitAmount: unitAmountCents,
-        storePriceTier: storePriceTier ?? null,
-        effectiveFrom: new Date(), // marca desde ahora
+        effectiveFrom: new Date(),
         effectiveTo: null,
         deletedAt: null,
       })
@@ -181,7 +176,6 @@ async function upsertPlanChannelPrice({
     .values({
       planChannelProductId: productId,
       unitAmount: unitAmountCents,
-      storePriceTier: storePriceTier ?? null,
       effectiveFrom: new Date(),
       effectiveTo: null,
       deletedAt: null,
@@ -203,11 +197,9 @@ function getPriceForExternalId(externalProductId: string): number {
 export async function seedApple() {
   console.log('Seeding Apple IAP products…');
 
-  // 1) Plans
   const standard = await upsertPlan(SubscriptionTier.STANDARD);
   const max = await upsertPlan(SubscriptionTier.MAX);
 
-  // 2) Plan channel products (Apple) para STANDARD y MAX (monthly + annual)
   const stdProducts = [] as { id: string }[];
   for (const meta of PLAN_META[SubscriptionTier.STANDARD]) {
     const prod = await upsertPlanChannelProduct({
@@ -217,6 +209,7 @@ export async function seedApple() {
       currency: USD,
       billingCycle: meta.billingCycle,
     });
+
     stdProducts.push({ id: prod.planChannelProductId });
   }
 
@@ -229,24 +222,33 @@ export async function seedApple() {
       currency: USD,
       billingCycle: meta.billingCycle,
     });
+
     maxProducts.push({ id: prod.planChannelProductId });
   }
 
-  // 3) Precios (vigentes) para cada producto Apple (derivado del externalProductId)
   for (const meta of PLAN_META[SubscriptionTier.STANDARD]) {
     const price = getPriceForExternalId(meta.externalProductId);
     const prod = await db
       .select()
       .from(planChannelProducts)
-      .where(eq(planChannelProducts.externalProductId, meta.externalProductId))
+      .where(
+        and(
+          eq(planChannelProducts.externalProductId, meta.externalProductId),
+          eq(planChannelProducts.channel, APPLE),
+        ),
+      )
       .limit(1);
-    if (prod[0]) {
-      await upsertPlanChannelPrice({
-        productId: prod[0].planChannelProductId,
-        unitAmountCents: price,
-        storePriceTier: null,
-      });
+
+    if (!prod[0]) {
+      throw new Error(
+        `Product not found for externalId=${meta.externalProductId}, planId=${standard.planId}, channel=${APPLE}, billingCycle=${meta.billingCycle}`,
+      );
     }
+
+    await upsertPlanChannelPrice({
+      productId: prod[0].planChannelProductId,
+      unitAmountCents: price,
+    });
   }
 
   for (const meta of PLAN_META[SubscriptionTier.MAX]) {
@@ -254,15 +256,24 @@ export async function seedApple() {
     const prod = await db
       .select()
       .from(planChannelProducts)
-      .where(eq(planChannelProducts.externalProductId, meta.externalProductId))
+      .where(
+        and(
+          eq(planChannelProducts.externalProductId, meta.externalProductId),
+          eq(planChannelProducts.channel, APPLE),
+        ),
+      )
       .limit(1);
-    if (prod[0]) {
-      await upsertPlanChannelPrice({
-        productId: prod[0].planChannelProductId,
-        unitAmountCents: price,
-        storePriceTier: null,
-      });
+
+    if (!prod[0]) {
+      throw new Error(
+        `Product not found for externalId=${meta.externalProductId}, planId=${max.planId}, channel=${APPLE}, billingCycle=${meta.billingCycle}`,
+      );
     }
+
+    await upsertPlanChannelPrice({
+      productId: prod[0].planChannelProductId,
+      unitAmountCents: price,
+    });
   }
 
   console.log('Seed Apple IAP: OK');

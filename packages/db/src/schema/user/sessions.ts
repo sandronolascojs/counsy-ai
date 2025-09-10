@@ -5,7 +5,7 @@ import { users } from './users';
 
 export const sessions = pgTable('sessions', {
   id: generateIdField({ name: 'id' }),
-  expiresAt: timestamp('expires_at').notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
   token: text('token').notNull().unique(),
   ipAddress: text('ip_address'),
   userAgent: text('user_agent'),

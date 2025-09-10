@@ -15,7 +15,7 @@ export const referralRedemptions = pgTable(
     referredUserId: text('referred_user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    redeemedAt: timestamp('redeemed_at'),
+    redeemedAt: timestamp('redeemed_at', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

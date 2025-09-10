@@ -6,11 +6,14 @@ import { z } from 'zod';
 export const createSignInFormSchema = (t: TFunction) =>
   z.object({
     email: z
-      .email({
+      .string({
         message: t(AuthErrorTranslations.EMAIL_INVALID),
       })
       .min(1, {
         message: t(AuthErrorTranslations.EMAIL_REQUIRED),
+      })
+      .email({
+        message: t(AuthErrorTranslations.EMAIL_INVALID),
       }),
     password: z.string().min(1, { message: t(AuthErrorTranslations.PASSWORD_REQUIRED) }),
   });

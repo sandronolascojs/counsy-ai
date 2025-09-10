@@ -1,7 +1,7 @@
 import { CatalogRepository } from '@/repositories/catalog.repository';
 import type { DB } from '@counsy-ai/db';
 import type { Logger } from '@counsy-ai/shared';
-import type { BillingCycle, SubscriptionVendor } from '@counsy-ai/types';
+import type { BillingCycle, Currency, SubscriptionVendor } from '@counsy-ai/types';
 
 export class CatalogService {
   private readonly catalogRepository: CatalogRepository;
@@ -37,7 +37,7 @@ export class CatalogService {
           channel: SubscriptionVendor;
           externalProductId: string;
           unitAmount: number;
-          currency: string;
+          currency: Currency;
           billingCycle: BillingCycle;
         }[];
         createdAt: string;
@@ -67,7 +67,7 @@ export class CatalogService {
           planChannelProductId: item.planChannelProductId,
           channel: item.channel,
           externalProductId: item.externalProductId,
-          unitAmount: item.unitAmount || 0,
+          unitAmount: item.unitAmount,
           currency: item.currency,
           billingCycle: item.billingCycle,
         });

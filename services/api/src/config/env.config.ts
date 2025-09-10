@@ -8,6 +8,7 @@ export const env = createEnv({
     APP_ENV: z.enum(['development', 'production', 'staging']).default('development'),
     DATABASE_URL: z.string(),
     ALLOWED_ORIGINS: z.string().default('*'),
+    APP_DEV_EXPO_ORIGINS: z.string().optional(),
     API_BASE_URL: z.string(),
     FRONTEND_URL: z.string(),
 
@@ -40,6 +41,7 @@ export const env = createEnv({
     API_BASE_URL: process.env.API_BASE_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
+    APP_DEV_EXPO_ORIGINS: process.env.APP_DEV_EXPO_ORIGINS,
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     FROM_EMAIL: process.env.FROM_EMAIL,

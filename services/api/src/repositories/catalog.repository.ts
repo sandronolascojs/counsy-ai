@@ -1,7 +1,7 @@
 import { planChannelPrices, planChannelProducts, plans } from '@counsy-ai/db/schema';
 import { BaseRepository } from '@counsy-ai/shared';
 import type { BillingCycle, SubscriptionVendor } from '@counsy-ai/types';
-import { eq, isNull } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 
 export class CatalogRepository extends BaseRepository {
   async getCatalog({
@@ -30,13 +30,17 @@ export class CatalogRepository extends BaseRepository {
       })
       .from(plans)
       .innerJoin(planChannelProducts, eq(plans.planId, planChannelProducts.planId))
-      .leftJoin(
+      .innerJoin(
         planChannelPrices,
-        eq(planChannelProducts.planChannelProductId, planChannelPrices.planChannelProductId),
+        and(
+          eq(planChannelProducts.planChannelProductId, planChannelPrices.planChannelProductId),
+          isNull(planChannelPrices.effectiveTo),
+          isNull(planChannelPrices.deletedAt),
+        ),
       );
 
     // Apply filters
-    const conditions = [isNull(planChannelPrices.effectiveTo), isNull(planChannelPrices.deletedAt)];
+    const conditions = [];
     if (query?.channel) {
       conditions.push(eq(planChannelProducts.channel, query.channel));
     }
@@ -45,10 +49,7 @@ export class CatalogRepository extends BaseRepository {
     }
 
     if (conditions.length > 0) {
-      dbQuery.where(conditions[0]);
-      for (let i = 1; i < conditions.length; i++) {
-        dbQuery.where(conditions[i]);
-      }
+      dbQuery.where(and(...conditions));
     }
 
     return await dbQuery;

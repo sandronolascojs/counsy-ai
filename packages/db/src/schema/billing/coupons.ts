@@ -23,7 +23,7 @@ export const coupons = pgTable(
     minutesBonus: integer('minutes_bonus'),
     xpBonus: integer('xp_bonus'),
     maxRedemptions: integer('max_redemptions'),
-    expiresAt: timestamp('expires_at'),
+    expiresAt: timestamp('expires_at', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

@@ -25,7 +25,7 @@ export const pushTokens = pgTable(
     osVersion: text('os_version'), // OS version
     appVersion: text('app_version'), // App version
     isEnabled: boolean('is_enabled').default(true).notNull(), // Whether notifications are enabled
-    lastUsedAt: timestamp('last_used_at'), // Last time this token was used
+    lastUsedAt: timestamp('last_used_at', { withTimezone: true }), // Last time this token was used
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

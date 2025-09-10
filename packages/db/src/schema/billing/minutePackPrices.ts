@@ -14,12 +14,11 @@ export const minutePackPrices = pgTable(
       })
       .notNull(),
     unitAmount: integer('unit_amount').notNull(), // 499
-    storePriceTier: text('store_price_tier'),
-    effectiveFrom: timestamp('effective_from').notNull(),
-    effectiveTo: timestamp('effective_to'),
+    effectiveFrom: timestamp('effective_from', { withTimezone: true }).notNull(),
+    effectiveTo: timestamp('effective_to', { withTimezone: true }),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
-    deletedAt: timestamp('deleted_at'),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
   },
   (table) => [
     uniqueIndex('idx_minute_pack_prices_temporal_unique')

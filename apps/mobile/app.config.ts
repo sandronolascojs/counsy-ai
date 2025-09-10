@@ -2,7 +2,7 @@ import { type ConfigContext, type ExpoConfig } from 'expo/config';
 
 type AppEnvironment = 'development' | 'staging' | 'production';
 
-function getAppEnvironmentFromProcess() {
+function getAppEnvironmentFromProcess(): AppEnvironment {
   const env = (
     process.env.EXPO_PUBLIC_APP_ENV ||
     process.env.EAS_BUILD_PROFILE ||
@@ -97,6 +97,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       favicon: './assets/images/favicon.png',
     },
     plugins: [
+      'expo-secure-store',
       'expo-apple-authentication',
       'expo-router',
       [
@@ -128,6 +129,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           android: {},
         },
       ],
+      'expo-secure-store',
     ],
 
     experiments: { typedRoutes: true },

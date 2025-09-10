@@ -46,6 +46,7 @@ export const useRevenueCatStore = create<RevenueCatState>((set, get) => ({
   // Configure RevenueCat
   configure: async () => {
     const state = get();
+    // Idempotent guard: don't configure if already configured or currently loading
     if (state.isConfigured || state.isLoading) return;
 
     const isExpoGo = Constants.executionEnvironment === 'storeClient';
@@ -157,6 +158,12 @@ export const useRevenueCatStore = create<RevenueCatState>((set, get) => ({
       set({ customerInfo });
       return customerInfo;
     } catch (error) {
+      // Check if the purchase was cancelled by the user
+      if (error && typeof error === 'object' && 'userCancelled' in error && error.userCancelled) {
+        mobileLogger.info('Purchase cancelled by user');
+      }
+
+      // Handle other errors
       const errorMessage = error instanceof Error ? error.message : 'Purchase failed';
       mobileLogger.error('Purchase failed', { error });
       throw new Error(errorMessage);
@@ -182,6 +189,10 @@ export const useRevenueCatStore = create<RevenueCatState>((set, get) => ({
 
   // Reset store
   reset: () => {
+    const state = get();
+    // Idempotent guard: don't reset if already reset (not configured and not loading)
+    if (!state.isConfigured && !state.isLoading) return;
+
     set({
       isConfigured: false,
       isLoading: false,

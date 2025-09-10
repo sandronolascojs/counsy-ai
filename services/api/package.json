@@ -12,7 +12,7 @@
     "bundle": "tsup-node",
     "bundle:watch": "tsup-node --watch",
     "clean": "del dist tsconfig.tsbuildinfo",
-    "dev": "run-p bundle:watch type:gen:watch dev:local",
+    "dev": "dotenv -e .env.local -- tsx src/index.ts",
     "dev:local": "dotenv -e .env.local -- node ./dist/index.js",
     "format": "prettier --config ../../packages/config/.prettierrc --write . && prettier-package-json --write ./package.json",
     "lint": "eslint src --max-warnings 0 --ext .ts,.tsx",
@@ -59,6 +59,7 @@
     "prettier-package-json": "catalog:",
     "prettier-plugin-organize-imports": "catalog:",
     "tsup": "catalog:",
+    "tsx": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"
   }
