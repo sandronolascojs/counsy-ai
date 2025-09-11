@@ -1,5 +1,16 @@
-# Ignore all JSON files
-**/*.json
+# Drizzle snapshots and migration metadata
+packages/db/drizzle/meta/
+packages/db/drizzle/**/*.sql
 
-# But include package.json files
-!**/package.json 
+# TypeScript configs (preserve formatting)
+**/tsconfig.json
+
+# Build outputs
+**/dist/
+**/build/
+
+# Lockfiles
+pnpm-lock.yaml
+
+# Misc
+node_modules/ 
