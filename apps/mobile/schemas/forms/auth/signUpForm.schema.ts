@@ -1,6 +1,5 @@
 import { AuthErrorTranslations } from '@/i18n/constants';
 import {
-  EMAIL_REGEX,
   MAX_NAME_LENGTH,
   NAME_REGEX,
   PASSWORD_MAX_LENGTH,

@@ -1,5 +1,6 @@
 import { useProductCatalog } from '@/hooks/http/catalog/useProductCatalog';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
+import { mobileLogger } from '@/utils/logger';
 import { BillingCycle, Currency, SubscriptionTier } from '@counsy-ai/types';
 import { LinearGradient } from '@tamagui/linear-gradient';
 import {
@@ -140,11 +141,6 @@ export const ProfessionalPaywall = ({ onClose, onPurchase }: Props) => {
     }).format(amount / 100);
   };
 
-  const calculateDailyPrice = (amount: number, cycle: BillingCycle) => {
-    const days = cycle === BillingCycle.ANNUAL ? 365 : cycle === BillingCycle.MONTHLY ? 30 : 7;
-    return amount / days / 100;
-  };
-
   const monthlyProductForTier = useMemo(() => {
     return currentPlan?.products.find((p) => p.billingCycle === BillingCycle.MONTHLY);
   }, [currentPlan]);
@@ -185,6 +181,7 @@ export const ProfessionalPaywall = ({ onClose, onPurchase }: Props) => {
       console.log('purchase successful', revenueCatPackage.product.identifier, selectedCycle);
       onPurchase(revenueCatPackage);
     } catch (error) {
+      mobileLogger.error('Error processing purchase', { error });
       toast.error('Error processing purchase. Please try again.');
     } finally {
       setIsPurchasing(false);
@@ -196,6 +193,7 @@ export const ProfessionalPaywall = ({ onClose, onPurchase }: Props) => {
       await refresh();
       toast.success('Purchases restored successfully!');
     } catch (error) {
+      mobileLogger.error('Error restoring purchases', { error });
       toast.error('No purchases found to restore.');
     }
   };
