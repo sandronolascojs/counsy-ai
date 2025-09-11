@@ -15,4 +15,11 @@ export const billingController = server.router(contract.billingContract, {
       body: catalog,
     };
   },
+  revenueCatWebhook: async ({ body }) => {
+    console.log('revenueCatWebhook', body);
+    return {
+      status: 200,
+      body: undefined,
+    };
+  },
 });
