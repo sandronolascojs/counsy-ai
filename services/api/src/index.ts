@@ -9,6 +9,7 @@ import { env } from './config/env.config';
 import { rateLimitConfig } from './config/rateLimit.config';
 import { registerAuthController } from './controllers/auth.controller';
 import { billingController } from './controllers/billing.controller';
+import { publicController } from './controllers/public.controller';
 import { authPlugin } from './plugins/auth.plugin';
 import { errorHandlerPlugin } from './plugins/errorHandler.plugin';
 import { requestHandlerPlugin } from './plugins/requestHandler.plugin';
@@ -26,7 +27,7 @@ export function buildServer() {
 
   app.register(registerAuthController);
 
-  //app.register(tsRest.plugin(publicController));
+  app.register(tsRest.plugin(publicController));
 
   app.register(async (fastify) => {
     await fastify.register(authPlugin);

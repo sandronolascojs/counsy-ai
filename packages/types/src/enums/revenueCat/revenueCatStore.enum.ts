@@ -1,0 +1,7 @@
+export enum RevenueCatStore {
+  APP_STORE = 'APP_STORE',
+  MAC_APP_STORE = 'MAC_APP_STORE',
+  PLAY_STORE = 'PLAY_STORE',
+  AMAZON = 'AMAZON',
+  STRIPE = 'STRIPE',
+}
