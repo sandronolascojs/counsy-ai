@@ -54,7 +54,7 @@ const getDevExpoOrigins = (): string[] => {
         origin.startsWith('exp://') &&
         origin.length > 6 &&
         !origin.includes('*') && // No wildcards allowed
-        origin.match(/^exp:\/\/[a-zA-Z0-9.-]+$/) // Basic format validation
+        /^exp:\/\/[a-zA-Z0-9.-]+$/.exec(origin) // Basic format validation
       );
     });
 };
