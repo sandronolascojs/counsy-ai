@@ -1,11 +1,12 @@
 import { env } from '@/config/env.config';
 import { emailRender } from '@/tools/emailRender';
 import { SesEmailService } from '@counsy-ai/shared';
+import { MailTemplateId } from '@counsy-ai/types';
 import { z } from 'zod';
 import type { SendEmailRequest, SnsEvent } from './types';
 
 const sendSchema = z.object({
-  template: z.literal('MyEmail'),
+  template: z.nativeEnum(MailTemplateId),
   to: z.string().email(),
   subject: z.string().min(1),
   props: z.record(z.unknown()).optional(),
