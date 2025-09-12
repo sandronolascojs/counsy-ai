@@ -1,5 +1,5 @@
 {
-  "name": "@counsy-ai/ai-background-service",
+  "name": "@counsy-ai/ai-background-jobs",
   "version": "1.0.0",
   "license": "ISC",
   "type": "module",

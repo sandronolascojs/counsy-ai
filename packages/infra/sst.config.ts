@@ -58,6 +58,7 @@ export default $config({
     const VPC_NAME = `${$app.stage}-${APP_NAME}-vpc`;
     const API_NAME = `${$app.stage}-${APP_NAME}-api`;
     const FRONTEND_NAME = `${$app.stage}-${APP_NAME}-frontend`;
+    const NOTIFICATIONS_NAME = `${$app.stage}-${APP_NAME}-notifications`;
 
     const vpc = new sst.aws.Vpc(VPC_NAME, {
       bastion: true,
@@ -76,6 +77,33 @@ export default $config({
         version: '16.x',
       },
     );
+
+    // SNS Topic for cross-service notifications / fan-out
+    const notificationsTopic = new sst.aws.SnsTopic(`${NOTIFICATIONS_NAME}`, {});
+
+    // Subscribe notifications Lambda to the topic
+    notificationsTopic.subscribe('Handler', {
+      handler: '../../services/notifications/src/sns.handler',
+      runtime: 'nodejs22.x',
+      memory: '1024 MB',
+      timeout: '30 seconds',
+      link: [db],
+      permissions: [
+        {
+          actions: ['ses:SendEmail', 'ses:SendRawEmail'],
+          resources: ['*'],
+        },
+      ],
+      environment: {
+        APP_ENV: $app.stage,
+        DATABASE_URL: $interpolate`postgresql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}`,
+        FROM_EMAIL: isProduction
+          ? $interpolate`no-reply@${ROOT}`
+          : $interpolate`no-reply-${$app.stage}@${ROOT}`,
+        AWS_REGION: 'us-east-1',
+        SES_CONFIGURATION_SET: isProduction ? 'prod-default' : undefined,
+      },
+    });
 
     const api = new sst.aws.ApiGatewayV2(API_NAME, {
       vpc,
@@ -130,6 +158,9 @@ export default $config({
         // google credentials
         GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
+
+        // notifications
+        NOTIFICATIONS_TOPIC_ARN: notificationsTopic.arn,
       },
     });
 
@@ -147,8 +178,10 @@ export default $config({
     });
 
     return {
-      ApiUrl: api.url,
-      FrontendUrl: frontend.url,
+      apiUrl: api.url,
+      frontendUrl: frontend.url,
+      notificationsTopicArn: notificationsTopic.arn,
+      notificationsTopicName: notificationsTopic.name,
       databaseUrl: $interpolate`postgresql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}`,
     };
   },

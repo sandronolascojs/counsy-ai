@@ -25,6 +25,8 @@
   },
   "types": "./src/index.ts",
   "dependencies": {
+    "@aws-sdk/client-sesv2": "catalog:",
+    "@aws-sdk/client-sns": "catalog:",
     "@counsy-ai/ai": "workspace:*",
     "@counsy-ai/config": "workspace:*",
     "@counsy-ai/db": "workspace:*",
@@ -33,6 +35,7 @@
     "winston": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "prettier-package-json": "catalog:",

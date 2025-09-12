@@ -46,5 +46,10 @@ catalog:
   'npm-run-all': ^4.1.5
   'react': 19.0.0
   'react-dom': 19.0.0
+  '@types/react': 19.1.12
+  '@types/react-dom': 19.1.9
   'react-hook-form': ^7.62.0
   '@hookform/resolvers': ^5.2.1
+  '@aws-sdk/client-sesv2': ^3.883.0
+  '@fastify/aws-lambda': ^5.1.4
+  '@aws-sdk/client-sns': ^3.887.0

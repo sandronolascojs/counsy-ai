@@ -1,0 +1,13 @@
+export enum NotificationTransporterType {
+  MAIL = 'MAIL',
+  EXPO = 'EXPO',
+}
+
+export enum NotificationEventType {
+  WELCOME = 'WELCOME',
+  TRIAL_START = 'TRIAL_START',
+  TRIAL_3D_LEFT = 'TRIAL_3D_LEFT',
+  TRIAL_END = 'TRIAL_END',
+  SUBSCRIPTION_ACTIVE = 'SUBSCRIPTION_ACTIVE',
+  SUBSCRIPTION_PAST_DUE = 'SUBSCRIPTION_PAST_DUE',
+}

@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "name": "@counsy-ai/notifications",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "emails"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "run-p dev:server preview",
+    "dev:server": "tsx watch src/start.ts",
+    "email": "email",
+    "lint": "eslint .",
+    "preview": "email dev",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@counsy-ai/config": "workspace:*",
+    "@counsy-ai/shared": "workspace:*",
+    "@counsy-ai/types": "workspace:*",
+    "@fastify/aws-lambda": "catalog:",
+    "@react-email/components": "0.5.3",
+    "@react-email/render": "1.2.3",
+    "@t3-oss/env-core": "catalog:",
+    "fastify": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@react-email/preview-server": "4.2.11",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "npm-run-all": "catalog:",
+    "react-email": "4.2.11",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}
