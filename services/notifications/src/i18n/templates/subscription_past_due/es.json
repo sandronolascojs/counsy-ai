@@ -1,0 +1,10 @@
+{
+  "cta_pay_now": "Pagar ahora",
+  "details_title": "Monto adeudado",
+  "labels.amount_due": "Monto a pagar",
+  "labels.billing_period": "Periodo de facturación",
+  "labels.plan": "Plan",
+  "preview": "Pago requerido para continuar",
+  "subtitle": "El último pago falló. Por favor actualiza tu método de pago.",
+  "title": "Necesitamos tu pago para restablecer la suscripción"
+}

@@ -1,0 +1,14 @@
+{
+  "card_title": "¿Qué puedes hacer ahora?",
+  "cta": "Explorar {brandName}",
+  "help.1": "¿Tienes dudas? Revisa la",
+  "help.2": "documentación",
+  "list.1": "Configura tu perfil y preferencias",
+  "list.2": "Explora plantillas y flujos recomendados",
+  "list.3": "Conecta tus herramientas para automatizar tareas",
+  "muted": "Comienza con tu panel y configura tu perfil.",
+  "note": "Consejo: añade esta dirección a tus contactos para no perder novedades importantes.",
+  "preview": "Bienvenido a {brandName}, {firstName}!",
+  "subtitle": "{firstName}, gracias por unirte. Estamos encantados de ayudarte a trabajar mejor.",
+  "title": "¡Bienvenido a {brandName}!"
+}

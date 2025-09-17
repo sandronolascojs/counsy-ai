@@ -1,5 +1,5 @@
-import { ErrorBase } from '@/utils/errors/error.base';
 import { logger } from '@/utils/logger.instance';
+import { ErrorBase } from '@counsy-ai/shared';
 import type { FastifyPluginAsync } from 'fastify';
 
 export const errorHandlerPlugin: FastifyPluginAsync = async (fastify) => {

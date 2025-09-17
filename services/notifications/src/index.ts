@@ -1,48 +1,69 @@
 import { env } from '@/config/env.config';
-import { emailRender } from '@/tools/emailRender';
-import { SesEmailService } from '@counsy-ai/shared';
-import { MailTemplateId } from '@counsy-ai/types';
-import { z } from 'zod';
-import type { SendEmailRequest, SnsEvent } from './types';
+import type { SqsEvent } from '@/types';
+import { EmailService, normalizeTransporterType } from '@counsy-ai/shared';
+import { NotificationTransporterType } from '@counsy-ai/types';
+import { getUserLocale, parseEmailPayload, renderEmail } from './notifications';
 
-const sendSchema = z.object({
-  template: z.nativeEnum(MailTemplateId),
-  to: z.string().email(),
-  subject: z.string().min(1),
-  props: z.record(z.unknown()).optional(),
-});
-
-const ses = new SesEmailService({
+const ses = new EmailService({
   fromEmail: env.FROM_EMAIL,
   region: env.AWS_REGION,
   configurationSetName: env.SES_CONFIGURATION_SET,
 });
 
-export const handler = async (event: SnsEvent): Promise<void> => {
-  for (const record of event.Records) {
+// Minimal SQS processor for SNS -> SQS messages (and plain SQS JSON)
+export const handler = async (event: SqsEvent): Promise<void> => {
+  for (const record of event?.Records ?? []) {
     try {
-      const message = JSON.parse(record.Sns.Message) as SendEmailRequest & { type?: string };
+      const { payload, attrs } = decodeSqsBody(record.body);
 
-      // Simple router by type (email | expo). Default to email.
-      const kind = (message as any).type ?? 'email';
-      if (kind === 'email') {
-        const parsed = sendSchema.safeParse(message);
-        if (!parsed.success) {
-          console.warn('Invalid email message', parsed.error.flatten());
-          continue;
-        }
-        const html = await emailRender(parsed.data.template, parsed.data.props ?? {});
-        await ses.sendEmail({ to: parsed.data.to, subject: parsed.data.subject, html });
+      const transporter = attrs.queue
+        ? normalizeTransporterType(attrs.queue)
+        : NotificationTransporterType.MAIL;
+
+      if (transporter === NotificationTransporterType.MAIL) {
+        const emailMsg = parseEmailPayload(payload);
+
+        const locale = await getUserLocale(attrs.userId);
+        const html = await renderEmail(emailMsg, locale);
+        await ses.sendEmail({ to: emailMsg.to, subject: emailMsg.subject, html });
         continue;
       }
 
-      if (kind === 'expo') {
-        // TODO: implement Expo push delivery using your existing expo notifications util
-        // await sendExpoPush(message);
-        continue;
-      }
+      // Future: support NotificationTransporterType.EXPO here
+      // For now, ignore non-MAIL transporters gracefully
     } catch (err) {
-      console.error('Failed to process SNS record', { err, recordId: record.Sns.MessageId });
+      // Rethrow to enable SQS retry / DLQ
+      throw err instanceof Error ? err : new Error(String(err));
     }
   }
 };
+
+function decodeSqsBody(body: string): { payload: unknown; attrs: Record<string, string> } {
+  const outer = tryParse(body);
+  if (isObject(outer) && typeof outer.Message === 'string') {
+    const inner = tryParse(outer.Message);
+    const raw = (outer.MessageAttributes ?? {}) as Record<
+      string,
+      { Type?: string; Value?: string }
+    >;
+    const attrs: Record<string, string> = {};
+    for (const k in raw) {
+      const v = raw[k]?.Value;
+      if (typeof v === 'string') attrs[k] = v;
+    }
+    return { payload: inner, attrs };
+  }
+  return { payload: outer, attrs: {} };
+}
+
+function tryParse(value: string): unknown {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value;
+  }
+}
+
+function isObject(value: unknown): value is Record<string, any> {
+  return typeof value === 'object' && value !== null;
+}

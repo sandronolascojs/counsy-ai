@@ -1,0 +1,10 @@
+{
+  "cta_pay_now": "Pay now",
+  "details_title": "Amount due",
+  "labels.amount_due": "Amount due",
+  "labels.billing_period": "Billing period",
+  "labels.plan": "Plan",
+  "preview": "Payment required to continue",
+  "subtitle": "Your last payment failed. Please update your payment method.",
+  "title": "Payment needed to restore your subscription"
+}

@@ -1,4 +1,4 @@
-import type { StatusCode } from './statusCode.enum';
+import type { StatusCode } from '@counsy-ai/types';
 
 export class ErrorBase extends Error {
   statusCode: StatusCode;

@@ -6,4 +6,5 @@ export * from './locale.enum';
 export * from './notification';
 export * from './platform.enum';
 export * from './revenueCat';
+export * from './statusCode.enum';
 export * from './subscription';

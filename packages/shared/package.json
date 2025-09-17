@@ -31,6 +31,8 @@
     "@counsy-ai/config": "workspace:*",
     "@counsy-ai/db": "workspace:*",
     "@counsy-ai/types": "workspace:*",
+    "date-fns": "catalog:",
+    "drizzle-orm": "catalog:",
     "limax": "catalog:",
     "winston": "catalog:"
   },

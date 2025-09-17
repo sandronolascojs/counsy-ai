@@ -1,26 +1,14 @@
-export type SnsMessageAttributes = Record<string, { Type: string; Value: string }>;
+export type { SnsEvent, SnsMessageAttributes, SnsRecord } from '@counsy-ai/types';
 
-export interface SnsRecord {
-  EventSource: string;
-  EventVersion: string;
-  EventSubscriptionArn: string;
-  Sns: {
-    Type: string;
-    MessageId: string;
-    TopicArn: string;
-    Subject?: string | null;
-    Message: string;
-    Timestamp: string;
-    SignatureVersion: string;
-    Signature: string;
-    SigningCertUrl: string;
-    UnsubscribeUrl: string;
-    MessageAttributes: SnsMessageAttributes;
-  };
+// Minimal SQS event type used when SNS delivers notifications via SQS
+export interface SqsRecord {
+  messageId: string;
+  receiptHandle: string;
+  body: string; // JSON string: SNS envelope with Message + MessageAttributes
 }
 
-export interface SnsEvent {
-  Records: SnsRecord[];
+export interface SqsEvent {
+  Records: SqsRecord[];
 }
 
 export interface SendEmailRequest {

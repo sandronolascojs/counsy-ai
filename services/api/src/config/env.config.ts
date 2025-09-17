@@ -20,6 +20,7 @@ export const env = createEnv({
     FROM_EMAIL: z.string(),
     AWS_REGION: z.string(),
     SES_CONFIGURATION_SET: z.string().optional(),
+    NOTIFICATIONS_TOPIC_ARN: z.string(),
 
     // google
     GOOGLE_CLIENT_ID: z.string(),
@@ -47,6 +48,7 @@ export const env = createEnv({
     FROM_EMAIL: process.env.FROM_EMAIL,
     AWS_REGION: process.env.AWS_REGION,
     SES_CONFIGURATION_SET: process.env.SES_CONFIGURATION_SET,
+    NOTIFICATIONS_TOPIC_ARN: process.env.NOTIFICATIONS_TOPIC_ARN,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     FRONTEND_URL: process.env.FRONTEND_URL,

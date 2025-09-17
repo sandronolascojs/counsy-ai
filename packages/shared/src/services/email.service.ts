@@ -12,7 +12,7 @@ export interface SendEmailParams {
   configurationSetName?: string;
 }
 
-export class SesEmailService {
+export class EmailService {
   private readonly client: SESv2Client;
   private readonly fromAddress: string;
   private readonly configurationSetName?: string;

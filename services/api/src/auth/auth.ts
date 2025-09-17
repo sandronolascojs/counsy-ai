@@ -1,21 +1,18 @@
-/**
- * Authentication configuration with security improvements:
- * - Replaced broad wildcard 'exp://*' with explicit whitelist from APP_DEV_EXPO_ORIGINS
- * - Added proper origin validation to prevent security vulnerabilities
- * - Defaults to empty array when no whitelist is provided for maximum security
- */
 import { env } from '@/config/env.config';
-import { SubscriptionRepository } from '@/repositories/subscription.repository';
-import { UserRepository } from '@/repositories/user.repository';
-import { emailServiceSingleton } from '@/services/sesEmail.service';
-import { SubscriptionsService } from '@/services/subscription.service';
 import { getAppleClientSecret } from '@/utils/apple.secret.manager';
 import { logger } from '@/utils/logger.instance';
 import { expo } from '@better-auth/expo';
 import { db } from '@counsy-ai/db';
 import type { SelectSubscription } from '@counsy-ai/db/schema';
 import * as schema from '@counsy-ai/db/schema';
-import { APP_CONFIG } from '@counsy-ai/types';
+import {
+  SubscriptionRepository,
+  SubscriptionsService,
+  TypedSnsProducer,
+  UserRepository,
+  UserService,
+} from '@counsy-ai/shared';
+import { APP_CONFIG, MailTemplateId, NotificationsQueueNames } from '@counsy-ai/types';
 import type { Session, User } from 'better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -94,6 +91,9 @@ const subscriptionsService = new SubscriptionsService(
   logger,
   db,
 );
+const userService = new UserService(userRepository, logger, db);
+// SNS notifications topic (injected via env in the API service runtime)
+// Using env.NOTIFICATIONS_TOPIC_ARN indirectly via snsEmailQueue
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
   session: {
@@ -107,8 +107,10 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       let subscription: SelectSubscription | undefined = undefined;
       if (user?.id) {
         try {
-          subscription = await subscriptionsService.getSubscriptionByUserId({ userId: user.id });
-        } catch (error) {
+          subscription = await subscriptionsService.getSubscriptionByUserId({
+            userId: user.id,
+          });
+        } catch (error: unknown) {
           logger.error('Failed to fetch subscription for user', {
             userId: user.id,
             error: error instanceof Error ? error.message : 'Unknown error',
@@ -142,18 +144,25 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }) => {
-      const emailService = emailServiceSingleton;
       const scheme = `${APP_CONFIG.basics.prefix}://`;
       const callbackDeepLink = `${scheme}reset?token=${encodeURIComponent(token)}`;
       const resetUrl = new URL(url);
       resetUrl.searchParams.set('callbackURL', callbackDeepLink);
       const resetPasswordUrl = resetUrl.toString();
-      await emailService.sendEmail({
-        to: user.email,
-        subject: `${APP_CONFIG.basics.name} - Reset your password`,
-        html: `Click <a href="${resetPasswordUrl}">here</a> to reset your password`,
-        text: `Open the following link to reset your password: ${resetPasswordUrl}`,
+      const producer = new TypedSnsProducer({
+        region: env.AWS_REGION,
+        topicArn: env.NOTIFICATIONS_TOPIC_ARN,
       });
+      await producer.sendToQueue(
+        NotificationsQueueNames.EMAIL,
+        {
+          template: MailTemplateId.RESET_PASSWORD,
+          to: user.email,
+          subject: `${APP_CONFIG.basics.name} - Reset your password`,
+          props: { resetPasswordUrl, firstName: user.name },
+        },
+        { userId: user.id },
+      );
     },
   },
   socialProviders: {
@@ -175,18 +184,34 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     haveIBeenPwned(haveIBeenPwnedPlugin),
     magicLink({
       sendMagicLink: async ({ email, url, token }) => {
-        const emailService = emailServiceSingleton;
+        const user = await userService.getUserByEmail({ email });
         const scheme = `${APP_CONFIG.basics.prefix}://`;
         const callbackDeepLink = `${scheme}auth/magic-link?token=${encodeURIComponent(token)}`;
         const magicUrl = new URL(url);
         magicUrl.searchParams.set('callbackURL', callbackDeepLink);
         const magicLinkUrl = magicUrl.toString();
-        await emailService.sendEmail({
-          to: email,
-          subject: `${APP_CONFIG.basics.name} - Magic link`,
-          html: `Click <a href="${magicLinkUrl}">here</a> to login`,
-          text: `Open the following link to login: ${magicLinkUrl}`,
+        const producer = new TypedSnsProducer({
+          region: env.AWS_REGION,
+          topicArn: env.NOTIFICATIONS_TOPIC_ARN,
         });
+
+        if (user?.id) {
+          await producer.sendToQueue(
+            NotificationsQueueNames.EMAIL,
+            {
+              template: MailTemplateId.MAGIC_LINK,
+              to: email,
+              subject: `${APP_CONFIG.basics.name} - Magic link`,
+              props: { magicLinkUrl, firstName: user.name },
+            },
+            {
+              userId: user.id,
+              attributes: {
+                link: { DataType: 'String', StringValue: magicLinkUrl },
+              },
+            },
+          );
+        }
       },
       disableSignUp: true,
     }),

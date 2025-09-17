@@ -1,0 +1,11 @@
+{
+  "footer.help": "¿Necesitas ayuda? Visita",
+  "footer.receiving": "Recibes este correo porque tienes una cuenta en {brandName}.",
+  "footer.rights": "Todos los derechos reservados.",
+  "reset_password.alt": "Si el botón no funciona, copia y pega este enlace:",
+  "reset_password.cta": "Restablecer contraseña",
+  "reset_password.muted": "Por seguridad, este enlace expira tras un tiempo.",
+  "reset_password.preview": "Restablecer tu contraseña | {brandName}",
+  "reset_password.subtitle": "{firstName} si solicitaste restablecer tu contraseña, pulsa el botón.",
+  "reset_password.title": "Restablecer contraseña"
+}

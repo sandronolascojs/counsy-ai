@@ -1,0 +1,11 @@
+{
+  "cta_manage": "Gestionar suscripción",
+  "details_title": "Detalles de la suscripción",
+  "labels.billing_period": "Periodo de facturación",
+  "labels.next_charge": "Próximo cargo",
+  "labels.plan": "Plan",
+  "labels.started_on": "Inició el",
+  "preview": "Suscripción activa: {planName}",
+  "subtitle": "Gracias por suscribirte a {planName}.",
+  "title": "Tu suscripción está activa"
+}

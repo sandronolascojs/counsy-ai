@@ -14,18 +14,21 @@
     "dev:server": "tsx watch src/start.ts",
     "email": "email",
     "lint": "eslint .",
-    "preview": "email dev",
+    "preview": "email dev --dir src/emails",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "types": "dist/index.d.ts",
   "dependencies": {
     "@counsy-ai/config": "workspace:*",
+    "@counsy-ai/db": "workspace:*",
     "@counsy-ai/shared": "workspace:*",
     "@counsy-ai/types": "workspace:*",
     "@fastify/aws-lambda": "catalog:",
     "@react-email/components": "0.5.3",
     "@react-email/render": "1.2.3",
     "@t3-oss/env-core": "catalog:",
+    "date-fns": "catalog:",
+    "drizzle-orm": "catalog:",
     "fastify": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
@@ -36,10 +39,15 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "eslint": "catalog:",
     "npm-run-all": "catalog:",
+    "prettier": "catalog:",
+    "prettier-package-json": "catalog:",
+    "prettier-plugin-organize-imports": "catalog:",
     "react-email": "4.2.11",
     "tsup": "catalog:",
     "tsx": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
   }
 }

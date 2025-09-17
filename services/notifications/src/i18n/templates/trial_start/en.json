@@ -1,0 +1,19 @@
+{
+  "billing.annual": "Annual",
+  "billing.monthly": "Monthly",
+  "billing.weekly": "Weekly",
+  "cta_start": "Start now",
+  "details_title": "After your trial",
+  "labels.billing_period": "Billing period",
+  "labels.first_charge": "First charge after trial",
+  "labels.plan": "Plan",
+  "labels.trial_duration": "Trial duration",
+  "labels.trial_range": "Trial dates",
+  "note_link_text": "billing",
+  "note_prefix": "You can cancel or change your plan anytime from",
+  "preview": "Your trial started and ends on {endDate}",
+  "subtitle": "Your {days}-day trial starts now.",
+  "title": "Welcome to your trial, {firstName}!",
+  "value.day": "{count} day",
+  "value.days": "{count} days"
+}

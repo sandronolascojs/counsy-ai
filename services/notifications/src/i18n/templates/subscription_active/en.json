@@ -1,0 +1,11 @@
+{
+  "cta_manage": "Manage subscription",
+  "details_title": "Subscription details",
+  "labels.billing_period": "Billing period",
+  "labels.next_charge": "Next charge",
+  "labels.plan": "Plan",
+  "labels.started_on": "Started on",
+  "preview": "Subscription active: {planName}",
+  "subtitle": "Thanks for subscribing to {planName}.",
+  "title": "Your subscription is active"
+}

@@ -1,4 +1,4 @@
-import { StatusCode } from '@/utils/errors/statusCode.enum';
+import { StatusCode } from '@counsy-ai/types';
 import { RateLimitOptions } from '@fastify/rate-limit';
 
 const MAX_REQUESTS = 100;

@@ -1,0 +1,14 @@
+{
+  "card_title": "What can you do now?",
+  "cta": "Explore {brandName}",
+  "help.1": "Got questions? Check the",
+  "help.2": "documentation",
+  "list.1": "Set up your profile and preferences",
+  "list.2": "Explore recommended templates and flows",
+  "list.3": "Connect your tools to automate tasks",
+  "muted": "Start with your dashboard and set up your profile.",
+  "note": "Tip: add this address to your contacts to avoid missing important updates.",
+  "preview": "Welcome to {brandName}, {firstName}!",
+  "subtitle": "{firstName}, thanks for joining. We are excited to help you work smarter.",
+  "title": "Welcome to {brandName}!"
+}

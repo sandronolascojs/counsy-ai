@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { MailTemplateId, NotificationEventType, NotificationTransporterType } from '../enums';
+import type { MailTemplateProps } from './emailTemplates';
 
 // Base metadata all notifications share
 export const NotificationBaseMetaSchema = z.object({
@@ -62,10 +63,6 @@ const MailPayloadByEventSchema = {
     templateId: z.literal(MailTemplateId.SUBSCRIPTION_TRIAL_START),
     data: z.object({ trialDays: z.number().int().positive() }).passthrough(),
   }),
-  [NotificationEventType.TRIAL_3D_LEFT]: MailPayloadSchema.extend({
-    templateId: z.literal(MailTemplateId.SUBSCRIPTION_TRIAL_3D_LEFT),
-    data: z.object({ remainingDays: z.number().int().positive() }).passthrough(),
-  }),
   [NotificationEventType.TRIAL_END]: MailPayloadSchema.extend({
     templateId: z.literal(MailTemplateId.SUBSCRIPTION_TRIAL_END),
     data: z.object({ endedAtISO: z.string() }).passthrough(),
@@ -114,13 +111,6 @@ const MailEventEnvelopes = [
     event: z.literal(NotificationEventType.TRIAL_START),
     meta: NotificationBaseMetaSchema,
     payload: MailPayloadByEventSchema[NotificationEventType.TRIAL_START],
-    requestId: z.string().optional(),
-  }),
-  z.object({
-    transporter: z.literal(NotificationTransporterType.MAIL),
-    event: z.literal(NotificationEventType.TRIAL_3D_LEFT),
-    meta: NotificationBaseMetaSchema,
-    payload: MailPayloadByEventSchema[NotificationEventType.TRIAL_3D_LEFT],
     requestId: z.string().optional(),
   }),
   z.object({
@@ -200,3 +190,31 @@ export const NotificationEnvelopeByEventSchema = z.union([
   ...((typeof MailEventEnvelopes)[number] | (typeof ExpoEventEnvelopes)[number])[],
 ]);
 export type NotificationEnvelopeByEvent = z.infer<typeof NotificationEnvelopeByEventSchema>;
+
+// ==== Typed SNS Queue Payloads (for generic producer) ====
+
+// Map each MailTemplateId to its strict props type
+type MailTemplatePropsWithoutLocale<T extends MailTemplateId> = Omit<
+  MailTemplateProps<T>,
+  'locale'
+>;
+
+type EmailPayloadByTemplate = {
+  [K in MailTemplateId]: {
+    template: K;
+    to: string;
+    subject: string;
+    // Producer payload does NOT include locale; consumer injects it before render
+    props?: MailTemplatePropsWithoutLocale<K>;
+  };
+};
+
+export type NotificationsEmailQueuePayload = EmailPayloadByTemplate[MailTemplateId];
+
+export interface NotificationsQueues {
+  [NotificationsQueueNames.EMAIL]: NotificationsEmailQueuePayload;
+}
+
+export enum NotificationsQueueNames {
+  EMAIL = 'email',
+}

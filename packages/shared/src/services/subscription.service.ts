@@ -1,6 +1,3 @@
-import { SubscriptionRepository } from '@/repositories/subscription.repository';
-import { UserRepository } from '@/repositories/user.repository';
-import { NotFoundError } from '@/utils/errors/NotFoundError';
 import type { DB } from '@counsy-ai/db';
 import type {
   InsertSubscription,
@@ -8,6 +5,9 @@ import type {
   UpdateSubscription,
 } from '@counsy-ai/db/schema';
 import type { Logger } from '@counsy-ai/shared';
+import { SubscriptionRepository } from '../repositories/subscription.repository';
+import { UserRepository } from '../repositories/user.repository';
+import { NotFoundError } from '../utils/errors/NotFoundError';
 
 export class SubscriptionsService {
   constructor(

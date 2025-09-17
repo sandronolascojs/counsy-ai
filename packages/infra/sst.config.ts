@@ -78,12 +78,15 @@ export default $config({
       },
     );
 
-    // SNS Topic for cross-service notifications / fan-out
+    // SNS Topic + SQS subscription (recommended: SNS -> SQS -> Lambda)
     const notificationsTopic = new sst.aws.SnsTopic(`${NOTIFICATIONS_NAME}`, {});
 
-    // Subscribe notifications Lambda to the topic
-    notificationsTopic.subscribe('Handler', {
-      handler: '../../services/notifications/src/sns.handler',
+    const notificationsQueue = new sst.aws.Queue(`${NOTIFICATIONS_NAME}-queue`);
+
+    notificationsTopic.subscribeQueue('Subscription', notificationsQueue);
+
+    notificationsQueue.subscribe({
+      handler: '../../services/notifications/src/index.handler',
       runtime: 'nodejs22.x',
       memory: '1024 MB',
       timeout: '30 seconds',

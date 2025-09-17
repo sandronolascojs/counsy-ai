@@ -1,20 +1,7 @@
+import type { MessageAttributeValue } from '@aws-sdk/client-sns';
 import { PublishCommand, SNSClient } from '@aws-sdk/client-sns';
-import type { NotificationEventType, NotificationTransporterType } from '@counsy-ai/types';
-import {
-  NotificationEnvelopeByEventSchema,
-  type NotificationEnvelopeByEvent,
-} from '@counsy-ai/types';
-
-// Type-level mapping: transporter -> event -> envelope subtype
-type EnvelopesByTransporter = Extract<
-  NotificationEnvelopeByEvent,
-  { transporter: NotificationTransporterType }
->;
-
-export type EnvelopeFor<
-  TTransporter extends NotificationTransporterType,
-  TEvent extends NotificationEventType,
-> = Extract<EnvelopesByTransporter, { transporter: TTransporter; event: TEvent }>;
+import type { NotificationsQueues } from '@counsy-ai/types';
+import { transporterForQueue } from './snsUtils';
 
 export interface TypedSnsProducerParams {
   region: string;
@@ -27,34 +14,60 @@ export class TypedSnsProducer {
 
   constructor(params: TypedSnsProducerParams) {
     this.topicArn = params.topicArn;
-    this.sns = new SNSClient({ region: params.region });
+    const isLocal = process.env.APP_ENV === 'development' || process.env.USE_LOCALSTACK === '1';
+    const localEndpoint = process.env.AWS_ENDPOINT || 'http://localhost:4566';
+    this.sns = new SNSClient({
+      region: params.region,
+      ...(isLocal && {
+        endpoint: localEndpoint,
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'test',
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'test',
+        },
+      }),
+    });
   }
 
-  async publish<
-    TTransporter extends NotificationTransporterType,
-    TEvent extends NotificationEventType,
-  >(message: EnvelopeFor<TTransporter, TEvent>): Promise<void> {
-    const parsed = NotificationEnvelopeByEventSchema.safeParse(message);
-    if (!parsed.success) {
-      const validationMessage: string = parsed.error.message;
-      throw new Error(
-        validationMessage.length > 0 ? validationMessage : 'Invalid notification envelope',
-      );
-    }
+  // Generic queue sender with autocomplete by queue name
+  async sendToQueue<TQueue extends keyof NotificationsQueues>(
+    queue: TQueue,
+    payload: NotificationsQueues[TQueue],
+    options?: {
+      attributes?: Record<string, MessageAttributeValue>;
+      userId?: string;
+      eventType?: string;
+      eventVersion?: string | number;
+      correlationId?: string;
+      source?: string;
+    },
+  ): Promise<void> {
+    const transporter = transporterForQueue(queue);
 
-    const transporter = parsed.data.transporter;
-    const event = parsed.data.event;
-    const userId = parsed.data.meta.userId;
+    const attrs: Record<string, MessageAttributeValue> = {
+      queue: { DataType: 'String', StringValue: transporter },
+      ...(options?.attributes ?? {}),
+    };
+    if (options?.userId) {
+      attrs.userId = { DataType: 'String', StringValue: options.userId };
+    }
+    if (options?.eventType) {
+      attrs.eventType = { DataType: 'String', StringValue: options.eventType };
+    }
+    if (options?.eventVersion !== undefined) {
+      attrs.eventVersion = { DataType: 'String', StringValue: String(options.eventVersion) };
+    }
+    if (options?.correlationId) {
+      attrs.correlationId = { DataType: 'String', StringValue: options.correlationId };
+    }
+    if (options?.source) {
+      attrs.source = { DataType: 'String', StringValue: options.source };
+    }
 
     await this.sns.send(
       new PublishCommand({
         TopicArn: this.topicArn,
-        Message: JSON.stringify(message),
-        MessageAttributes: {
-          transporter: { DataType: 'String', StringValue: transporter },
-          event: { DataType: 'String', StringValue: event },
-          userId: { DataType: 'String', StringValue: userId },
-        },
+        Message: JSON.stringify(payload),
+        MessageAttributes: attrs,
       }),
     );
   }

@@ -1,0 +1,11 @@
+{
+  "footer.help": "Need help? Visit",
+  "footer.receiving": "You are receiving this email because you have an account with {brandName}.",
+  "footer.rights": "All rights reserved.",
+  "reset_password.alt": "If the button doesn't work, copy and paste this link:",
+  "reset_password.cta": "Reset password",
+  "reset_password.muted": "For security, this link expires after a short time.",
+  "reset_password.preview": "Reset your password | {brandName}",
+  "reset_password.subtitle": "{firstName} if you requested a password reset, click the button below.",
+  "reset_password.title": "Reset your password"
+}

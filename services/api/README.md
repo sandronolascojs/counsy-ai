@@ -1,3 +1,26 @@
+## Local SNS (via LocalStack)
+
+1. Start LocalStack + Postgres
+
+   docker compose up -d localstack db
+
+2. Get the topic ARN
+
+   docker compose logs localstack | grep 'SNS topic ARN'
+
+   Or exec:
+
+   docker compose exec localstack awslocal sns list-topics --query 'Topics[0].TopicArn' --output text
+
+3. Set env for API (.env.local)
+
+   AWS_REGION=us-east-1
+   NOTIFICATIONS_TOPIC_ARN=arn:aws:sns:us-east-1:000000000000:notifications-topic
+
+4. Run API
+
+   pnpm --filter @counsy-ai/api dev
+
 # API Service
 
 This service provides the REST API for the Auto Articles platform. It exposes endpoints for managing and retrieving articles and categories, supporting multi-site content delivery and integration with the frontend and other services.

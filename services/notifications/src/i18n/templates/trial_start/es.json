@@ -1,0 +1,19 @@
+{
+  "billing.annual": "Anual",
+  "billing.monthly": "Mensual",
+  "billing.weekly": "Semanal",
+  "cta_start": "Empezar ahora",
+  "details_title": "Tu plan tras el trial",
+  "labels.billing_period": "Periodo de facturación",
+  "labels.first_charge": "Primer cargo después del trial",
+  "labels.plan": "Plan",
+  "labels.trial_duration": "Duración del trial",
+  "labels.trial_range": "Fechas del trial",
+  "note_link_text": "billing",
+  "note_prefix": "Podrás cancelar o cambiar de plan en cualquier momento desde",
+  "preview": "Tu prueba inició y termina el {endDate}",
+  "subtitle": "Tu prueba de {days} días comienza ahora.",
+  "title": "¡Bienvenido a tu prueba, {firstName}!",
+  "value.day": "{count} día",
+  "value.days": "{count} días"
+}
