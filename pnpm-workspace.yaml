@@ -53,4 +53,5 @@ catalog:
   '@aws-sdk/client-sesv2': ^3.883.0
   '@fastify/aws-lambda': ^5.1.4
   '@aws-sdk/client-sns': ^3.887.0
+  '@aws-sdk/client-sqs': ^3.890.0
   'date-fns': ^4.1.0

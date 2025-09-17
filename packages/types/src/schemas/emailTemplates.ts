@@ -32,9 +32,18 @@ export const MAIL_TEMPLATE_SCHEMAS = {
   }),
   SUBSCRIPTION_ACTIVE: BASE_EMAIL_PROPS_SCHEMA.extend({
     planName: z.string(),
+    startedAtISO: z.string(),
+    nextChargeISO: z.string(),
+    amount: z.number().nonnegative(),
+    currency: z.nativeEnum(Currency),
+    billingPeriod: z.nativeEnum(BillingCycle).optional(),
   }),
   SUBSCRIPTION_PAST_DUE: BASE_EMAIL_PROPS_SCHEMA.extend({
-    invoiceUrl: z.string().url().optional(),
+    planName: z.string(),
+    billingPeriod: z.nativeEnum(BillingCycle),
+    amountDue: z.number().nonnegative(),
+    currency: z.nativeEnum(Currency),
+    payUrl: z.string().url().optional(),
   }),
 } as const;
 export type MailTemplateSchema<T extends MailTemplateId> = (typeof MAIL_TEMPLATE_SCHEMAS)[T];

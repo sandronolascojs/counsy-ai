@@ -9,16 +9,25 @@
     "emails"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "run-p dev:server preview",
-    "dev:server": "tsx watch src/start.ts",
+    "build": "run-p bundle type:gen",
+    "bundle": "tsup-node",
+    "bundle:watch": "tsup-node --watch",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "dev": "dotenv -e .env.local -- tsx --watch src/index.ts",
+    "dev:local": "dotenv -e .env.local -- node ./dist/index.js",
     "email": "email",
-    "lint": "eslint .",
+    "format": "prettier --config ../../packages/config/.prettierrc --ignore-path ../../.prettierignore --write . && prettier-package-json --write ./package.json",
+    "lint": "eslint src --max-warnings 0 --ext .ts,.tsx",
+    "lint:fix": "eslint src --max-warnings 0 --fix --ext .ts,.tsx",
     "preview": "email dev --dir src/emails",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "start": "node ./dist/index.js",
+    "type:gen": "tsc --emitDeclarationOnly",
+    "type:gen:watch": "tsc --emitDeclarationOnly --watch",
+    "typecheck": "tsc --noEmit"
   },
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@aws-sdk/client-sqs": "catalog:",
     "@counsy-ai/config": "workspace:*",
     "@counsy-ai/db": "workspace:*",
     "@counsy-ai/shared": "workspace:*",
@@ -28,8 +37,9 @@
     "@react-email/render": "1.2.3",
     "@t3-oss/env-core": "catalog:",
     "date-fns": "catalog:",
+    "dotenv-cli": "catalog:",
     "drizzle-orm": "catalog:",
-    "fastify": "catalog:",
+    "npm-run-all": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "zod": "catalog:"

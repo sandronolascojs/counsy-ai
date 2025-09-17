@@ -74,7 +74,7 @@ export function parseEmailPayload(input: unknown): EmailQueuePayload {
   return parsed.data;
 }
 
-export async function getUserLocale(userId: string | undefined): Promise<Locale> {
+export async function getUserLocale(_userId: string | undefined): Promise<Locale> {
   // TODO: Add locale field to users table and implement proper locale fetching
   // For now, return default locale
   return Locale.EN_US;

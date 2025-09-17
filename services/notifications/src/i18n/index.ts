@@ -52,7 +52,7 @@ export function te(
   const template = (dict as Dict)[key] ?? key;
   if (!params) return template;
   return Object.keys(params).reduce(
-    (acc, k) => acc.replace(new RegExp(`\\{${k}\\}`, 'g'), String(params[k]!)),
+    (acc, k) => acc.replace(new RegExp(`\\{${k}\\}`, 'g'), String(params[k] || '')),
     template,
   );
 }

@@ -30,12 +30,7 @@ export const ResetPasswordEmail: React.FC<ResetPasswordEmailProps> & {
           )}
         </Text>
         <Text className="text-sm text-muted m-0 mt-1">
-          {te(
-            locale,
-            'reset_password.subtitle',
-            { firstName: firstName ?? '' },
-            EMAIL_NAMESPACES.COMMON,
-          )}
+          {te(locale, 'reset_password.subtitle', { firstName }, EMAIL_NAMESPACES.COMMON)}
         </Text>
         <Button
           className="bg-brand text-white py-3 px-10 rounded-full font-semibold no-underline inline-block mt-3"

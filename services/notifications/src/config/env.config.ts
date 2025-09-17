@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const env = createEnv({
   server: {
-    PORT: z.coerce.number().default(8000),
+    PORT: z.coerce.number().default(8001),
     APP_ENV: z.enum(['development', 'production', 'staging']).default('development'),
     DATABASE_URL: z.string(),
 
@@ -11,6 +11,9 @@ export const env = createEnv({
     FROM_EMAIL: z.string(),
     AWS_REGION: z.string(),
     SES_CONFIGURATION_SET: z.string().optional(),
+
+    // sqs
+    SQS_QUEUE_URL: z.string().optional(),
   },
   runtimeEnvStrict: {
     PORT: process.env.PORT,
@@ -19,5 +22,6 @@ export const env = createEnv({
     FROM_EMAIL: process.env.FROM_EMAIL,
     AWS_REGION: process.env.AWS_REGION,
     SES_CONFIGURATION_SET: process.env.SES_CONFIGURATION_SET,
+    SQS_QUEUE_URL: process.env.SQS_QUEUE_URL,
   },
 });

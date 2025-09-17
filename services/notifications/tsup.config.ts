@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  entry: ['src/index.ts', 'src/handler.ts'],
   format: ['esm'],
   target: 'node18',
   clean: true,
@@ -23,12 +23,14 @@ export default defineConfig({
    * Configure esbuild to handle automatic extensions and path mapping
    */
   esbuildOptions(options) {
-    options.resolveExtensions = ['.ts', '.js', '.json'];
+    options.resolveExtensions = ['.ts', '.tsx', '.js', '.jsx', '.json'];
     options.mainFields = ['module', 'main'];
     // Configure path mapping for @/ alias
     options.alias = {
       '@': './src',
     };
+    // Enable JSX transformation
+    options.jsx = 'automatic';
   },
   /**
    * Do not use tsup for generating d.ts files because it can not generate type

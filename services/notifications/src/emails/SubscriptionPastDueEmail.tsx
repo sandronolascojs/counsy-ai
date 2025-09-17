@@ -53,20 +53,18 @@ export const SubscriptionPastDueEmail: React.FC<SubscriptionPastDueEmailProps> &
                 <td className="py-1 text-right font-medium">{planName}</td>
               </tr>
             ) : null}
-            {billingPeriod ? (
-              <tr>
-                <td className="py-1">
-                  {te(
-                    locale,
-                    PD.LABEL_BILLING_PERIOD,
-                    undefined,
-                    EMAIL_NAMESPACES.SUBSCRIPTION_PAST_DUE,
-                  )}
-                </td>
-                <td className="py-1 text-right font-medium">{billingPeriod}</td>
-              </tr>
-            ) : null}
-            {due ? (
+            <tr>
+              <td className="py-1">
+                {te(
+                  locale,
+                  PD.LABEL_BILLING_PERIOD,
+                  undefined,
+                  EMAIL_NAMESPACES.SUBSCRIPTION_PAST_DUE,
+                )}
+              </td>
+              <td className="py-1 text-right font-medium">{billingPeriod}</td>
+            </tr>
+            {due && (
               <tr>
                 <td className="py-1">
                   {te(
@@ -78,7 +76,7 @@ export const SubscriptionPastDueEmail: React.FC<SubscriptionPastDueEmailProps> &
                 </td>
                 <td className="py-1 text-right font-semibold">{due}</td>
               </tr>
-            ) : null}
+            )}
           </tbody>
         </table>
       </Section>

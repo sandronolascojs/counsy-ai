@@ -63,12 +63,21 @@ export class TypedSnsProducer {
       attrs.source = { DataType: 'String', StringValue: options.source };
     }
 
-    await this.sns.send(
+    console.log('Sending message to SNS', {
+      TopicArn: this.topicArn,
+      MessageType: typeof payload,
+      MessageSize: JSON.stringify(payload).length,
+      AttributeCount: Object.keys(attrs).length,
+    });
+
+    const result = await this.sns.send(
       new PublishCommand({
         TopicArn: this.topicArn,
         Message: JSON.stringify(payload),
         MessageAttributes: attrs,
       }),
     );
+
+    console.log('Message sent to SNS', result);
   }
 }

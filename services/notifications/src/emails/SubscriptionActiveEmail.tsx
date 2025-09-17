@@ -84,7 +84,7 @@ export const SubscriptionActiveEmail: React.FC<SubscriptionActiveEmailProps> & {
                   )}
                 </td>
                 <td className="py-1 text-right font-medium">
-                  {nextCharge ?? fromIsoToReadableDate(nextChargeISO)}
+                  {nextCharge || fromIsoToReadableDate(nextChargeISO)}
                 </td>
               </tr>
             ) : null}

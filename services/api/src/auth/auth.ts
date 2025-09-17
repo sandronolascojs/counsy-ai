@@ -153,6 +153,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         region: env.AWS_REGION,
         topicArn: env.NOTIFICATIONS_TOPIC_ARN,
       });
+      console.log('Sending reset password email to user', user.email);
       await producer.sendToQueue(
         NotificationsQueueNames.EMAIL,
         {

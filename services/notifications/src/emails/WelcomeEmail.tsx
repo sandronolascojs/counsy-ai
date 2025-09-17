@@ -7,10 +7,6 @@ import BaseTemplate from './BaseTemplate';
 
 export type WelcomeEmailProps = MailTemplateProps<MailTemplateId.WELCOME>;
 
-const ASSETS = {
-  banner: 'https://assets.counsy.ai/email/welcome-banner.png',
-};
-
 export const WelcomeEmail: React.FC<WelcomeEmailProps> & { PreviewProps: WelcomeEmailProps } = ({
   firstName,
   locale,

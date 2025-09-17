@@ -15,12 +15,15 @@ import {
   Text,
   pixelBasedPreset,
 } from '@react-email/components';
-import type { PropsWithChildren } from 'react';
 import * as React from 'react';
 import { te } from '../i18n';
 import { EmailCommonTranslations as CT, EMAIL_NAMESPACES } from '../i18n/constants';
 
-export type BaseTemplateProps = PropsWithChildren<{ previewText?: string; locale: Locale }>;
+export type BaseTemplateProps = {
+  previewText?: string;
+  locale: Locale;
+  children: React.ReactNode;
+};
 
 const BRAND = {
   name: APP_CONFIG.basics.name,
@@ -111,6 +114,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({ previewText, locale,
             </Section>
             <Hr className="my-0" style={{ borderColor: '#E6E6E6' }} />
 
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <Section className="px-8 py-6">{children as any}</Section>
 
             <Hr className="border-border my-6" />

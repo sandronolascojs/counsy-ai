@@ -5,6 +5,7 @@ export const EMAIL_NAMESPACES = {
   TRIAL_START: 'trial_start',
   SUBSCRIPTION_ACTIVE: 'subscription_active',
   SUBSCRIPTION_PAST_DUE: 'subscription_past_due',
+  SUBSCRIPTION_TRIAL_END: 'subscription_trial_end',
 } as const;
 
 export enum EmailCommonTranslations {
@@ -63,5 +64,14 @@ export enum SubscriptionPastDueTranslations {
   LABEL_BILLING_PERIOD = 'labels.billing_period',
   LABEL_AMOUNT_DUE = 'labels.amount_due',
   CTA_PAY_NOW = 'cta_pay_now',
+  PREVIEW = 'preview',
+}
+
+export enum SubscriptionTrialEndTranslations {
+  TITLE = 'title',
+  SUBTITLE = 'subtitle',
+  DETAILS_TITLE = 'details_title',
+  LABEL_ENDED_ON = 'labels.ended_on',
+  CTA_UPGRADE = 'cta_upgrade',
   PREVIEW = 'preview',
 }
