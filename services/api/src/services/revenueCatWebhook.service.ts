@@ -10,24 +10,36 @@ import {
 } from '@counsy-ai/shared';
 import type { RevenueCatPayload } from '@counsy-ai/ts-rest';
 import {
+  NotificationTransporterType,
   RevenueCatEventType,
   RevenueCatPeriodType,
   SubscriptionPeriodType,
   SubscriptionStatus,
   SubscriptionVendor,
 } from '@counsy-ai/types';
+import { NotificationService } from './notification.service';
 
 export class RevenueCatWebhookService {
   private readonly userRepository: BaseUserRepository;
   private readonly subscriptionRepository: BaseSubscriptionRepository;
   private readonly planChannelProductRepository: PlanChannelProductRepository;
+  private readonly notificationService: NotificationService;
   private readonly logger: Logger;
 
-  constructor(db: DB, logger: Logger) {
+  constructor({
+    db,
+    logger,
+    notificationService,
+  }: {
+    db: DB;
+    logger: Logger;
+    notificationService: NotificationService;
+  }) {
     this.logger = logger;
     this.subscriptionRepository = new BaseSubscriptionRepository(db, logger);
     this.userRepository = new BaseUserRepository(db, logger);
     this.planChannelProductRepository = new PlanChannelProductRepository(db, logger);
+    this.notificationService = notificationService;
   }
 
   private mapStoreToVendor(store: string): SubscriptionVendor {
@@ -101,21 +113,39 @@ export class RevenueCatWebhookService {
     const existing = await this.subscriptionRepository.getSubscriptionByUserId({ userId: user.id });
     if (!existing) {
       await this.subscriptionRepository.createSubscription({ subscription: newSubscription });
-      return;
+    } else {
+      await this.subscriptionRepository.updateSubscription({
+        subscriptionId: existing.subscriptionId,
+        subscription: {
+          planId: product.planId,
+          channel,
+          externalId: newSubscription.externalId,
+          status: SubscriptionStatus.ACTIVE,
+          periodType: SubscriptionPeriodType.TRIAL,
+          startedAt,
+          currentPeriodEnd,
+          cancelledAt: null,
+        },
+      });
     }
 
-    await this.subscriptionRepository.updateSubscription({
-      subscriptionId: existing.subscriptionId,
-      subscription: {
-        planId: product.planId,
-        channel,
-        externalId: newSubscription.externalId,
-        status: SubscriptionStatus.ACTIVE,
-        periodType: SubscriptionPeriodType.TRIAL,
-        startedAt,
-        currentPeriodEnd,
-        cancelledAt: null,
-      },
-    });
+    // Send trial start notification
+    try {
+      const trialDays = Math.ceil(trialDurationMs / (1000 * 60 * 60 * 24));
+      await this.notificationService.sendTrialStartNotification({
+        userId: user.id,
+        transporterType: NotificationTransporterType.MAIL,
+        trialDays,
+        correlationId: event.original_transaction_id || event.transaction_id || undefined,
+        requestId: `revenuecat-${event.original_transaction_id || event.transaction_id}`,
+      });
+    } catch (error) {
+      this.logger.error('Failed to send trial start notification', {
+        userId: user.id,
+        error: error as Error,
+        correlationId: event.original_transaction_id || event.transaction_id,
+      });
+      // Don't throw - notification failure shouldn't break the webhook processing
+    }
   }
 }

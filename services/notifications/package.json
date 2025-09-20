@@ -33,6 +33,7 @@
     "@counsy-ai/shared": "workspace:*",
     "@counsy-ai/types": "workspace:*",
     "@fastify/aws-lambda": "catalog:",
+    "@paralleldrive/cuid2": "catalog:",
     "@react-email/components": "0.5.3",
     "@react-email/render": "1.2.3",
     "@t3-oss/env-core": "catalog:",

@@ -211,10 +211,13 @@ type EmailPayloadByTemplate = {
 
 export type NotificationsEmailQueuePayload = EmailPayloadByTemplate[MailTemplateId];
 
+// Import the new lightweight notification queue payload
+import { NotificationQueuePayload } from '../queues/notificationQueue.types';
+
 export interface NotificationsQueues {
-  [NotificationsQueueNames.EMAIL]: NotificationsEmailQueuePayload;
+  [NotificationsQueueNames.NOTIFICATIONS]: NotificationQueuePayload;
 }
 
 export enum NotificationsQueueNames {
-  EMAIL = 'email',
+  NOTIFICATIONS = 'notifications',
 }

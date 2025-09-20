@@ -6,7 +6,7 @@ import {
   type MessageAttributeValue,
 } from '@aws-sdk/client-sqs';
 import { metrics } from './monitoring/metrics';
-import { initializeDLQ, processSqsMessage } from './processors/sqsProcessor';
+import { initializeDLQ, processSqsMessage } from './processors/notificationProcessor';
 import { logger } from './utils/logger.instance';
 
 const sqsClient = new SQSClient({

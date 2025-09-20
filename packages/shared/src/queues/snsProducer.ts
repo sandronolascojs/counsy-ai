@@ -1,7 +1,7 @@
 import type { MessageAttributeValue } from '@aws-sdk/client-sns';
 import { PublishCommand, SNSClient } from '@aws-sdk/client-sns';
+import type { Logger } from '@counsy-ai/shared';
 import type { NotificationsQueues } from '@counsy-ai/types';
-import { transporterForQueue } from './snsUtils';
 
 export interface TypedSnsProducerParams {
   region: string;
@@ -11,8 +11,9 @@ export interface TypedSnsProducerParams {
 export class TypedSnsProducer {
   private readonly sns: SNSClient;
   private readonly topicArn: string;
+  private readonly logger: Logger;
 
-  constructor(params: TypedSnsProducerParams) {
+  constructor(params: TypedSnsProducerParams, logger: Logger) {
     this.topicArn = params.topicArn;
     const isLocal = process.env.APP_ENV === 'development' || process.env.USE_LOCALSTACK === '1';
     const localEndpoint = process.env.AWS_ENDPOINT || 'http://localhost:4566';
@@ -26,6 +27,7 @@ export class TypedSnsProducer {
         },
       }),
     });
+    this.logger = logger;
   }
 
   // Generic queue sender with autocomplete by queue name
@@ -34,43 +36,41 @@ export class TypedSnsProducer {
     payload: NotificationsQueues[TQueue],
     options?: {
       attributes?: Record<string, MessageAttributeValue>;
-      userId?: string;
       eventType?: string;
       eventVersion?: string | number;
-      correlationId?: string;
       source?: string;
+      correlationId?: string;
+      requestId?: string;
     },
   ): Promise<void> {
-    const transporter = transporterForQueue(queue);
-
     const attrs: Record<string, MessageAttributeValue> = {
-      queue: { DataType: 'String', StringValue: transporter },
+      queue: { DataType: 'String', StringValue: queue },
       ...(options?.attributes ?? {}),
     };
-    if (options?.userId) {
-      attrs.userId = { DataType: 'String', StringValue: options.userId };
+
+    // Extract userId from payload (essential data)
+    if ('userId' in payload && payload.userId) {
+      attrs.userId = { DataType: 'String', StringValue: payload.userId };
     }
+
+    // Add metadata attributes
     if (options?.eventType) {
       attrs.eventType = { DataType: 'String', StringValue: options.eventType };
     }
     if (options?.eventVersion !== undefined) {
       attrs.eventVersion = { DataType: 'String', StringValue: String(options.eventVersion) };
     }
-    if (options?.correlationId) {
-      attrs.correlationId = { DataType: 'String', StringValue: options.correlationId };
-    }
     if (options?.source) {
       attrs.source = { DataType: 'String', StringValue: options.source };
     }
+    if (options?.correlationId) {
+      attrs.correlationId = { DataType: 'String', StringValue: options.correlationId };
+    }
+    if (options?.requestId) {
+      attrs.requestId = { DataType: 'String', StringValue: options.requestId };
+    }
 
-    console.log('Sending message to SNS', {
-      TopicArn: this.topicArn,
-      MessageType: typeof payload,
-      MessageSize: JSON.stringify(payload).length,
-      AttributeCount: Object.keys(attrs).length,
-    });
-
-    const result = await this.sns.send(
+    await this.sns.send(
       new PublishCommand({
         TopicArn: this.topicArn,
         Message: JSON.stringify(payload),
@@ -78,6 +78,11 @@ export class TypedSnsProducer {
       }),
     );
 
-    console.log('Message sent to SNS', result);
+    this.logger.info('Message sent to SNS', {
+      TopicArn: this.topicArn,
+      MessageType: typeof payload,
+      MessageSize: JSON.stringify(payload).length,
+      AttributeCount: Object.keys(attrs).length,
+    });
   }
 }

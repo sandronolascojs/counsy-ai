@@ -975,6 +975,9 @@ importers:
       '@fastify/rate-limit':
         specifier: ^10.3.0
         version: 10.3.0
+      '@paralleldrive/cuid2':
+        specifier: 'catalog:'
+        version: 2.2.2
       '@slack/oauth':
         specifier: ^3.0.3
         version: 3.0.4
@@ -1024,9 +1027,6 @@ importers:
         specifier: 'catalog:'
         version: 3.25.74
     devDependencies:
-      '@paralleldrive/cuid2':
-        specifier: 'catalog:'
-        version: 2.2.2
       '@types/node':
         specifier: 'catalog:'
         version: 22.16.0
@@ -1075,6 +1075,9 @@ importers:
       '@fastify/aws-lambda':
         specifier: 'catalog:'
         version: 5.1.4
+      '@paralleldrive/cuid2':
+        specifier: 'catalog:'
+        version: 2.2.2
       '@react-email/components':
         specifier: 0.5.3
         version: 0.5.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

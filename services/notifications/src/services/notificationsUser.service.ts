@@ -1,4 +1,5 @@
 import { DB } from '@counsy-ai/db';
+import type { SelectUser } from '@counsy-ai/db/schema';
 import { Logger } from '@counsy-ai/shared';
 import { Locale } from '@counsy-ai/types';
 import { NotificationsUserRepository } from '../repositories/user.repository';
@@ -19,5 +20,9 @@ export class NotificationsUserService {
       return null;
     }
     return await this.userRepository.getUserLocale({ userId: user.id });
+  }
+
+  async getUserById({ id }: { id: string }): Promise<SelectUser | undefined> {
+    return await this.userRepository.getUserById({ id });
   }
 }

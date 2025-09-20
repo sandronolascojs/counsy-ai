@@ -5,9 +5,9 @@ import { BaseUserRepository } from '../repositories/user.repository';
 
 export class BaseUserService {
   constructor(
-    private readonly userRepository: BaseUserRepository,
-    private readonly logger: Logger,
-    private readonly db: DB,
+    readonly userRepository: BaseUserRepository,
+    readonly logger: Logger,
+    readonly db: DB,
   ) {
     this.logger = logger;
     this.db = db;

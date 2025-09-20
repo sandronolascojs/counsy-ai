@@ -12,7 +12,13 @@ import {
   SubscriptionsService,
   TypedSnsProducer,
 } from '@counsy-ai/shared';
-import { APP_CONFIG, MailTemplateId, NotificationsQueueNames } from '@counsy-ai/types';
+import {
+  APP_CONFIG,
+  NotificationEventType,
+  NotificationsQueueNames,
+  NotificationTransporterType,
+} from '@counsy-ai/types';
+import { createId } from '@paralleldrive/cuid2';
 import type { Session, User } from 'better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -149,20 +155,30 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       const resetUrl = new URL(url);
       resetUrl.searchParams.set('callbackURL', callbackDeepLink);
       const resetPasswordUrl = resetUrl.toString();
-      const producer = new TypedSnsProducer({
-        region: env.AWS_REGION,
-        topicArn: env.NOTIFICATIONS_TOPIC_ARN,
-      });
-      console.log('Sending reset password email to user', user.email);
-      await producer.sendToQueue(
-        NotificationsQueueNames.EMAIL,
+      const producer = new TypedSnsProducer(
         {
-          template: MailTemplateId.RESET_PASSWORD,
-          to: user.email,
-          subject: `${APP_CONFIG.basics.name} - Reset your password`,
-          props: { resetPasswordUrl, firstName: user.name },
+          region: env.AWS_REGION,
+          topicArn: env.NOTIFICATIONS_TOPIC_ARN,
         },
-        { userId: user.id },
+        logger,
+      );
+      await producer.sendToQueue(
+        NotificationsQueueNames.NOTIFICATIONS,
+        {
+          notificationType: NotificationEventType.RESET_PASSWORD,
+          transporterType: NotificationTransporterType.MAIL,
+          additionalData: {
+            resetPasswordUrl,
+          },
+          userId: user.id,
+        },
+        {
+          eventType: NotificationEventType.RESET_PASSWORD,
+          eventVersion: '1.0',
+          source: 'api-service',
+          correlationId: createId(),
+          requestId: createId(),
+        },
       );
     },
   },
@@ -191,25 +207,31 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         const magicUrl = new URL(url);
         magicUrl.searchParams.set('callbackURL', callbackDeepLink);
         const magicLinkUrl = magicUrl.toString();
-        const producer = new TypedSnsProducer({
-          region: env.AWS_REGION,
-          topicArn: env.NOTIFICATIONS_TOPIC_ARN,
-        });
+        const producer = new TypedSnsProducer(
+          {
+            region: env.AWS_REGION,
+            topicArn: env.NOTIFICATIONS_TOPIC_ARN,
+          },
+          logger,
+        );
 
         if (user?.id) {
           await producer.sendToQueue(
-            NotificationsQueueNames.EMAIL,
+            NotificationsQueueNames.NOTIFICATIONS,
             {
-              template: MailTemplateId.MAGIC_LINK,
-              to: email,
-              subject: `${APP_CONFIG.basics.name} - Magic link`,
-              props: { magicLinkUrl, firstName: user.name },
+              notificationType: NotificationEventType.MAGIC_LINK,
+              transporterType: NotificationTransporterType.MAIL,
+              additionalData: {
+                magicLinkUrl,
+              },
+              userId: user.id,
             },
             {
-              userId: user.id,
-              attributes: {
-                link: { DataType: 'String', StringValue: magicLinkUrl },
-              },
+              source: 'api-service',
+              eventType: NotificationEventType.MAGIC_LINK,
+              eventVersion: '1.0',
+              correlationId: createId(),
+              requestId: createId(),
             },
           );
         }
