@@ -1,16 +1,9 @@
-import { CouponType } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
-import { integer, pgEnum, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { integer, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { couponTypeEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { couponRedemptions } from './couponRedemptions';
-
-export const couponType = pgEnum('coupon_type', [
-  CouponType.PERCENT,
-  CouponType.FIXED,
-  CouponType.BONUS_XP,
-  CouponType.BONUS_MIN,
-]);
 
 export const coupons = pgTable(
   'coupons',
@@ -18,7 +11,7 @@ export const coupons = pgTable(
     couponId: generateIdField({ name: 'coupon_id' }),
     code: text('code').notNull(), // 'PACK10OFF'
     description: text('description'),
-    discountType: couponType('discount_type').notNull(),
+    discountType: couponTypeEnum('discount_type').notNull(),
     amount: integer('amount'),
     minutesBonus: integer('minutes_bonus'),
     xpBonus: integer('xp_bonus'),

@@ -2,11 +2,11 @@ import { PlanChannelProductRepository } from '@/repositories/planChannelProduct.
 import type { DB } from '@counsy-ai/db';
 import type { InsertSubscription } from '@counsy-ai/db/schema';
 import {
+  BaseSubscriptionRepository,
+  BaseUserRepository,
   ConflictError,
   Logger,
   NotFoundError,
-  SubscriptionRepository,
-  UserRepository,
 } from '@counsy-ai/shared';
 import type { RevenueCatPayload } from '@counsy-ai/ts-rest';
 import {
@@ -18,15 +18,15 @@ import {
 } from '@counsy-ai/types';
 
 export class RevenueCatWebhookService {
-  private readonly userRepository: UserRepository;
-  private readonly subscriptionRepository: SubscriptionRepository;
+  private readonly userRepository: BaseUserRepository;
+  private readonly subscriptionRepository: BaseSubscriptionRepository;
   private readonly planChannelProductRepository: PlanChannelProductRepository;
   private readonly logger: Logger;
 
   constructor(db: DB, logger: Logger) {
     this.logger = logger;
-    this.subscriptionRepository = new SubscriptionRepository(db, logger);
-    this.userRepository = new UserRepository(db, logger);
+    this.subscriptionRepository = new BaseSubscriptionRepository(db, logger);
+    this.userRepository = new BaseUserRepository(db, logger);
     this.planChannelProductRepository = new PlanChannelProductRepository(db, logger);
   }
 

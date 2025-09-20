@@ -7,7 +7,7 @@ import {
 import { BaseRepository } from '@counsy-ai/shared';
 import { eq } from 'drizzle-orm';
 
-export class SubscriptionRepository extends BaseRepository {
+export class BaseSubscriptionRepository extends BaseRepository {
   async createSubscription({ subscription }: { subscription: InsertSubscription }): Promise<void> {
     await this.db.insert(subscriptions).values(subscription);
   }

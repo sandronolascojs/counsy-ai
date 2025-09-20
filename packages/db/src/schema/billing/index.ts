@@ -1,4 +1,5 @@
-export * from './currencyEnum';
+export * from './couponRedemptions';
+export * from './coupons';
 export * from './minutePackPrices';
 export * from './minutePackProducts';
 export * from './minutePackPurchases';
@@ -6,5 +7,4 @@ export * from './minutePacks';
 export * from './planChannelPrice';
 export * from './planChannelProducts';
 export * from './plans';
-export * from './subscriptionChannelEnum';
 export * from './subscriptions';

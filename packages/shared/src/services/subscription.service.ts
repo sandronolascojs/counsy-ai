@@ -5,19 +5,19 @@ import type {
   UpdateSubscription,
 } from '@counsy-ai/db/schema';
 import type { Logger } from '@counsy-ai/shared';
-import { SubscriptionRepository } from '../repositories/subscription.repository';
-import { UserRepository } from '../repositories/user.repository';
+import { BaseSubscriptionRepository } from '../repositories/subscription.repository';
+import { BaseUserRepository } from '../repositories/user.repository';
 import { NotFoundError } from '../utils/errors/NotFoundError';
 
 export class SubscriptionsService {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly subscriptionRepository: SubscriptionRepository,
+    private readonly userRepository: BaseUserRepository,
+    private readonly subscriptionRepository: BaseSubscriptionRepository,
     private readonly logger: Logger,
     private readonly db: DB,
   ) {
-    this.subscriptionRepository = new SubscriptionRepository(db, logger);
-    this.userRepository = new UserRepository(db, logger);
+    this.subscriptionRepository = new BaseSubscriptionRepository(db, logger);
+    this.userRepository = new BaseUserRepository(db, logger);
   }
 
   async createSubscription({ subscription }: { subscription: InsertSubscription }): Promise<void> {

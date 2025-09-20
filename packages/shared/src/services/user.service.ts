@@ -1,17 +1,17 @@
 import type { DB } from '@counsy-ai/db';
 import type { SelectUser } from '@counsy-ai/db/schema';
 import type { Logger } from '@counsy-ai/shared';
-import { UserRepository } from '../repositories/user.repository';
+import { BaseUserRepository } from '../repositories/user.repository';
 
-export class UserService {
+export class BaseUserService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: BaseUserRepository,
     private readonly logger: Logger,
     private readonly db: DB,
   ) {
     this.logger = logger;
     this.db = db;
-    this.userRepository = new UserRepository(db, logger);
+    this.userRepository = new BaseUserRepository(db, logger);
   }
 
   async getUserById({ id }: { id: string }): Promise<SelectUser | undefined> {

@@ -1,6 +1,8 @@
 export enum NotificationTransporterType {
   MAIL = 'MAIL',
   EXPO = 'EXPO',
+  SMS = 'SMS',
+  IN_APP = 'IN_APP',
 }
 
 export enum NotificationEventType {

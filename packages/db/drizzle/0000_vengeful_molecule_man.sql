@@ -1,11 +1,22 @@
-CREATE TYPE "public"."currency" AS ENUM('USD', 'EUR', 'GBP', 'AUD', 'NZD', 'CHF', 'JPY', 'CNY');--> statement-breakpoint
 CREATE TYPE "public"."billing_cycle" AS ENUM('Weekly', 'Monthly', 'Annual');--> statement-breakpoint
-CREATE TYPE "public"."plan_name" AS ENUM('Standard', 'Max');--> statement-breakpoint
+CREATE TYPE "public"."country_code" AS ENUM('US', 'CA', 'MX', 'GB', 'FR', 'DE', 'ES', 'IT', 'PT', 'RU', 'CN', 'JP', 'KR', 'BR', 'AR', 'AU', 'NZ', 'IN', 'ID', 'TH', 'MY', 'SG', 'AE', 'SA', 'EG', 'ZA', 'NG', 'KE', 'MA');--> statement-breakpoint
+CREATE TYPE "public"."coupon_type" AS ENUM('PERCENT', 'FIXED', 'BONUS_XP', 'BONUS_MIN');--> statement-breakpoint
+CREATE TYPE "public"."currency" AS ENUM('USD', 'EUR', 'GBP', 'AUD', 'NZD', 'CHF', 'JPY', 'CNY');--> statement-breakpoint
+CREATE TYPE "public"."date_format" AS ENUM('MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD');--> statement-breakpoint
+CREATE TYPE "public"."device_type" AS ENUM('Android', 'iOS');--> statement-breakpoint
+CREATE TYPE "public"."font_size" AS ENUM('SMALL', 'MEDIUM', 'LARGE', 'EXTRA_LARGE');--> statement-breakpoint
+CREATE TYPE "public"."locale" AS ENUM('en_US', 'es_ES', 'fr_FR', 'de_DE', 'it_IT', 'pt_PT', 'ru_RU', 'zh_CN', 'ja_JP', 'ko_KR', 'pt_BR', 'ar_SA', 'zh_TW', 'nl_NL', 'pl_PL', 'sv_SE', 'tr_TR', 'uk_UA', 'vi_VN', 'id_ID', 'ms_MY', 'th_TH', 'ms_SG');--> statement-breakpoint
+CREATE TYPE "public"."notification_category" AS ENUM('ACCOUNT', 'SUBSCRIPTION', 'PROMOTIONAL', 'SECURITY', 'REMINDER', 'SYSTEM', 'CHAT', 'APPOINTMENT');--> statement-breakpoint
+CREATE TYPE "public"."notification_transporter" AS ENUM('MAIL', 'EXPO', 'SMS', 'IN_APP');--> statement-breakpoint
+CREATE TYPE "public"."platform" AS ENUM('EXPO');--> statement-breakpoint
+CREATE TYPE "public"."profile_visibility" AS ENUM('PUBLIC', 'PRIVATE', 'FRIENDS');--> statement-breakpoint
 CREATE TYPE "public"."subscription_channel" AS ENUM('APPLE_IAP', 'GOOGLE_PLAY', 'STRIPE');--> statement-breakpoint
 CREATE TYPE "public"."subscription_period_type" AS ENUM('Trial', 'Normal');--> statement-breakpoint
 CREATE TYPE "public"."subscription_status" AS ENUM('Active', 'Past Due', 'Pending Payment', 'Pending Cancel', 'Cancelled');--> statement-breakpoint
-CREATE TYPE "public"."device_type" AS ENUM('Android', 'iOS');--> statement-breakpoint
-CREATE TYPE "public"."platform" AS ENUM('EXPO');--> statement-breakpoint
+CREATE TYPE "public"."subscription_tier" AS ENUM('Standard', 'Max');--> statement-breakpoint
+CREATE TYPE "public"."theme" AS ENUM('LIGHT', 'DARK', 'SYSTEM');--> statement-breakpoint
+CREATE TYPE "public"."time_format" AS ENUM('12H', '24H');--> statement-breakpoint
+CREATE TYPE "public"."timezone" AS ENUM('UTC', 'America/New_York', 'America/Chicago', 'America/Denver', 'America/Los_Angeles', 'America/Toronto', 'America/Mexico_City', 'America/Sao_Paulo', 'America/Buenos_Aires', 'America/Vancouver', 'America/Montreal', 'America/Lima', 'America/Bogota', 'America/Caracas', 'America/Santiago', 'Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Europe/Madrid', 'Europe/Rome', 'Europe/Amsterdam', 'Europe/Stockholm', 'Europe/Copenhagen', 'Europe/Oslo', 'Europe/Helsinki', 'Europe/Warsaw', 'Europe/Moscow', 'Europe/Zurich', 'Europe/Vienna', 'Europe/Dublin', 'Europe/Lisbon', 'Europe/Athens', 'Asia/Tokyo', 'Asia/Seoul', 'Asia/Shanghai', 'Asia/Hong_Kong', 'Asia/Singapore', 'Asia/Dubai', 'Asia/Kolkata', 'Asia/Bangkok', 'Asia/Jakarta', 'Asia/Manila', 'Asia/Taipei', 'Asia/Mumbai', 'Asia/Karachi', 'Asia/Dhaka', 'Australia/Sydney', 'Australia/Melbourne', 'Australia/Perth', 'Australia/Adelaide', 'Pacific/Auckland', 'Pacific/Honolulu', 'Pacific/Fiji', 'Africa/Cairo', 'Africa/Johannesburg', 'Africa/Lagos', 'Africa/Casablanca');--> statement-breakpoint
 CREATE TABLE "minute_pack_prices" (
 	"minute_pack_price_id" text PRIMARY KEY NOT NULL,
 	"minute_pack_product_id" text NOT NULL,
@@ -82,7 +93,7 @@ CREATE TABLE "plan_channel_products" (
 --> statement-breakpoint
 CREATE TABLE "plans" (
 	"plan_id" text PRIMARY KEY NOT NULL,
-	"name" "plan_name" NOT NULL,
+	"name" "subscription_tier" NOT NULL,
 	"minutes_included" integer NOT NULL,
 	"features" jsonb,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -104,6 +115,32 @@ CREATE TABLE "subscriptions" (
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "subscriptions_subscription_id_unique" UNIQUE("subscription_id")
+);
+--> statement-breakpoint
+CREATE TABLE "coupons" (
+	"coupon_id" text PRIMARY KEY NOT NULL,
+	"code" text NOT NULL,
+	"description" text,
+	"discount_type" "coupon_type" NOT NULL,
+	"amount" integer,
+	"minutes_bonus" integer,
+	"xp_bonus" integer,
+	"max_redemptions" integer,
+	"expires_at" timestamp with time zone,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "coupons_coupon_id_unique" UNIQUE("coupon_id")
+);
+--> statement-breakpoint
+CREATE TABLE "coupon_redemptions" (
+	"coupon_redemption_id" text PRIMARY KEY NOT NULL,
+	"coupon_id" text NOT NULL,
+	"user_id" text NOT NULL,
+	"redeemed_at" timestamp,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"minute_pack_purchase_id" text,
+	CONSTRAINT "coupon_redemptions_coupon_redemption_id_unique" UNIQUE("coupon_redemption_id")
 );
 --> statement-breakpoint
 CREATE TABLE "cloud_conversation_meta" (
@@ -255,6 +292,9 @@ ALTER TABLE "plan_channel_prices" ADD CONSTRAINT "plan_channel_prices_plan_chann
 ALTER TABLE "plan_channel_products" ADD CONSTRAINT "plan_channel_products_plan_id_plans_plan_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plans"("plan_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_plan_id_plans_plan_id_fk" FOREIGN KEY ("plan_id") REFERENCES "public"."plans"("plan_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "coupon_redemptions" ADD CONSTRAINT "coupon_redemptions_coupon_id_coupons_coupon_id_fk" FOREIGN KEY ("coupon_id") REFERENCES "public"."coupons"("coupon_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "coupon_redemptions" ADD CONSTRAINT "coupon_redemptions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "coupon_redemptions" ADD CONSTRAINT "coupon_redemptions_minute_pack_purchase_id_minute_pack_purchases_minute_pack_purchase_id_fk" FOREIGN KEY ("minute_pack_purchase_id") REFERENCES "public"."minute_pack_purchases"("minute_pack_purchase_id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "cloud_conversation_meta" ADD CONSTRAINT "cloud_conversation_meta_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "encryption_keys" ADD CONSTRAINT "encryption_keys_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "referral_codes" ADD CONSTRAINT "referral_codes_owner_user_id_users_id_fk" FOREIGN KEY ("owner_user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -276,6 +316,8 @@ CREATE UNIQUE INDEX "idx_plan_channel_products_plan_id_channel_external_unique" 
 CREATE UNIQUE INDEX "idx_plan_channel_products_external_product_id_unique" ON "plan_channel_products" USING btree ("external_product_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_plans_name_unique" ON "plans" USING btree ("name");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_subscriptions_user_external_unique" ON "subscriptions" USING btree ("user_id","external_id");--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_coupons_code" ON "coupons" USING btree ("code");--> statement-breakpoint
+CREATE UNIQUE INDEX "idx_coupon_redemptions_coupon_id_user_id" ON "coupon_redemptions" USING btree ("coupon_id","user_id");--> statement-breakpoint
 CREATE INDEX "idx_cloud_conversation_meta_user_id" ON "cloud_conversation_meta" USING btree ("user_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_cloud_conversation_meta_object_key" ON "cloud_conversation_meta" USING btree ("object_key");--> statement-breakpoint
 CREATE UNIQUE INDEX "idx_encryption_keys_user_id_unique" ON "encryption_keys" USING btree ("user_id");--> statement-breakpoint

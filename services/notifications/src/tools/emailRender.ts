@@ -1,9 +1,4 @@
-import {
-  MAIL_TEMPLATE_SCHEMAS,
-  MailTemplateId,
-  type MailTemplateProps,
-  type MailTemplateSchema,
-} from '@counsy-ai/types';
+import { MAIL_TEMPLATE_SCHEMAS, MailTemplateId, type MailTemplateProps } from '@counsy-ai/types';
 import { render } from '@react-email/render';
 import * as React from 'react';
 import MagicLinkEmail from '../emails/MagicLinkEmail';
@@ -36,7 +31,7 @@ export const emailRender = async <T extends MailTemplateId>(
 ): Promise<string> => {
   const Component = templateRegistry[template];
   // Runtime validation using zod schemas per template id
-  const schema = MAIL_TEMPLATE_SCHEMAS[template] as MailTemplateSchema<T>;
+  const schema = MAIL_TEMPLATE_SCHEMAS[template];
   const parsed = schema.safeParse(props);
   if (!parsed.success) {
     throw new Error(`Invalid props for template ${template}: ${parsed.error.message}`);

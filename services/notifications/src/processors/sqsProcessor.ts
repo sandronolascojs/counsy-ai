@@ -2,13 +2,16 @@ import { env } from '@/config/env.config';
 import type { SqsEvent } from '@/types';
 import type { MessageAttributeValue } from '@aws-sdk/client-sqs';
 import { SQSClient } from '@aws-sdk/client-sqs';
+import { db } from '@counsy-ai/db';
 import { EmailService, normalizeTransporterType } from '@counsy-ai/shared';
 import { NotificationTransporterType } from '@counsy-ai/types';
 import { DeadLetterQueueManager } from '../dlq/deadLetterQueue';
 import { ErrorClassifier } from '../errors/errorClassifier';
 import { metrics } from '../monitoring/metrics';
-import { getUserLocale, parseEmailPayload, renderEmail } from '../notifications';
+import { parseEmailPayload, renderEmail } from '../notifications';
+import { NotificationsUserRepository } from '../repositories/user.repository';
 import { RetryManager } from '../retry/retryManager';
+import { NotificationsUserService } from '../services/notificationsUser.service';
 import { logger } from '../utils/logger.instance';
 
 const ses = new EmailService({
@@ -168,6 +171,12 @@ export async function processSqsMessage(
   }
 }
 
+const notificationsUserService = new NotificationsUserService(
+  new NotificationsUserRepository(db, logger),
+  logger,
+  db,
+);
+
 async function processEmailMessage(
   payload: unknown,
   attrs: Record<string, string>,
@@ -184,8 +193,14 @@ async function processEmailMessage(
   const emailStartTime = Date.now();
 
   try {
+    if (!attrs.userId) {
+      throw new Error('User ID is required');
+    }
     const emailMsg = parseEmailPayload(payload);
-    const locale = await getUserLocale(attrs.userId);
+    const locale = await notificationsUserService.getUserLocale({ userId: attrs.userId });
+    if (!locale) {
+      throw new Error('Locale is required');
+    }
     const html = await renderEmail(emailMsg, locale);
 
     // Use retry mechanism for email sending

@@ -1,13 +1,10 @@
-import { DeviceType, Platform } from '@counsy-ai/types';
+import { Platform } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
-import { boolean, pgEnum, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { boolean, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { deviceTypeEnum, platformEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { users } from './users';
-
-export const deviceType = pgEnum('device_type', [DeviceType.ANDROID, DeviceType.IOS]);
-
-export const platform = pgEnum('platform', [Platform.EXPO]);
 
 export const pushTokens = pgTable(
   'push_tokens',
@@ -16,8 +13,8 @@ export const pushTokens = pgTable(
     userId: text('user_id')
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
-    platform: platform('platform').default(Platform.EXPO).notNull(),
-    deviceType: deviceType('device_type').notNull(),
+    platform: platformEnum('platform').default(Platform.EXPO).notNull(),
+    deviceType: deviceTypeEnum('device_type').notNull(),
     token: text('token').notNull(),
     deviceId: text('device_id').notNull(), // Unique identifier for the device
     deviceName: text('device_name'), // Device name (e.g., "iPhone 12")

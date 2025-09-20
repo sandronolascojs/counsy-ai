@@ -6,11 +6,11 @@ import { db } from '@counsy-ai/db';
 import type { SelectSubscription } from '@counsy-ai/db/schema';
 import * as schema from '@counsy-ai/db/schema';
 import {
-  SubscriptionRepository,
+  BaseSubscriptionRepository,
+  BaseUserRepository,
+  BaseUserService,
   SubscriptionsService,
   TypedSnsProducer,
-  UserRepository,
-  UserService,
 } from '@counsy-ai/shared';
 import { APP_CONFIG, MailTemplateId, NotificationsQueueNames } from '@counsy-ai/types';
 import type { Session, User } from 'better-auth';
@@ -83,15 +83,15 @@ const buildTrustedOrigins = (): string[] => {
   return Array.from(new Set(filtered));
 };
 
-const userRepository = new UserRepository(db, logger);
-const subscriptionRepository = new SubscriptionRepository(db, logger);
+const userRepository = new BaseUserRepository(db, logger);
+const subscriptionRepository = new BaseSubscriptionRepository(db, logger);
 const subscriptionsService = new SubscriptionsService(
   userRepository,
   subscriptionRepository,
   logger,
   db,
 );
-const userService = new UserService(userRepository, logger, db);
+const userService = new BaseUserService(userRepository, logger, db);
 // SNS notifications topic (injected via env in the API service runtime)
 // Using env.NOTIFICATIONS_TOPIC_ARN indirectly via snsEmailQueue
 

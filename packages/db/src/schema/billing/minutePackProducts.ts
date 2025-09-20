@@ -1,11 +1,10 @@
 import { Currency } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
 import { pgTable, text, uniqueIndex } from 'drizzle-orm/pg-core';
+import { currencyEnum, subscriptionChannelEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
-import { currency } from './currencyEnum';
 import { minutePacks } from './minutePacks';
-import { subscriptionChannel } from './subscriptionChannelEnum';
 
 export const minutePackProducts = pgTable(
   'minute_pack_products',
@@ -14,9 +13,9 @@ export const minutePackProducts = pgTable(
     minutePackId: text('minute_pack_id')
       .references(() => minutePacks.minutePackId, { onDelete: 'cascade' })
       .notNull(),
-    channel: subscriptionChannel('channel').notNull(),
+    channel: subscriptionChannelEnum('channel').notNull(),
     externalProductId: text('external_product_id').notNull(),
-    currency: currency('currency').notNull().default(Currency.USD), // default to USD
+    currency: currencyEnum('currency').notNull().default(Currency.USD), // default to USD
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

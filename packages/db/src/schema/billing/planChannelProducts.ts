@@ -1,27 +1,20 @@
 import { BillingCycle, Currency } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
-import { pgEnum, pgTable, text, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, text, uniqueIndex } from 'drizzle-orm/pg-core';
+import { billingCycleEnum, currencyEnum, subscriptionChannelEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
-import { currency } from './currencyEnum';
 import { plans } from './plans';
-import { subscriptionChannel } from './subscriptionChannelEnum';
-
-export const billingCycle = pgEnum('billing_cycle', [
-  BillingCycle.WEEKLY,
-  BillingCycle.MONTHLY,
-  BillingCycle.ANNUAL,
-]);
 
 export const planChannelProducts = pgTable(
   'plan_channel_products',
   {
     planChannelProductId: generateIdField({ name: 'plan_channel_product_id' }),
     planId: text('plan_id').references(() => plans.planId, { onDelete: 'cascade' }),
-    channel: subscriptionChannel('channel').notNull(),
+    channel: subscriptionChannelEnum('channel').notNull(),
     externalProductId: text('external_product_id').notNull(),
-    currency: currency('currency').notNull().default(Currency.USD), // default to USD
-    billingCycle: billingCycle('billing_cycle').notNull().default(BillingCycle.MONTHLY),
+    currency: currencyEnum('currency').notNull().default(Currency.USD), // default to USD
+    billingCycle: billingCycleEnum('billing_cycle').notNull().default(BillingCycle.MONTHLY),
     createdAt: createdAtField,
     updatedAt: updatedAtField,
   },

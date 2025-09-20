@@ -1,17 +1,15 @@
-import { SubscriptionTier } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
-import { integer, jsonb, pgEnum, pgTable, uniqueIndex } from 'drizzle-orm/pg-core';
+import { integer, jsonb, pgTable, uniqueIndex } from 'drizzle-orm/pg-core';
+import { subscriptionTierEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { planChannelProducts } from './planChannelProducts';
-
-export const planName = pgEnum('plan_name', [SubscriptionTier.STANDARD, SubscriptionTier.MAX]);
 
 export const plans = pgTable(
   'plans',
   {
     planId: generateIdField({ name: 'plan_id' }),
-    name: planName('name').notNull(),
+    name: subscriptionTierEnum('name').notNull(),
     minutesIncluded: integer('minutes_included').notNull(),
     features: jsonb('features').$type<string[]>(),
     updatedAt: updatedAtField,

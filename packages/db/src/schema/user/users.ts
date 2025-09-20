@@ -5,6 +5,7 @@ import { voiceSessions } from '../sessions/voiceSessions';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { accounts } from './accounts';
+import { userPreferences } from './preferences';
 import { pushTokens } from './pushTokens';
 import { sessions } from './sessions';
 import { verifications } from './verifications';
@@ -31,6 +32,10 @@ export const userRelations = relations(users, ({ one, many }) => ({
   }),
   userSubscriptions: many(subscriptions),
   userPushTokens: many(pushTokens),
+  userPreferences: one(userPreferences, {
+    fields: [users.id],
+    references: [userPreferences.userId],
+  }),
 }));
 
 export type InsertUser = typeof users.$inferInsert;

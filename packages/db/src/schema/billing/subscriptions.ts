@@ -1,25 +1,16 @@
-import { SubscriptionPeriodType, SubscriptionStatus } from '@counsy-ai/types';
+import { SubscriptionPeriodType } from '@counsy-ai/types';
 import { relations } from 'drizzle-orm';
-import { pgEnum, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 import { users } from '../user';
+import {
+  subscriptionChannelEnum,
+  subscriptionPeriodTypeEnum,
+  subscriptionStatusEnum,
+} from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { minutePackPurchases } from './minutePackPurchases';
 import { plans } from './plans';
-import { subscriptionChannel } from './subscriptionChannelEnum';
-
-export const subscriptionStatus = pgEnum('subscription_status', [
-  SubscriptionStatus.ACTIVE,
-  SubscriptionStatus.PAST_DUE,
-  SubscriptionStatus.PENDING_PAYMENT,
-  SubscriptionStatus.PENDING_CANCEL,
-  SubscriptionStatus.CANCELLED,
-]);
-
-export const subscriptionPeriodType = pgEnum('subscription_period_type', [
-  SubscriptionPeriodType.TRIAL,
-  SubscriptionPeriodType.NORMAL,
-]);
 
 export const subscriptions = pgTable(
   'subscriptions',
@@ -31,10 +22,10 @@ export const subscriptions = pgTable(
     planId: text('plan_id')
       .notNull()
       .references(() => plans.planId),
-    channel: subscriptionChannel('channel').notNull(),
+    channel: subscriptionChannelEnum('channel').notNull(),
     externalId: text('external_id'),
-    status: subscriptionStatus('status').notNull(),
-    periodType: subscriptionPeriodType('period_type')
+    status: subscriptionStatusEnum('status').notNull(),
+    periodType: subscriptionPeriodTypeEnum('period_type')
       .notNull()
       .default(SubscriptionPeriodType.NORMAL),
     startedAt: timestamp('started_at', { withTimezone: true }).notNull(),

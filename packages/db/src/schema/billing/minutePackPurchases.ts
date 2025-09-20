@@ -1,9 +1,9 @@
 import { relations } from 'drizzle-orm';
 import { integer, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { subscriptionChannelEnum } from '../utils/enums';
 import { generateIdField } from '../utils/id';
 import { createdAtField, updatedAtField } from '../utils/timestamp';
 import { minutePacks } from './minutePacks';
-import { subscriptionChannel } from './subscriptionChannelEnum';
 import { subscriptions } from './subscriptions';
 
 export const minutePackPurchases = pgTable(
@@ -17,7 +17,7 @@ export const minutePackPurchases = pgTable(
       .references(() => minutePacks.minutePackId, { onDelete: 'cascade' })
       .notNull(),
     externalId: text('external_id').notNull(), // transactionId, paymentIntentId…
-    channel: subscriptionChannel('channel').notNull(),
+    channel: subscriptionChannelEnum('channel').notNull(),
     minutesGranted: integer('minutes_granted').notNull(),
     minutesUsed: integer('minutes_used').default(0),
     purchasedAt: timestamp('purchased_at', { withTimezone: true }).notNull(),
