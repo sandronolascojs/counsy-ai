@@ -28,6 +28,13 @@ export class TypedSnsProducer {
       }),
     });
     this.logger = logger;
+
+    this.logger.debug('Initialized SNS client for notifications', {
+      isLocal,
+      region: params.region,
+      endpoint: isLocal ? localEndpoint : 'aws-default',
+      topicArn: this.topicArn,
+    });
   }
 
   // Generic queue sender with autocomplete by queue name
@@ -70,19 +77,36 @@ export class TypedSnsProducer {
       attrs.requestId = { DataType: 'String', StringValue: options.requestId };
     }
 
-    await this.sns.send(
+    const messageString = JSON.stringify(payload);
+
+    this.logger.debug('Publishing message to SNS', {
+      topicArn: this.topicArn,
+      queue,
+      eventType: options?.eventType,
+      eventVersion: options?.eventVersion,
+      source: options?.source,
+      correlationId: options?.correlationId,
+      requestId: options?.requestId,
+      hasUserIdAttr: !!attrs.userId,
+      attributeKeys: Object.keys(attrs),
+      messageSize: messageString.length,
+    });
+
+    const result = await this.sns.send(
       new PublishCommand({
         TopicArn: this.topicArn,
-        Message: JSON.stringify(payload),
+        Message: messageString,
         MessageAttributes: attrs,
       }),
     );
 
     this.logger.info('Message sent to SNS', {
-      TopicArn: this.topicArn,
-      MessageType: typeof payload,
-      MessageSize: JSON.stringify(payload).length,
-      AttributeCount: Object.keys(attrs).length,
+      topicArn: this.topicArn,
+      queue,
+      messageType: typeof payload,
+      messageSize: messageString.length,
+      attributeCount: Object.keys(attrs).length,
+      result,
     });
   }
 }

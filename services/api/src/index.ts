@@ -48,7 +48,7 @@ export const handler = proxy;
 
 if (!process.env.AWS_LAMBDA_FUNCTION_NAME) {
   buildServer()
-    .listen({ port: env.PORT, host: '0.0.0.0' })
+    .listen({ port: env.PORT, host: 'localhost' })
     .then(() => {
       logger.info(`🚀 API ready at http://localhost:${env.PORT}`);
     })

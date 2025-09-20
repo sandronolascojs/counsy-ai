@@ -6,7 +6,7 @@ import {
 
 // Base notification queue payload - only essential data
 export const NotificationQueuePayloadSchema = z.object({
-  userId: z.string().uuid(),
+  userId: z.string().min(1),
   notificationType: z.nativeEnum(NotificationEventType),
   transporterType: z.nativeEnum(NotificationTransporterType),
   // Optional additional data that might be needed for specific notifications

@@ -1,5 +1,10 @@
 import { z } from 'zod';
-import { MailTemplateId, NotificationEventType, NotificationTransporterType } from '../enums';
+import {
+  MailTemplateId,
+  NotificationEventType,
+  NotificationTransporterType,
+  type QueueNames,
+} from '../enums';
 import type { MailTemplateProps } from './emailTemplates';
 
 // Base metadata all notifications share
@@ -215,9 +220,5 @@ export type NotificationsEmailQueuePayload = EmailPayloadByTemplate[MailTemplate
 import { NotificationQueuePayload } from '../queues/notificationQueue.types';
 
 export interface NotificationsQueues {
-  [NotificationsQueueNames.NOTIFICATIONS]: NotificationQueuePayload;
-}
-
-export enum NotificationsQueueNames {
-  NOTIFICATIONS = 'notifications',
+  [QueueNames.NOTIFICATIONS]: NotificationQueuePayload;
 }

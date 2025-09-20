@@ -1,11 +1,7 @@
 import type { SqsEvent } from '@/types';
 import type { MessageAttributeValue } from '@aws-sdk/client-sqs';
 import { SQSClient } from '@aws-sdk/client-sqs';
-import {
-  NotificationQueuePayload,
-  NotificationQueuePayloadSchema,
-  NotificationTransporterType,
-} from '@counsy-ai/types';
+import { NotificationQueuePayload, NotificationQueuePayloadSchema } from '@counsy-ai/types';
 import { DeadLetterQueueManager } from '../dlq/deadLetterQueue';
 import { ErrorClassifier } from '../errors/errorClassifier';
 import { NotificationDispatcher } from '../handlers';
@@ -38,11 +34,12 @@ export async function processSqsMessage(
   const startTime = Date.now();
   const messageId = `msg_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
 
-  // Extract attributes from SNS message content (when coming from SNS → SQS)
+  // Extract attributes from SQS message attributes first (preferred with RawMessageDelivery)
+  // If missing, attempt to extract from SNS envelope inside SQS body
   const attrs: Record<string, string> = {};
   if (message.messageAttributes) {
     Object.entries(message.messageAttributes).forEach(([key, value]) => {
-      if (value.StringValue) {
+      if (typeof value.StringValue === 'string') {
         attrs[key] = value.StringValue;
       }
     });
@@ -71,37 +68,37 @@ export async function processSqsMessage(
   });
 
   try {
-    // Decode message body
-    const { payload } = decodeSqsBody(message.body);
+    // Decode message body and optionally recover attributes from SNS envelope
+    const { payload, envelopeAttributes, rawDelivery, envelopeDetected, originalBodySize } =
+      decodeSqsBody(message.body);
 
-    // Validate message attributes
-    if (!attrs.queue) {
-      throw new Error('Missing queue attribute in message attributes');
+    // Merge attributes from envelope if SQS attributes were empty
+    if (!attrs.queue && envelopeAttributes) {
+      Object.assign(attrs, envelopeAttributes);
+      context.userId = attrs.userId;
+      context.queue = attrs.queue;
+      context.eventType = attrs.eventType;
+      context.eventVersion = attrs.eventVersion;
+      context.source = attrs.source;
+      context.correlationId = attrs.correlationId;
+      context.requestId = attrs.requestId;
     }
 
-    const transporter = normalizeTransporterType(attrs.queue);
-
-    // Only process notification queue messages
-    if (
-      transporter !== NotificationTransporterType.MAIL &&
-      transporter !== NotificationTransporterType.EXPO
-    ) {
-      logger.info('Non-notification transporter ignored', {
+    // Determine transporter and validate strictly; if invalid, ignore and log
+    const notificationPayload = validateNotificationPayload(payload);
+    if (!notificationPayload) {
+      logger.warn('Ignored non-conformant notification payload', {
         messageId,
-        transporter,
         userId: attrs.userId,
         queue: attrs.queue,
         eventType: attrs.eventType,
         correlationId: attrs.correlationId,
         requestId: attrs.requestId,
+        bodyPreview: safePreview(message.body),
+        hasSqsAttributes: !!message.messageAttributes,
       });
+      // Treat as successfully handled to avoid retries
       return { success: true };
-    }
-
-    // Validate payload structure
-    const notificationPayload = validateNotificationPayload(payload);
-    if (!notificationPayload) {
-      throw new Error('Invalid notification payload structure');
     }
 
     // Initialize notification dispatcher
@@ -124,6 +121,9 @@ export async function processSqsMessage(
         eventType: attrs.eventType,
         correlationId: attrs.correlationId,
         requestId: attrs.requestId,
+        rawDelivery,
+        envelopeDetected,
+        originalBodySize,
       });
 
       // Record metrics
@@ -153,6 +153,8 @@ export async function processSqsMessage(
       eventType: attrs.eventType,
       correlationId: attrs.correlationId,
       requestId: attrs.requestId,
+      bodyPreview: safePreview(message.body),
+      hasSqsAttributes: !!message.messageAttributes,
     });
 
     // Record metrics
@@ -217,31 +219,86 @@ export async function processSqsEvent(event: SqsEvent): Promise<void> {
 }
 
 // Helper functions
-function decodeSqsBody(body: string): { payload: unknown } {
+type DecodedBody = {
+  payload: unknown;
+  envelopeAttributes?: Record<string, string>;
+  rawDelivery: boolean;
+  envelopeDetected: boolean;
+  originalBodySize: number;
+};
+
+function decodeSqsBody(body: string): DecodedBody {
+  const originalBodySize = body.length;
   try {
-    return JSON.parse(body) as { payload: unknown };
+    const parsed: unknown = JSON.parse(body);
+
+    // Case 1: RawMessageDelivery (SNS -> SQS) where producer already sends final payload shape
+    if (isRecord(parsed) && 'payload' in parsed) {
+      return {
+        payload: (parsed as { payload: unknown }).payload,
+        rawDelivery: true,
+        envelopeDetected: false,
+        originalBodySize,
+      };
+    }
+
+    // Case 2: SNS envelope present (common when RawMessageDelivery is disabled)
+    // SNS structure typically contains: Type, Message, MessageAttributes, etc.
+    if (isRecord(parsed) && typeof parsed.Message !== 'undefined') {
+      let innerPayload: unknown = parsed.Message as unknown;
+      try {
+        if (typeof parsed.Message === 'string') {
+          innerPayload = JSON.parse(parsed.Message);
+        }
+      } catch {
+        // keep as string if not JSON
+      }
+
+      const envelopeAttributes: Record<string, string> = {};
+      if (isRecord(parsed.MessageAttributes)) {
+        for (const [key, val] of Object.entries(parsed.MessageAttributes)) {
+          if (isRecord(val) && typeof val.Value === 'string') {
+            envelopeAttributes[key] = val.Value;
+          }
+        }
+      }
+
+      // If message is of shape { payload: ... } inside SNS Message, unwrap
+      if (isRecord(innerPayload) && 'payload' in innerPayload) {
+        return {
+          payload: (innerPayload as { payload: unknown }).payload,
+          envelopeAttributes,
+          rawDelivery: false,
+          envelopeDetected: true,
+          originalBodySize,
+        };
+      }
+
+      // Otherwise, treat inner payload as the payload directly
+      return {
+        payload: innerPayload,
+        envelopeAttributes,
+        rawDelivery: false,
+        envelopeDetected: true,
+        originalBodySize,
+      };
+    }
+
+    // Fallback: if it's an object but not matching expected shapes
+    return {
+      payload: parsed,
+      rawDelivery: true,
+      envelopeDetected: false,
+      originalBodySize,
+    };
   } catch (error) {
-    throw new Error(`Failed to decode SQS message body: ${error}`);
+    throw new Error(
+      `Failed to decode SQS message body: ${String(error)} | bodyPreview=${safePreview(body)}`,
+    );
   }
 }
 
-function normalizeTransporterType(queue: string): NotificationTransporterType {
-  switch (queue.toLowerCase()) {
-    case 'mail':
-    case 'email':
-      return NotificationTransporterType.MAIL;
-    case 'expo':
-    case 'push':
-      return NotificationTransporterType.EXPO;
-    case 'sms':
-      return NotificationTransporterType.SMS;
-    case 'in_app':
-    case 'inapp':
-      return NotificationTransporterType.IN_APP;
-    default:
-      throw new Error(`Unknown transporter type: ${queue}`);
-  }
-}
+// normalizeTransporterType removed; strict payload validation is the only source of truth now
 
 function validateNotificationPayload(payload: unknown): NotificationQueuePayload | null {
   try {
@@ -279,3 +336,16 @@ function safeStringify(value: unknown): string {
     return '[Unable to stringify]';
   }
 }
+
+function safePreview(body: string, max = 500): string {
+  if (!body) return '';
+  return body.length > max ? `${body.slice(0, max)}...[truncated ${body.length - max}]` : body;
+}
+
+type StringRecord = Record<string, unknown>;
+
+function isRecord(value: unknown): value is StringRecord {
+  return typeof value === 'object' && value !== null;
+}
+
+// legacy coercion removed by product decision; non-conformant payloads are ignored and logged

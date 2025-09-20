@@ -15,8 +15,8 @@ import {
 import {
   APP_CONFIG,
   NotificationEventType,
-  NotificationsQueueNames,
   NotificationTransporterType,
+  QueueNames,
 } from '@counsy-ai/types';
 import { createId } from '@paralleldrive/cuid2';
 import type { Session, User } from 'better-auth';
@@ -155,6 +155,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       const resetUrl = new URL(url);
       resetUrl.searchParams.set('callbackURL', callbackDeepLink);
       const resetPasswordUrl = resetUrl.toString();
+
       const producer = new TypedSnsProducer(
         {
           region: env.AWS_REGION,
@@ -163,7 +164,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         logger,
       );
       await producer.sendToQueue(
-        NotificationsQueueNames.NOTIFICATIONS,
+        QueueNames.NOTIFICATIONS,
         {
           notificationType: NotificationEventType.RESET_PASSWORD,
           transporterType: NotificationTransporterType.MAIL,
@@ -216,8 +217,16 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         );
 
         if (user?.id) {
+          logger.debug('Preparing magic link notification', {
+            userId: user.id,
+            topicArn: env.NOTIFICATIONS_TOPIC_ARN,
+            region: env.AWS_REGION,
+            queue: QueueNames.NOTIFICATIONS,
+            eventType: NotificationEventType.MAGIC_LINK,
+            magicUrlLength: magicLinkUrl.length,
+          });
           await producer.sendToQueue(
-            NotificationsQueueNames.NOTIFICATIONS,
+            QueueNames.NOTIFICATIONS,
             {
               notificationType: NotificationEventType.MAGIC_LINK,
               transporterType: NotificationTransporterType.MAIL,
@@ -234,6 +243,11 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
               requestId: createId(),
             },
           );
+          logger.info('Magic link notification enqueued', {
+            userId: user.id,
+            queue: QueueNames.NOTIFICATIONS,
+            eventType: NotificationEventType.MAGIC_LINK,
+          });
         }
       },
       disableSignUp: true,

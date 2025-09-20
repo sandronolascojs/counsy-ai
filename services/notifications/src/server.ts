@@ -25,6 +25,12 @@ const QUEUE_URL = process.env.SQS_QUEUE_URL || '';
 
 export async function startLocalServer() {
   logger.info('Starting notifications service in local mode - polling SQS');
+  logger.debug('SQS client configuration', {
+    region: env.AWS_REGION,
+    endpoint: 'http://localhost:4566',
+    queueUrlEnv: process.env.SQS_QUEUE_URL,
+    dlqUrlEnv: process.env.DLQ_URL,
+  });
 
   if (!QUEUE_URL) {
     logger.error('SQS_QUEUE_URL environment variable is required for local development');

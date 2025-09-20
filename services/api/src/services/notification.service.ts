@@ -3,7 +3,7 @@ import {
   NotificationEventType,
   NotificationQueuePayload,
   NotificationTransporterType,
-  NotificationsQueueNames,
+  QueueNames,
 } from '@counsy-ai/types';
 
 export interface NotificationServiceParams {
@@ -138,7 +138,7 @@ export class NotificationService {
         transporterType: payload.transporterType,
       });
 
-      await this.snsProducer.sendToQueue(NotificationsQueueNames.NOTIFICATIONS, payload, {
+      await this.snsProducer.sendToQueue(QueueNames.NOTIFICATIONS, payload, {
         eventType: payload.notificationType,
         eventVersion: '1.0',
         source: 'api-service',
